@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using CyberdropDownloader.Avalonia.ViewModels;
 using ReactiveUI;
 using System;
 
@@ -9,8 +8,8 @@ public class ViewLocator : IDataTemplate
 {
     public IControl Build(object data)
     {
-        var name = data.GetType().FullName!.Replace("ViewModel", "View");
-        var type = Type.GetType(name);
+        string? name = data.GetType().FullName!.Replace("ViewModel", "View");
+        Type? type = Type.GetType(name);
 
         if (type != null)
         {
@@ -22,8 +21,5 @@ public class ViewLocator : IDataTemplate
         }
     }
 
-    public bool Match(object data)
-    {
-        return data is ReactiveObject;
-    }
+    public bool Match(object data) => data is ReactiveObject;
 }
