@@ -1,10 +1,19 @@
+using CyberdropDownloader.Avalonia.Services;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CyberdropDownloader.Avalonia.ViewModels;
 public class MainWindowViewModel : ReactiveObject
 {
-    public string Greeting => "Welcome to Avalonia!";
+    private readonly Navigator _navigator;
+
+    public MainWindowViewModel(Navigator navigator)
+    {
+        _navigator = navigator;
+
+        _navigator.CurrentViewModelChanged += CurrentViewModelChanged;
+    }
+
+    public ReactiveObject? CurrentViewModel => _navigator.CurrentViewModel;
+
+    private void CurrentViewModelChanged() => this.RaisePropertyChanged(nameof(CurrentViewModel));
 }
