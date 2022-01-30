@@ -8,6 +8,11 @@
 
     <Application.Styles>
         <FluentTheme Mode="Light"/>
-		<StyleInclude Source="/Assets/CustomStyles.axaml"/>
+		
+		<StyleInclude Source="/Assets/Styles/LabelStyles.axaml"/>
+		<StyleInclude Source="/Assets/Styles/TextBoxStyles.axaml"/>
+		<StyleInclude Source="/Assets/Styles/WindowStyles.axaml"/>
+		
+		<StyleInclude Source="/Assets/Icons.axaml"/>
     </Application.Styles>
 </Application>
