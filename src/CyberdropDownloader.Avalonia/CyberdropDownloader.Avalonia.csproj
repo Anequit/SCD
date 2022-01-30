@@ -5,7 +5,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <AvaloniaResource Remove="Assets\icons.axaml" />
     <AvaloniaResource Remove="Assets\IconStyles.axaml" />
@@ -29,5 +28,8 @@
     <AvaloniaXaml Update="Assets\Icons.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
