@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="222"
+             x:Class="CyberdropDownloader.Avalonia.Views.MainFormView">
+
+	<StackPanel Background="#EDEDED">
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+
+			<Label Grid.Column="0" Classes="Header"
+				   Margin="15 18 5 4"
+				   Height="21" Content="Album URL"
+				   VerticalContentAlignment="Center"
+				   VerticalAlignment="Stretch"/>
+
+			<Label Grid.Column="1" Classes="Hint"
+				   Margin="5 18 0 4" Height="21"
+				   Content="What do you want to download?"
+				   VerticalContentAlignment="Bottom"
+				   VerticalAlignment="Stretch"/>
+		</Grid>
+
+		<!-- TODO: Add Input Box -->
+		<TextBox Margin="15 4 15 0"/>
+	</StackPanel>
+</UserControl>
