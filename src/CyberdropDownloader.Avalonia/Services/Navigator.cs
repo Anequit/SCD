@@ -1,28 +1,37 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Controls;
+using ReactiveUI;
 using System;
+using System.Collections.ObjectModel;
 
 namespace CyberdropDownloader.Avalonia.Services;
 
 public class Navigator
 {
-    private ReactiveObject? _currentViewModel;
-    private ReactiveObject? _previousViewModel;
+    private readonly ObservableCollection<UserControl> _views;
 
-    public event Action? CurrentViewModelChanged;
+    public event Action? CurrentViewChanged;
 
-    public ReactiveObject? CurrentViewModel
+    public Navigator() => _views = new ObservableCollection<UserControl>();
+
+    public UserControl CurrentView
     {
-        get => _currentViewModel;
+        get => _views[-1];
         set
         {
-            _previousViewModel = CurrentViewModel;
+            // Store prvious view incase we want to implement a back button
+            PreviousView = _views[-1];
 
-            _currentViewModel = value;
-            OnCurrentViewModelChanged();
+            _views[-1] = value;
+            OnCurrentViewChanged();
         }
     }
 
-    public ReactiveObject? PreviousViewModel => _previousViewModel;
+    public ObservableCollection<UserControl> Views
+    {
+        get => _views;
+    }
 
-    private void OnCurrentViewModelChanged() => CurrentViewModelChanged?.Invoke();
+    public UserControl? PreviousView { get; private set; }
+
+    private void OnCurrentViewChanged() => CurrentViewChanged?.Invoke();
 }
