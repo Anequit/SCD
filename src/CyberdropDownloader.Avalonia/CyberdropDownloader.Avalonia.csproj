@@ -7,20 +7,11 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
-    <AvaloniaResource Remove="Assets\CustomStyles.axaml" />
+    <AvaloniaResource Remove="Assets\icons.axaml" />
+    <AvaloniaResource Remove="Assets\IconStyles.axaml" />
+    <AvaloniaResource Remove="Assets\Styles\TextBoxStyles.axaml" />
     <None Remove=".gitignore" />
-    <None Remove="Assets\Fonts\Roboto-Black.ttf" />
-    <None Remove="Assets\Fonts\Roboto-BlackItalic.ttf" />
-    <None Remove="Assets\Fonts\Roboto-Bold.ttf" />
-    <None Remove="Assets\Fonts\Roboto-BoldItalic.ttf" />
-    <None Remove="Assets\Fonts\Roboto-Italic.ttf" />
-    <None Remove="Assets\Fonts\Roboto-Light.ttf" />
-    <None Remove="Assets\Fonts\Roboto-LightItalic.ttf" />
-    <None Remove="Assets\Fonts\Roboto-Medium.ttf" />
-    <None Remove="Assets\Fonts\Roboto-MediumItalic.ttf" />
     <None Remove="Assets\Fonts\Roboto-Regular.ttf" />
-    <None Remove="Assets\Fonts\Roboto-Thin.ttf" />
-    <None Remove="Assets\Fonts\Roboto-ThinItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.10" />
@@ -30,7 +21,12 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.10" />
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaXaml Update="Assets\CustomStyles.axaml">
+    <AvaloniaXaml Update="Assets\Styles\TextBoxStyles.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaXaml Update="Assets\Icons.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
   </ItemGroup>
