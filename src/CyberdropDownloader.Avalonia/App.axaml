@@ -2,11 +2,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:CyberdropDownloader.Avalonia"
              x:Class="CyberdropDownloader.Avalonia.App">
+	
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
 
     <Application.Styles>
         <FluentTheme Mode="Light"/>
+		
+		<StyleInclude Source="/Assets/Styles/LabelStyles.axaml"/>
+		<StyleInclude Source="/Assets/Styles/TextBoxStyles.axaml"/>
+		
+		<StyleInclude Source="/Assets/Icons.axaml"/>
     </Application.Styles>
 </Application>
