@@ -13,6 +13,7 @@
 		<StyleInclude Source="/Assets/Styles/LabelStyles.axaml"/>
 		<StyleInclude Source="/Assets/Styles/TextBoxStyles.axaml"/>
 		<StyleInclude Source="/Assets/Styles/ButtonStyles.axaml"/>
+		<StyleInclude Source="/Assets/Styles/ProgressBarStyles.axaml"/>
 		    
 		<StyleInclude Source="/Assets/Icons.axaml"/>
     </Application.Styles>
