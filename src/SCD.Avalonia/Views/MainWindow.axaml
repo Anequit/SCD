@@ -4,9 +4,10 @@
         xmlns:views="using:SCD.Avalonia.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="254"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="274"
         x:Class="SCD.Avalonia.Views.MainWindow"
-        Title="SCD" Width="450" Height="254">
+        Title="SCD" Width="450" Height="254"
+        Background="#EDEDED">
 
 	<ItemsControl Items="{Binding Views}"/>
 </Window>
