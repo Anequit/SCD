@@ -1,2 +1,2 @@
-# CyberdropDownloader
-Simplistic downloader for https://cyberdrop.me/
+# SCD
+A **S**imple **C**yberdrop **D**ownloader built for [Cyberdrop](https://cyberdrop.me/).
