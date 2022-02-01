@@ -1,9 +1,8 @@
 ﻿using Avalonia.Controls;
-using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
 
-namespace CyberdropDownloader.Avalonia.Services;
+namespace SCD.Avalonia.Services;
 
 public class Navigator
 {

@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace CyberdropDownloader.Avalonia.Views;
+namespace SCD.Avalonia.Views;
 
 public partial class DownloadingView : UserControl
 {

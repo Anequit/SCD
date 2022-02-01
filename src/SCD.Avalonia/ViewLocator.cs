@@ -3,7 +3,7 @@ using Avalonia.Controls.Templates;
 using ReactiveUI;
 using System;
 
-namespace CyberdropDownloader.Avalonia;
+namespace SCD.Avalonia;
 
 public class ViewLocator : IDataTemplate
 {

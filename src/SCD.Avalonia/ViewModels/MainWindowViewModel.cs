@@ -1,11 +1,11 @@
 using Avalonia.Controls;
-using CyberdropDownloader.Avalonia.Services;
-using CyberdropDownloader.Avalonia.Views;
+using SCD.Avalonia.Services;
+using SCD.Avalonia.Views;
 using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 
-namespace CyberdropDownloader.Avalonia.ViewModels;
+namespace SCD.Avalonia.ViewModels;
 
 public class MainWindowViewModel : ReactiveObject
 {

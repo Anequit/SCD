@@ -1,11 +1,11 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using CyberdropDownloader.Avalonia.Services;
-using CyberdropDownloader.Avalonia.ViewModels;
-using CyberdropDownloader.Avalonia.Views;
+using SCD.Avalonia.Services;
+using SCD.Avalonia.ViewModels;
+using SCD.Avalonia.Views;
 
-namespace CyberdropDownloader.Avalonia;
+namespace SCD.Avalonia;
 
 public class App : Application
 {
