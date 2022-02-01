@@ -6,8 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="274"
         x:Class="SCD.Avalonia.Views.MainWindow"
-        Title="SCD" Width="450" Height="254"
-        Background="#EDEDED">
+        Title="SCD" Width="450" SizeToContent="Height"
+        Background="#EDEDED" Icon="/Assets/SCD.ico">
 
 	<ItemsControl Items="{Binding Views}"/>
 </Window>
