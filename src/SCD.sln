@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CyberdropDownloader.Core", "CyberdropDownloader.Core\CyberdropDownloader.Core.csproj", "{094F3A59-5C9F-4513-A49A-28554DA92359}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCD.Core", "SCD.Core\SCD.Core.csproj", "{094F3A59-5C9F-4513-A49A-28554DA92359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyberdropDownloader.Avalonia", "CyberdropDownloader.Avalonia\CyberdropDownloader.Avalonia.csproj", "{DE0A30A0-C0E6-4C4F-A942-48DDEBB4A37B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCD.Avalonia", "SCD.Avalonia\SCD.Avalonia.csproj", "{DE0A30A0-C0E6-4C4F-A942-48DDEBB4A37B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

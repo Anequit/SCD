@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <!-- Add Controls for Previewer Here -->
+            <TextBox Text="wdaawdawdawwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"/>
         </Border>
     </Design.PreviewWith>
 
@@ -37,10 +37,6 @@
 		<Setter Property="Background" Value="#FFFFFF"/>
 	</Style>
 
-	<Style Selector="TextBox /template/ TextPresenter#PART_TextPresenter">
-		
-	</Style>
-	
 	<Style Selector="TextBox /template/ DockPanel#Part_InnerDockPanel">
 		<Setter Property="Margin" Value="0"/>
 	</Style>
@@ -51,11 +47,17 @@
 	</Style>
 
 	<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="#7095F4"/>
+		<Setter Property="BorderBrush">
+			<Setter.Value>
+				<LinearGradientBrush EndPoint="0%, 0%" StartPoint="100%, 100%">
+					<GradientStop Color="#1741eb" Offset="0.5" />
+					<GradientStop Color="#597ff2" Offset="1" />
+				</LinearGradientBrush>
+			</Setter.Value>
+		</Setter>
 	</Style>
 
 	<Style Selector="TextBox:pressed /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="#7095F4"/>
 		<Setter Property="Opacity" Value="100"/>
 	</Style>
 </Styles>
