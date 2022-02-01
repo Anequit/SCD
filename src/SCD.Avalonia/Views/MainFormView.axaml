@@ -10,41 +10,36 @@
 			   Content="Album URL"/>
 		
 		<Label Classes="Hint"
-			   Content="What do you want to download?"
-			   Margin="0 0 0 4"/>
+			   Content="What do you want to download?"/>
 		
-		<TextBox Margin="0 4 0 0"/>
+		<TextBox Margin="0 8 0 0"/>
 		
 		<Label Classes="Header"
 			   Content="Download Location"
 			   Margin="0 15 0 0"/>
 
 		<Label Classes="Hint"
-			   Content="Where should it be saved?"
-			   Margin="0 0 0 4"/>
+			   Content="Where should it be saved?"/>
 
-		<Grid Margin="0 4 0 0">
+		<Grid Margin="0 8 0 0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 			
-			<TextBox Grid.Column="0"
-					 Margin="0 0 4 0"/>
+			<TextBox Grid.Column="0"/>
 			
 			<Button Grid.Column="1"
 					Classes="Select"
-					Margin="4 0 0 0"/>
+					Margin="8 0 0 0"/>
 		</Grid>
 
 		<DockPanel Margin="0 15 0 0">
 			<Button DockPanel.Dock="Left"
-					Classes="ReportBug"
-					Margin="0 0 0 0"/>
+					Classes="ReportBug"/>
 			
 			<Button DockPanel.Dock="Right"
 					Classes="Download"
-					Margin="0 0 0 0"
 					HorizontalAlignment="Right"/>
 		</DockPanel>
 	</StackPanel>
