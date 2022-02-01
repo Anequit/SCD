@@ -13,6 +13,7 @@
     <AvaloniaResource Remove="Assets\icons.axaml" />
     <AvaloniaResource Remove="Assets\IconStyles.axaml" />
     <AvaloniaResource Remove="Assets\Styles\ButtonStyles.axaml" />
+    <AvaloniaResource Remove="Assets\Styles\ProgressBarStyles.axaml" />
     <AvaloniaResource Remove="Assets\Styles\TextBoxStyles.axaml" />
     <None Remove=".gitignore" />
     <None Remove="Assets\Fonts\Roboto-Regular.ttf" />
@@ -37,6 +38,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaXaml Update="Assets\Styles\ProgressBarStyles.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
   </ItemGroup>
   <ItemGroup>
     <AvaloniaXaml Update="Assets\Styles\ButtonStyles.axaml">
