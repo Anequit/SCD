@@ -3,16 +3,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="32"
-             x:Class="SCD.Avalonia.Views.TitleBarView">
+             x:Class="SCD.Avalonia.Views.TitleBarView"
+			 Height="32" Background="#CBCBCB">
 
-	<DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-		<Label Classes="Title"
-			   Content="Cyberdrop Downloader"
-			   VerticalContentAlignment="Center"
-			   DockPanel.Dock="Left" Padding="8 0 0 0"/>
-
-		<StackPanel DockPanel.Dock="Right">
+	<DockPanel>
+		<Label Classes="Title" Content="SCD"
+			   VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+			   DockPanel.Dock="Left" Padding="10 0 0 0"/>
+		
+		<StackPanel DockPanel.Dock="Right"
+					Orientation="Horizontal"
+					HorizontalAlignment="Right">
 			
+			<Button Classes="TitleBar Minimize"/>
+			<Button Classes="TitleBar Exit"/>
 		</StackPanel>
 	</DockPanel>
 </UserControl>
