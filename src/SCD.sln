@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCD.Core", "SCD.Core\SCD.Core.csproj", "{094F3A59-5C9F-4513-A49A-28554DA92359}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCD.Avalonia", "SCD.Avalonia\SCD.Avalonia.csproj", "{DE0A30A0-C0E6-4C4F-A942-48DDEBB4A37B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{094F3A59-5C9F-4513-A49A-28554DA92359} = {094F3A59-5C9F-4513-A49A-28554DA92359}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
