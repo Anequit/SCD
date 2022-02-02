@@ -1,4 +1,4 @@
-﻿using Avalonia.Controls;
+﻿using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
 
@@ -6,31 +6,30 @@ namespace SCD.Avalonia.Services;
 
 public class Navigator
 {
-    private readonly ObservableCollection<UserControl> _views;
+    private readonly ObservableCollection<ReactiveObject> _viewModels;
 
-    public event Action? CurrentViewChanged;
+    public event Action? CurrentViewModelChanged;
 
-    public Navigator() => _views = new ObservableCollection<UserControl>();
+    public Navigator() => _viewModels = new ObservableCollection<ReactiveObject>();
 
-    public UserControl CurrentView
+    public ReactiveObject CurrentViewModel
     {
-        get => _views[-1];
+        get => _viewModels[_viewModels.Count - 1];
         set
         {
-            // Store prvious view incase we want to implement a back button
-            PreviousView = _views[-1];
+            PreviousViewModel = CurrentViewModel;
 
-            _views[-1] = value;
-            OnCurrentViewChanged();
+            _viewModels[_viewModels.Count - 1] = value;
+            OnCurrentViewModelChanged();
         }
     }
 
-    public ObservableCollection<UserControl> Views
+    public ObservableCollection<ReactiveObject> ViewModels
     {
-        get => _views;
+        get => _viewModels;
     }
 
-    public UserControl? PreviousView { get; private set; }
+    public ReactiveObject? PreviousViewModel { get; private set; }
 
-    private void OnCurrentViewChanged() => CurrentViewChanged?.Invoke();
+    private void OnCurrentViewModelChanged() => CurrentViewModelChanged?.Invoke();
 }
