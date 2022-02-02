@@ -36,7 +36,8 @@
 
 		<DockPanel Margin="0 15 0 0">
 			<Button DockPanel.Dock="Left"
-					Classes="ReportBug"/>
+					Classes="ReportBug"
+					Command="{Binding ReportBug}"/>
 			
 			<Button DockPanel.Dock="Right"
 					Classes="Download"
