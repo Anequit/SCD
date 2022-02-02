@@ -12,7 +12,8 @@
 		<Label Classes="Hint"
 			   Content="What do you want to download?"/>
 		
-		<TextBox Margin="0 8 0 0"/>
+		<TextBox Margin="0 8 0 0"
+				 Text="{Binding AlbumURL}"/>
 		
 		<Label Classes="Header"
 			   Content="Download Location"
@@ -27,21 +28,24 @@
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 			
-			<TextBox Grid.Column="0"/>
+			<TextBox Grid.Column="0"
+					 Text="{Binding DownloadLocation}"/>
 			
 			<Button Grid.Column="1"
 					Classes="Select"
-					Margin="8 0 0 0"/>
+					Margin="8 0 0 0"
+					Command="{Binding SelectCommand}"/>
 		</Grid>
 
 		<DockPanel Margin="0 15 0 0">
 			<Button DockPanel.Dock="Left"
 					Classes="ReportBug"
-					Command="{Binding ReportBug}"/>
+					Command="{Binding ReportBugCommand}"/>
 			
 			<Button DockPanel.Dock="Right"
 					Classes="Download"
-					HorizontalAlignment="Right"/>
+					HorizontalAlignment="Right"
+					Command="{Binding DownloadCommand}"/>
 		</DockPanel>
 	</StackPanel>
 </UserControl>
