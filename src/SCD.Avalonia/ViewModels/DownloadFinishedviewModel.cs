@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace SCD.Avalonia.ViewModels;
 
-public class DownloadFinishedviewModel : ReactiveObject
+public class DownloadFinishedViewModel : ReactiveObject
 {
 }
