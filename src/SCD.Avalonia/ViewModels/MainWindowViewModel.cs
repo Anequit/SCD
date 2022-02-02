@@ -1,6 +1,6 @@
 using Avalonia.Controls;
-using SCD.Avalonia.Services;
 using ReactiveUI;
+using SCD.Avalonia.Services;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 
