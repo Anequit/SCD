@@ -1,8 +1,7 @@
 ﻿using ReactiveUI;
 using SCD.Avalonia.Services;
-using System.Diagnostics;
+using SCD.Core.Utilities;
 using System.Reactive;
-using System.Runtime.InteropServices;
 
 namespace SCD.Avalonia.ViewModels;
 
@@ -14,8 +13,8 @@ public class MainFormViewModel : ReactiveObject
     public MainFormViewModel(Navigator navigator)
     {
         ReportBugCommand = ReactiveCommand.Create(() => ReportBug());
-        DownloadCommand = ReactiveCommand.Create(() => { });
-        SelectCommand = ReactiveCommand.Create(() => { });
+        DownloadCommand = ReactiveCommand.Create(() => Download());
+        SelectCommand = ReactiveCommand.Create(() => Select());
     }
 
     public string AlbumURL
@@ -34,25 +33,9 @@ public class MainFormViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> DownloadCommand { get; }
     public ReactiveCommand<Unit, Unit> SelectCommand { get; }
 
-    private void Download() { }
+    private void ReportBug() => Web.Open("https://github.com/Anequit/SCD/issues");
 
-    private void ReportBug(string url = "https://github.com/Anequit/SCD/issues")
-    {
-        // https://stackoverflow.com/a/43232486
-        if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            url = url.Replace("&", "^&");
-            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
-        }
-        else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
-            Process.Start("xdg-open", url);
-        }
-        else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            Process.Start("open", url);
-        }
-    }
+    private void Download() { }
 
     private void Select() { }
 }
