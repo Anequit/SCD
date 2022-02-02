@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
 	  <ApplicationIcon>Assets\SCD.ico</ApplicationIcon>
 	  <IsPublishable>True</IsPublishable>
-	  <DebugType>none</DebugType>
+	  <DebugType>portable</DebugType>
 	  <AssemblyName>SCD</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
