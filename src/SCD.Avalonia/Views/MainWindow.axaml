@@ -9,5 +9,5 @@
         Title="SCD" Width="450" SizeToContent="Height"
         Background="#EDEDED" Icon="/Assets/SCD.ico">
 
-	<ItemsControl Items="{Binding Views}"/>
+	<ItemsPresenter Items="{Binding ViewModels}" />
 </Window>
