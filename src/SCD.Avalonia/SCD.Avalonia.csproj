@@ -40,6 +40,9 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SCD.Core\SCD.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <AvaloniaXaml Update="Assets\Styles\ProgressBarStyles.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
