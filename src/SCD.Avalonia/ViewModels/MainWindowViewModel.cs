@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using SCD.Avalonia.Services;
-using SCD.Avalonia.Views;
 using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
@@ -15,7 +14,7 @@ public class MainWindowViewModel : ReactiveObject
     {
         _navigator = navigator;
 
-        _navigator.CurrentViewChanged += CurrentViewModelChanged;
+        _navigator.CurrentViewModelChanged += CurrentViewModelChanged;
 
         if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
@@ -23,14 +22,14 @@ public class MainWindowViewModel : ReactiveObject
             window.SystemDecorations = SystemDecorations.BorderOnly;
             window.ExtendClientAreaChromeHints = 0;
 
-            _navigator.Views.Add(new TitleBarView());
+            _navigator.ViewModels.Add(new TitleBarViewModel());
         }
 
-        _navigator.Views.Add(new MainFormView());
+        _navigator.ViewModels.Add(new MainFormViewModel(_navigator));
         CurrentViewModelChanged();
     }
 
-    public ObservableCollection<UserControl> Views => _navigator.Views;
+    public ObservableCollection<ReactiveObject> ViewModels => _navigator.ViewModels;
 
-    private void CurrentViewModelChanged() => this.RaisePropertyChanged(nameof(Views));
+    private void CurrentViewModelChanged() => this.RaisePropertyChanged(nameof(ViewModels));
 }
