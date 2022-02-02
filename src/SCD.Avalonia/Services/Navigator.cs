@@ -24,10 +24,7 @@ public class Navigator
         }
     }
 
-    public ObservableCollection<ReactiveObject> ViewModels
-    {
-        get => _viewModels;
-    }
+    public ObservableCollection<ReactiveObject> ViewModels => _viewModels;
 
     public ReactiveObject? PreviousViewModel { get; private set; }
 
