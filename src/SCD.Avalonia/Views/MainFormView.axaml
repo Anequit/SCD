@@ -30,7 +30,7 @@
 			
 			<TextBox Grid.Column="0"
 					 Text="{Binding DownloadLocation}"/>
-			
+
 			<Button Grid.Column="1"
 					Classes="Select"
 					Margin="8 0 0 0"
