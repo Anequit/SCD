@@ -13,7 +13,7 @@
 			   Content="Current file being downloaded."/>
 
 		<TextBox Margin="0 8 0 0"
-				 Text="Bruh"
+				 Text="{Binding Filename}"
 				 IsEnabled="False"/>
 
 		<Label Classes="Header"
@@ -27,11 +27,13 @@
 				BorderThickness="2"
 				CornerRadius="4"
 				Margin="0 8 0 0">
-			<ProgressBar Value="25" ShowProgressText="True"/>
+			<ProgressBar Value="{Binding Progress}"
+						 ShowProgressText="True"/>
 		</Border>
 
 		<Button Classes="CancelDownload"
 				Margin="0 15 0 0" 
-				HorizontalAlignment="Center"/>
+				HorizontalAlignment="Center"
+				Command="{Binding CancelDownloadCommand}"/>
 	</StackPanel>
 </UserControl>
