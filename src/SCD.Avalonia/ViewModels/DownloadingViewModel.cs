@@ -9,8 +9,8 @@ namespace SCD.Avalonia.ViewModels;
 
 public class DownloadingViewModel : ReactiveObject
 {
-    private Navigator _navigator;
-    private Window _window;
+    private readonly Navigator _navigator;
+    private readonly Window _window;
 
     private int _progress = 0;
     private string _filename = "";
