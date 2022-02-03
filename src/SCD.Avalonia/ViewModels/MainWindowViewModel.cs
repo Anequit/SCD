@@ -1,7 +1,6 @@
 using Avalonia.Controls;
 using ReactiveUI;
 using SCD.Avalonia.Services;
-using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 
 namespace SCD.Avalonia.ViewModels;
@@ -9,27 +8,35 @@ namespace SCD.Avalonia.ViewModels;
 public class MainWindowViewModel : ReactiveObject
 {
     private readonly Navigator _navigator;
+    private ReactiveObject? _titleBarViewModel;
 
     public MainWindowViewModel(Navigator navigator, Window window)
     {
         _navigator = navigator;
 
         _navigator.CurrentViewModelChanged += CurrentViewModelChanged;
+        _navigator.CurrentAlertViewModelChanged += CurrentAlertViewModelChanged;
 
         if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             window.ExtendClientAreaToDecorationsHint = true;
-            window.SystemDecorations = SystemDecorations.BorderOnly;
             window.ExtendClientAreaChromeHints = 0;
+            window.ExtendClientAreaTitleBarHeightHint = -1;
 
-            _navigator.ViewModels.Add(new TitleBarViewModel());
+            TitleBarViewModel = new TitleBarViewModel(window);
         }
 
-        _navigator.ViewModels.Add(new MainFormViewModel(_navigator));
-        CurrentViewModelChanged();
+        _navigator.CurrentViewModel = new MainFormViewModel(_navigator, window);
     }
 
-    public ObservableCollection<ReactiveObject> ViewModels => _navigator.ViewModels;
+    public ReactiveObject? CurrentViewModel => _navigator.CurrentViewModel;
+    public ReactiveObject? AlertViewModel => _navigator.CurrentAlertViewModel;
+    public ReactiveObject? TitleBarViewModel
+    {
+        get => _titleBarViewModel;
+        set => this.RaiseAndSetIfChanged(ref _titleBarViewModel, value);
+    }
 
-    private void CurrentViewModelChanged() => this.RaisePropertyChanged(nameof(ViewModels));
+    private void CurrentViewModelChanged() => this.RaisePropertyChanged(nameof(CurrentViewModel));
+    private void CurrentAlertViewModelChanged() => this.RaisePropertyChanged(nameof(AlertViewModel));
 }
