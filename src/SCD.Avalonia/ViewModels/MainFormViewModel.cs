@@ -1,20 +1,39 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Controls;
+using ReactiveUI;
 using SCD.Avalonia.Services;
+using SCD.Core.DataModels;
+using SCD.Core.Exceptions;
 using SCD.Core.Utilities;
+using System;
+using System.IO;
 using System.Reactive;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace SCD.Avalonia.ViewModels;
 
 public class MainFormViewModel : ReactiveObject
 {
+    private readonly Navigator _navigator;
+    private readonly Window _window;
+
     private string _albumURL = string.Empty;
     private string _downloadLocation = string.Empty;
 
-    public MainFormViewModel(Navigator navigator)
+    public MainFormViewModel(Navigator navigator, Window window)
     {
+        _navigator = navigator;
+        _window = window;
+
+        IObservable<bool> ableToDownload = this.WhenAnyValue(
+            x => x.AlbumURL,
+            x => x.DownloadLocation,
+            (URL, DL) => !string.IsNullOrEmpty(URL) && !string.IsNullOrEmpty(DL));
+
         ReportBugCommand = ReactiveCommand.Create(() => ReportBug());
-        DownloadCommand = ReactiveCommand.Create(() => Download());
-        SelectCommand = ReactiveCommand.Create(() => Select());
+        DownloadCommand = ReactiveCommand.CreateFromTask(() => Download(), ableToDownload);
+
+        SelectCommand = ReactiveCommand.CreateFromTask(() => SelectAsync());
     }
 
     public string AlbumURL
@@ -35,7 +54,55 @@ public class MainFormViewModel : ReactiveObject
 
     private void ReportBug() => Web.Open("https://github.com/Anequit/SCD/issues");
 
-    private void Download() { }
+    private async Task Download()
+    {
+        try
+        {
+            if(!Directory.Exists(DownloadLocation))
+            {
+                throw new InvalidPathException(DownloadLocation);
+            }
 
-    private void Select() { }
+            Album album = await Web.FetchAlbumAsync(AlbumURL);
+
+            _navigator.CurrentViewModel = new DownloadingViewModel(_navigator, _window, album);
+        }
+        catch(Exception exception)
+        {
+            switch(exception)
+            {
+                case InvalidUrlException or InvalidOperationException or ArgumentOutOfRangeException:
+                    _navigator.CurrentAlertViewModel = new AlertViewModel(_navigator, "Error", "Invalid album URL.");
+                    AlbumURL = string.Empty;
+                    break;
+
+                case InvalidPathException:
+                    _navigator.CurrentAlertViewModel = new AlertViewModel(_navigator, "Error", "Invalid download location.");
+                    DownloadLocation = string.Empty;
+                    break;
+
+                default:
+                    _navigator.CurrentAlertViewModel = new AlertViewModel(_navigator, "Unknown Error", exception.Message);
+                    break;
+            }
+        }
+    }
+
+    private async Task SelectAsync()
+    {
+        OpenFolderDialog openFolderDialog = new OpenFolderDialog()
+        {
+            Title = "Download Location",
+            Directory = Assembly.GetExecutingAssembly().Location,
+        };
+
+        string? path = await openFolderDialog.ShowAsync(_window);
+
+        if(path is null)
+        {
+            return;
+        }
+
+        DownloadLocation = path;
+    }
 }
