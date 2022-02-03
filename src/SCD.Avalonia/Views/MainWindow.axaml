@@ -4,10 +4,20 @@
         xmlns:views="using:SCD.Avalonia.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="274"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="276"
         x:Class="SCD.Avalonia.Views.MainWindow"
-        Title="SCD" Width="450" SizeToContent="Height"
-        Background="#EDEDED" Icon="/Assets/SCD.ico">
+        Title="SCD" SizeToContent="Height"
+		CanResize="False" Width="450"
+		Background="#EDEDED" Icon="/Assets/SCD.ico">
 
-	<ItemsPresenter Items="{Binding ViewModels}" />
+	<ItemsControl>
+		<ItemsControl.Items>
+			<ContentControl Content="{Binding TitleBarViewModel}"/>
+			
+			<Grid>
+				<ContentControl Content="{Binding CurrentViewModel}"/>
+				<ContentControl Content="{Binding AlertViewModel}"/>
+			</Grid>
+		</ItemsControl.Items>
+	</ItemsControl>
 </Window>
