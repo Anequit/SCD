@@ -15,8 +15,11 @@
 					Orientation="Horizontal"
 					HorizontalAlignment="Right">
 			
-			<Button Classes="TitleBar Minimize"/>
-			<Button Classes="TitleBar Exit"/>
+			<Button Classes="TitleBar Minimize"
+					Command="{Binding MinimizeCommand}"/>
+			
+			<Button Classes="TitleBar Exit"
+					Command="{Binding ExitCommand}"/>
 		</StackPanel>
 	</DockPanel>
 </UserControl>
