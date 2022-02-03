@@ -23,8 +23,6 @@ public class TitleBarViewModel : ReactiveObject
     public ReactiveCommand<PointerPressedEventArgs, Unit> DragCommand { get; }
 
     private void Minimize() => _window.WindowState = WindowState.Minimized;
-
     private void Exit() => _window.Close();
-
     private void Drag(PointerPressedEventArgs eventArgs) => _window.BeginMoveDrag(eventArgs);
 }
