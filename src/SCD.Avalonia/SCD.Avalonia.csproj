@@ -14,6 +14,7 @@
     <AvaloniaResource Remove="Assets\IconStyles.axaml" />
     <AvaloniaResource Remove="Assets\Styles\ButtonStyles.axaml" />
     <AvaloniaResource Remove="Assets\Styles\ProgressBarStyles.axaml" />
+    <AvaloniaResource Remove="Assets\Styles\TextBlockStyles.axaml" />
     <AvaloniaResource Remove="Assets\Styles\TextBoxStyles.axaml" />
     <None Remove=".gitignore" />
     <None Remove="Assets\Fonts\Roboto-Regular.ttf" />
@@ -43,6 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SCD.Core\SCD.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaXaml Update="Assets\Styles\TextBlockStyles.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
   </ItemGroup>
   <ItemGroup>
     <AvaloniaXaml Update="Assets\Styles\ProgressBarStyles.axaml">
