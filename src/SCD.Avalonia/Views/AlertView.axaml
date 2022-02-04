@@ -14,7 +14,6 @@
 				Margin="85 26 85 26">
 			<DockPanel Margin="15">
 				<Path Classes="Error"
-					  Margin="0 5 0 0"
 					  DockPanel.Dock="Top"
 					  Height="32" Width="32"/>
 				
@@ -24,12 +23,9 @@
 					   Content="{Binding Error}"
 					   HorizontalAlignment="Center"/>
 
-				<Label Classes="Hint"
-					   FontSize="18"
-					   Margin="0 10 0 0"
-					   DockPanel.Dock="Top"
-					   Content="{Binding ErrorMessage}"
-					   HorizontalAlignment="Center"/>
+				<TextBlock Text="{Binding ErrorMessage}"
+						   Margin="0 5 0 0" DockPanel.Dock="Top"
+						   HorizontalAlignment="Center"/>
 
 				<Button Classes="Close"
 						HorizontalAlignment="Center" VerticalAlignment="Bottom"
