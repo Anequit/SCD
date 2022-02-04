@@ -28,17 +28,21 @@ public static class Web
 
     public static async Task<Album> FetchAlbumAsync(string url)
     {
-        string albumIdentifier = url.Substring(url.Length - 8);
+        string albumIdentifier = url.Substring(url.LastIndexOf('/')); // ArgumentOutOfRangeException
 
-        string response = await HttpClientHandler.HttpClient.GetStringAsync("https://cyberdrop.me/api/album/get/" + albumIdentifier);
-
-        Album? album = JsonConvert.DeserializeObject<Album>(response);
-
-        if(album is null || !album.Success)
+        using(HttpResponseMessage response = await HttpClientHandler.HttpClient.GetAsync("https://cyberdrop.me/api/album/get/" + albumIdentifier))
         {
-            throw new InvalidUrlException(url);
-        }
+            response.EnsureSuccessStatusCode(); // HttpRequestException
 
-        return album;
+            Album? album = JsonConvert.DeserializeObject<Album>(await response.Content.ReadAsStringAsync());
+
+            if(album is null)
+                throw new NullAlbumException();
+
+            if(album.Description != null && !album.Success)
+                throw new UnsuccessfulAlbumException(album.Description);
+
+            return album;
+        }
     }
 }
