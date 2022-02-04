@@ -6,6 +6,7 @@ using SCD.Core.Exceptions;
 using SCD.Core.Utilities;
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Reactive;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -59,9 +60,7 @@ public class MainFormViewModel : ReactiveObject
         try
         {
             if(!Directory.Exists(DownloadLocation))
-            {
                 throw new InvalidPathException(DownloadLocation);
-            }
 
             Album album = await Web.FetchAlbumAsync(AlbumURL);
 
@@ -71,14 +70,23 @@ public class MainFormViewModel : ReactiveObject
         {
             switch(exception)
             {
-                case InvalidUrlException or InvalidOperationException or ArgumentOutOfRangeException:
+                case ArgumentOutOfRangeException:
                     _navigator.CurrentAlertViewModel = new AlertViewModel(_navigator, "Error", "Invalid album URL.");
+                    AlbumURL = string.Empty;
+                    break;
+
+                case UnsuccessfulAlbumException:
+                    _navigator.CurrentAlertViewModel = new AlertViewModel(_navigator, "Error", exception.Message);
                     AlbumURL = string.Empty;
                     break;
 
                 case InvalidPathException:
                     _navigator.CurrentAlertViewModel = new AlertViewModel(_navigator, "Error", "Invalid download location.");
                     DownloadLocation = string.Empty;
+                    break;
+
+                case HttpRequestException:
+                    _navigator.CurrentAlertViewModel = new AlertViewModel(_navigator, "Error", "Failed to get response from server.");
                     break;
 
                 default:
@@ -99,9 +107,7 @@ public class MainFormViewModel : ReactiveObject
         string? path = await openFolderDialog.ShowAsync(_window);
 
         if(path is null)
-        {
             return;
-        }
 
         DownloadLocation = path;
     }
