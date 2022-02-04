@@ -21,6 +21,9 @@ public class DownloadingViewModel : ReactiveObject
         _window = window;
 
         CancelDownloadCommand = ReactiveCommand.Create(() => CancelDownload());
+
+        Downloader.FileChanged += Downloader_FileChanged;
+        Downloader.ProgressChanged += Downloader_ProgressChanged;
     }
 
     public string Filename
@@ -43,4 +46,7 @@ public class DownloadingViewModel : ReactiveObject
 
         _navigator.CurrentViewModel = new MainFormViewModel(_navigator, _window);
     }
+
+    private void Downloader_ProgressChanged(object? sender, int e) => Progress = e;
+    private void Downloader_FileChanged(object? sender, AlbumFile e) => Filename = e.Name;
 }
