@@ -7,26 +7,24 @@ namespace SCD.Avalonia.Services;
 
 public class Navigator
 {
-    private readonly ObservableCollection<ReactiveObject?> _viewModels;
-
     public event Action? CurrentViewModelChanged;
     public event Action? CurrentAlertViewModelChanged;
 
-    public Navigator() => _viewModels = new ObservableCollection<ReactiveObject?>();
+    public Navigator() => ViewModels = new ObservableCollection<ReactiveObject?>();
 
-    public ObservableCollection<ReactiveObject?> ViewModels => _viewModels;
+    public ObservableCollection<ReactiveObject?> ViewModels { get; }
 
     public ReactiveObject? CurrentViewModel
     {
-        get => _viewModels[0];
+        get => ViewModels[0];
         set
         {
-            if(_viewModels.Count == 0)
+            if(ViewModels.Count == 0)
             {
-                _viewModels.Add(value);
+                ViewModels.Add(value);
             }
 
-            _viewModels[0] = value;
+            ViewModels[0] = value;
             OnCurrentViewModelChanged();
         }
     }
@@ -35,21 +33,21 @@ public class Navigator
     {
         get
         {
-            if(_viewModels[_viewModels.Count - 1] is not AlertViewModel)
+            if(ViewModels[ViewModels.Count - 1] is not AlertViewModel)
             {
                 return null;
             }
 
-            return _viewModels[_viewModels.Count - 1];
+            return ViewModels[ViewModels.Count - 1];
         }
         set
         {
-            if(_viewModels.Count == 1)
+            if(ViewModels.Count == 1)
             {
-                _viewModels.Add(value);
+                ViewModels.Add(value);
             }
 
-            _viewModels[_viewModels.Count - 1] = value;
+            ViewModels[ViewModels.Count - 1] = value;
 
             OnCurrentAlertViewModelChanged();
         }
