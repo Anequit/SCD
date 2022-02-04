@@ -33,7 +33,6 @@ public class MainFormViewModel : ReactiveObject
 
         ReportBugCommand = ReactiveCommand.Create(() => ReportBug());
         DownloadCommand = ReactiveCommand.CreateFromTask(() => Download(), ableToDownload);
-
         SelectCommand = ReactiveCommand.CreateFromTask(() => SelectAsync());
     }
 
