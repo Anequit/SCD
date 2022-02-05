@@ -1,6 +1,6 @@
 ﻿namespace SCD.Core;
 
-public static class HttpClientHandler
+public static class HttpClientHelper
 {
     private static HttpClient? _httpClient;
 
