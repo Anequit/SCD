@@ -25,7 +25,7 @@ public class Navigator
             }
 
             ViewModels[0] = value;
-            OnCurrentViewModelChanged();
+            CurrentViewModelChanged?.Invoke();
         }
     }
 
@@ -49,10 +49,7 @@ public class Navigator
 
             ViewModels[ViewModels.Count - 1] = value;
 
-            OnCurrentAlertViewModelChanged();
+            CurrentAlertViewModelChanged?.Invoke();
         }
     }
-
-    private void OnCurrentViewModelChanged() => CurrentViewModelChanged?.Invoke();
-    private void OnCurrentAlertViewModelChanged() => CurrentAlertViewModelChanged?.Invoke();
 }
