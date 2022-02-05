@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace SCD.Core.Utilities;
 
-public static class Web
+public static class WebUtilities
 {
     public static void Open(string url)
     {
@@ -30,7 +30,7 @@ public static class Web
     {
         string albumIdentifier = url.Substring(url.LastIndexOf('/')); // ArgumentOutOfRangeException
 
-        using(HttpResponseMessage response = await HttpClientHandler.HttpClient.GetAsync("https://cyberdrop.me/api/album/get/" + albumIdentifier))
+        using(HttpResponseMessage response = await HttpClientHelper.HttpClient.GetAsync("https://cyberdrop.me/api/album/get/" + albumIdentifier))
         {
             response.EnsureSuccessStatusCode(); // HttpRequestException
 
