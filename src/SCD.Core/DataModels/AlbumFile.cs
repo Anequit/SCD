@@ -2,6 +2,6 @@
 
 public class AlbumFile
 {
-    public string Name { get; set; } = "Unknown filename";
-    public string? File { get; set; }
+    public string Name { get; set; } = "";
+    public string File { get; set; } = "";
 }
