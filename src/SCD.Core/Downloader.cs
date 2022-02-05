@@ -1,20 +1,48 @@
 ﻿using SCD.Core.DataModels;
+using SCD.Core.Extensions;
+using SCD.Core.Utilities;
+using System.Globalization;
 
 namespace SCD.Core;
 
-public static class Downloader
+public static class AlbumDownloader
 {
-    public static event EventHandler<AlbumFile>? FileChanged;
-    public static event EventHandler<int>? ProgressChanged;
+    private static readonly Progress<decimal> _progress = new Progress<decimal>(progressAmount => ProgressChanged?.Invoke(Convert.ToInt32(decimal.Round(progressAmount, MidpointRounding.ToZero), CultureInfo.InvariantCulture)));
 
-    public static void DownloadAlbum(Album album)
+    public static event Action<AlbumFile>? FileChanged;
+    public static event Action<int>? ProgressChanged;
+    public static event Action? DownloadFinished;
+
+    public static async Task Download(Album album, string downloadLocation, CancellationToken cancellationToken)
     {
         if(album.Files is null || album.Files.Length == 0)
             return;
 
+        if(string.IsNullOrEmpty(album.Title))
+            album.Title = "Album";
+
+        string path = PathUtilities.NormalizePath(Path.Combine(downloadLocation, album.Title));
+
+        if(!Directory.Exists(path))
+            Directory.CreateDirectory(path);
+
         foreach(AlbumFile file in album.Files)
         {
-            // Download logic for each file
+            FileChanged?.Invoke(file);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if(string.IsNullOrEmpty(file.File) || string.IsNullOrEmpty(file.Name))
+                continue;
+
+            string filePath = PathUtilities.NormalizePath(Path.Combine(path, file.Name));
+
+            using(FileStream fileStream = File.OpenWrite(filePath))
+            {
+                await HttpClientHelper.HttpClient.DownloadAsync(file.File, fileStream, _progress, cancellationToken);
+            }
         }
+
+        DownloadFinished?.Invoke();
     }
 }
