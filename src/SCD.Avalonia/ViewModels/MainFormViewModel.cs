@@ -52,7 +52,7 @@ public class MainFormViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> DownloadCommand { get; }
     public ReactiveCommand<Unit, Unit> SelectCommand { get; }
 
-    private void ReportBug() => Web.Open("https://github.com/Anequit/SCD/issues");
+    private void ReportBug() => WebUtilities.Open("https://github.com/Anequit/SCD/issues");
 
     private async Task Download()
     {
@@ -61,9 +61,9 @@ public class MainFormViewModel : ReactiveObject
             if(!Directory.Exists(DownloadLocation))
                 throw new InvalidPathException(DownloadLocation);
 
-            Album album = await Web.FetchAlbumAsync(AlbumURL);
+            Album album = await WebUtilities.FetchAlbumAsync(AlbumURL);
 
-            _navigator.CurrentViewModel = new DownloadingViewModel(_navigator, _window, album);
+            _navigator.CurrentViewModel = new DownloadingViewModel(_navigator, _window, album, DownloadLocation);
         }
         catch(Exception exception)
         {
