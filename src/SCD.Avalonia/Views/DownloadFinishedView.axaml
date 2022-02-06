@@ -10,7 +10,7 @@
 			   FontSize="24"
 			   Content="Download Finished"
 			   DockPanel.Dock="Top"
-			   Margin="0 60 0 0"
+			   Margin="0 55 0 0"
 			   HorizontalAlignment="Center"/>
 		
 		<Label Classes="Hint" 
@@ -20,14 +20,14 @@
 			   Margin="0 16 0 0"
 			   HorizontalAlignment="Center"/>
 
-		<DockPanel VerticalAlignment="Bottom">
+		<DockPanel Margin="0 60 0 0">
 			<Button DockPanel.Dock="Left"
-					HorizontalAlignment="Left"
+					HorizontalAlignment="Left" VerticalAlignment="Bottom"
 					Classes="Home"
 					Command="{Binding HomeCommand}"/>
 			
 			<Button DockPanel.Dock="Right"
-					HorizontalAlignment="Right"
+					HorizontalAlignment="Right" VerticalAlignment="Bottom"
 					Classes="OpenFolder"
 					Command="{Binding OpenFolderCommand}"/>
 		</DockPanel>
