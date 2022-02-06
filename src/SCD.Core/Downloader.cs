@@ -11,7 +11,7 @@ public static class AlbumDownloader
 
     public static event Action<AlbumFile>? FileChanged;
     public static event Action<int>? ProgressChanged;
-    public static event Action? DownloadFinished;
+    public static event Action<string>? DownloadFinished;
 
     public static async Task Download(Album album, string downloadLocation, CancellationToken cancellationToken)
     {
@@ -37,12 +37,15 @@ public static class AlbumDownloader
 
             string filePath = PathUtilities.NormalizePath(Path.Combine(path, file.Name));
 
+            if(File.Exists(filePath))
+                continue;
+
             using(FileStream fileStream = File.OpenWrite(filePath))
             {
-                await HttpClientHelper.HttpClient.DownloadAsync(file.File, fileStream, _progress, cancellationToken);
+                await HttpClientHelper.HttpClient.DownloadAsync(file.File, fileStream, 100000, _progress, cancellationToken);
             }
         }
 
-        DownloadFinished?.Invoke();
+        DownloadFinished?.Invoke(path);
     }
 }
