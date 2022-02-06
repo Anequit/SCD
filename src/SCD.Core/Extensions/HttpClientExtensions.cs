@@ -1,25 +1,36 @@
-﻿namespace SCD.Core.Extensions;
+﻿using System.Net.Http.Headers;
+
+namespace SCD.Core.Extensions;
 
 public static class HttpClientExtensions
 {
-    public static async Task DownloadAsync(this HttpClient httpClient, string url, Stream destination, IProgress<decimal> progress, CancellationToken cancellationToken)
+    public static async Task DownloadAsync(this HttpClient httpClient, string url, Stream destination, int buffer, IProgress<decimal> progress, CancellationToken cancellationToken)
     {
-        using(HttpResponseMessage? response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
+        using(HttpResponseMessage response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
         {
-            long? contentLength = response.Content.Headers.ContentLength;
+            // If content length is null, then set contentLength to default 500mb
+            long contentLength = (long)(response.Content.Headers.ContentLength is not null ? response.Content.Headers.ContentLength : 500000000);
+            long dataDownloaded = 0;
 
-            using(Stream? content = await response.Content.ReadAsStreamAsync(cancellationToken))
+            do
             {
-                if(progress == null || !contentLength.HasValue)
+                cancellationToken.ThrowIfCancellationRequested();
+
+                using(HttpRequestMessage httpRequest = new HttpRequestMessage())
                 {
-                    await content.CopyToAsync(destination);
-                    return;
+                    httpRequest.RequestUri = new Uri(url);
+                    httpRequest.Headers.Range = new RangeHeaderValue(dataDownloaded, dataDownloaded + buffer);
+
+                    using(HttpResponseMessage httpResponse = await HttpClientHelper.HttpClient.SendAsync(httpRequest, cancellationToken))
+                    {
+                        destination.Seek(dataDownloaded, SeekOrigin.Begin);
+                        await destination.WriteAsync(await httpResponse.Content.ReadAsByteArrayAsync(), cancellationToken);
+
+                        dataDownloaded += (long)(httpResponse.Content.Headers.ContentLength is not null ? httpResponse.Content.Headers.ContentLength : 0);
+                        progress.Report((decimal)dataDownloaded / contentLength * 100);
+                    }
                 }
-
-                Progress<long>? relativeProgress = new Progress<long>(totalBytes => progress.Report((decimal)totalBytes / contentLength.Value * 100));
-
-                await content.CopyToAsync(destination, 8192, relativeProgress, cancellationToken);
-            }
+            } while(dataDownloaded != response.Content.Headers.ContentLength);
         }
     }
 }
