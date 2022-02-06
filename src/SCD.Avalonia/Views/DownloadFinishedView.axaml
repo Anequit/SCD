@@ -21,11 +21,13 @@
 		<DockPanel Margin="0 54 0 0">
 			<Button DockPanel.Dock="Left"
 					HorizontalAlignment="Left"
-					Classes="Home"/>
+					Classes="Home"
+					Command="{Binding HomeCommand}"/>
 			
 			<Button DockPanel.Dock="Right"
 					HorizontalAlignment="Right"
-					Classes="OpenFolder"/>
+					Classes="OpenFolder"
+					Command="{Binding OpenFolderCommand}"/>
 		</DockPanel>
 	</StackPanel>
 </UserControl>
