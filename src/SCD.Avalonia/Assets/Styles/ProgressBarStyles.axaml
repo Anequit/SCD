@@ -13,7 +13,7 @@
 		<Setter Property="Foreground" Value="#FF8228"/>
 		<Setter Property="Background" Value="White"/>
 		
-		<Setter Property="Height" Value="32"/>
+		<Setter Property="Height" Value="28"/>
 		
 		<Setter Property="ShowProgressText" Value="True"/>
 	</Style>

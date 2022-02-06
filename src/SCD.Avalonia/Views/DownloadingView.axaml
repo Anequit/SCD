@@ -4,36 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="242"
              x:Class="SCD.Avalonia.Views.DownloadingView" Background="#EDEDED">
-
-	<StackPanel Margin="15">
+             
+	<DockPanel Margin="15">
 		<Label Classes="Header"
+			   DockPanel.Dock="Top"
 			   Content="File"/>
 		
 		<Label Classes="Hint"
+			   DockPanel.Dock="Top"
 			   Content="Current file being downloaded."/>
 
 		<TextBox Margin="0 8 0 0"
 				 Text="{Binding Filename}"
+				 DockPanel.Dock="Top"
 				 IsEnabled="False"/>
 
 		<Label Classes="Header"
+			   DockPanel.Dock="Top"
 			   Content="Progress"
 			   Margin="0 15 0 0"/>
 		
 		<Label Classes="Hint"
+			   DockPanel.Dock="Top"
 			   Content="How much of the file has been downloaded."/>
 
 		<Border BorderBrush="#DCDCDC"
 				BorderThickness="2"
 				CornerRadius="4"
+				DockPanel.Dock="Top"
 				Margin="0 8 0 0">
 			<ProgressBar Value="{Binding Progress}"
 						 ShowProgressText="True"/>
 		</Border>
 
-		<Button Classes="CancelDownload"
-				Margin="0 15 0 0" 
-				HorizontalAlignment="Center"
+		<Button Classes="CancelDownload" 
+				DockPanel.Dock="Bottom" Margin="0 15 0 0"
+				HorizontalAlignment="Center" VerticalAlignment="Bottom"
 				Command="{Binding CancelDownloadCommand}"/>
-	</StackPanel>
+	</DockPanel>
 </UserControl>

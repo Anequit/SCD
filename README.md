@@ -4,7 +4,7 @@
 [![GitHub repo size](https://img.shields.io:/github/repo-size/Anequit/SCD)](https://github.com/Anequit/SCD/releases)
 
 ## About
-SCD is a simplistic downloader built specifically for [cyberdrop](https://cyberdrop.me/) to make downloading albums from the site a quick and simple process, this is done with [.net 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) and [AvaloniaUI](http://avaloniaui.net/).
+SCD is a simplistic downloader built specifically for [cyberdrop](https://cyberdrop.me/) to make downloading albums from the site a quick and simple process. This application is made with [.net 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) and [AvaloniaUI](http://avaloniaui.net/).
 
 ## Supported Platforms
  * Windows 
@@ -12,8 +12,8 @@ SCD is a simplistic downloader built specifically for [cyberdrop](https://cyberd
  * ~~macOS~~ (Needs testing)
 
 ## Previews
-![SCD](https://raw.githubusercontent.com/Anequit/SCD/dev/assets/preview%201.png?token=GHSAT0AAAAAABRAQS6LN3F66IAOYPCE424WYQJLBLA)
-
-![SCD](https://raw.githubusercontent.com/Anequit/SCD/dev/assets/preview%202.png?token=GHSAT0AAAAAABRAQS6KAP3ZGN6QXEJB3W5CYQJLLKA)
-
-![SCD](https://raw.githubusercontent.com/Anequit/SCD/dev/assets/preview%203.png?token=GHSAT0AAAAAABRAQS6KJEJUW7JUVREEUJZ2YQJLLLA)
+<p float="left">
+  <img src="https://raw.githubusercontent.com/Anequit/SCD/main/assets/preview%201.png" width="350" />
+  <img src="https://raw.githubusercontent.com/Anequit/SCD/main/assets/preview%202.png" width="350" /> 
+  <img src="https://raw.githubusercontent.com/Anequit/SCD/main/assets/preview%203.png" width="350" />
+</p>
