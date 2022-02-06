@@ -9,7 +9,7 @@
 	  <AssemblyName>SCD</AssemblyName>
 	  <RepositoryUrl>https://github.com/Anequit/SCD</RepositoryUrl>
 	  <Description>A simple cyberdrop downloader.</Description>
-	  <AssemblyVersion>1.0.0</AssemblyVersion>
+	  <AssemblyVersion>1.0.1</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -41,9 +41,6 @@
     <AvaloniaXaml Update="Assets\Icons.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SCD.Core\SCD.Core.csproj" />

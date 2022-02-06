@@ -5,14 +5,7 @@ namespace SCD.Avalonia.Views;
 
 public partial class DownloadFinishedView : UserControl
 {
-    public DownloadFinishedView()
-    { 
-        InitializeComponent();
-
-#if !RELEASE
-        this.AttachDevTools();
-#endif
-    }
+    public DownloadFinishedView() => InitializeComponent();
 
     private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
 }
