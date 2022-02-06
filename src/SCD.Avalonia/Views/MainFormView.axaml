@@ -43,7 +43,7 @@
 					Command="{Binding SelectCommand}"/>
 		</Grid>
 
-		<DockPanel VerticalAlignment="Bottom">
+		<DockPanel Margin="0 15 0 0">
 			<Button DockPanel.Dock="Left"
 					Classes="ReportBug"
 					Command="{Binding ReportBugCommand}"/>
