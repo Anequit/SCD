@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,6 +7,9 @@
 	  <IsPublishable>True</IsPublishable>
 	  <DebugType>portable</DebugType>
 	  <AssemblyName>SCD</AssemblyName>
+	  <RepositoryUrl>https://github.com/Anequit/SCD</RepositoryUrl>
+	  <Description>A simple cyberdrop downloader.</Description>
+	  <AssemblyVersion>1.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
