@@ -43,9 +43,6 @@
     </AvaloniaXaml>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SCD.Core\SCD.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
