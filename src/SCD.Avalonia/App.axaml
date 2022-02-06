@@ -1,0 +1,21 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:SCD.Avalonia"
+             x:Class="SCD.Avalonia.App">
+	
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme Mode="Light"/>
+		
+		<StyleInclude Source="/Assets/Styles/LabelStyles.axaml"/>
+		<StyleInclude Source="/Assets/Styles/TextBoxStyles.axaml"/>
+		<StyleInclude Source="/Assets/Styles/ButtonStyles.axaml"/>
+		<StyleInclude Source="/Assets/Styles/ProgressBarStyles.axaml"/>
+		<StyleInclude Source="/Assets/Styles/TextBlockStyles.axaml"/>
+		    
+		<StyleInclude Source="/Assets/Icons.axaml"/>
+    </Application.Styles>
+</Application>

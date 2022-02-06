@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="32"
+             x:Class="SCD.Avalonia.Views.TitleBarView"
+			 Height="32" Background="#CBCBCB" IsHitTestVisible="True">
+
+	<DockPanel>
+		<i:Interaction.Behaviors>
+			<ia:EventTriggerBehavior EventName="PointerPressed" SourceObject="{Binding $parent}">
+				<ia:InvokeCommandAction Command="{Binding DragCommand}" PassEventArgsToCommand="True"/>
+			</ia:EventTriggerBehavior>
+		</i:Interaction.Behaviors>
+		
+		<Label Classes="Title" Content="{Binding Title}"
+			   VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+			   DockPanel.Dock="Left" Padding="10 0 0 0"/>
+		
+		<StackPanel DockPanel.Dock="Right"
+					Orientation="Horizontal"
+					HorizontalAlignment="Right">
+			
+			<Button Classes="TitleBar Minimize"
+					Command="{Binding MinimizeCommand}"/>
+			
+			<Button Classes="TitleBar Exit"
+					Command="{Binding ExitCommand}"/>
+		</StackPanel>
+	</DockPanel>
+</UserControl>

@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="242"
+             x:Class="SCD.Avalonia.Views.MainFormView" Background="#EDEDED">
+
+	<StackPanel Margin="15">
+		<Label Classes="Header"
+			   Content="Album URL"/>
+		
+		<Label Classes="Hint"
+			   Content="What do you want to download?"/>
+		
+		<TextBox Margin="0 8 0 0"
+				 Text="{Binding AlbumURL}"/>
+		
+		<Label Classes="Header"
+			   Content="Download Location"
+			   Margin="0 15 0 0"/>
+
+		<Label Classes="Hint"
+			   Content="Where should it be saved?"/>
+
+		<Grid Margin="0 8 0 0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			
+			<TextBox Grid.Column="0"
+					 Text="{Binding DownloadLocation}"/>
+
+			<Button Grid.Column="1"
+					Classes="Select"
+					Margin="8 0 0 0"
+					Command="{Binding SelectCommand}"/>
+		</Grid>
+
+		<DockPanel Margin="0 15 0 0">
+			<Button DockPanel.Dock="Left"
+					Classes="ReportBug"
+					Command="{Binding ReportBugCommand}"/>
+			
+			<Button DockPanel.Dock="Right"
+					Classes="Download"
+					HorizontalAlignment="Right"
+					Command="{Binding DownloadCommand}"/>
+		</DockPanel>
+	</StackPanel>
+</UserControl>

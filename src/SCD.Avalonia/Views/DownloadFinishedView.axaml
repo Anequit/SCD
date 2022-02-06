@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="242"
+             x:Class="SCD.Avalonia.Views.DownloadFinishedView" Background="#EDEDED">
+
+	<StackPanel Margin="15">
+		<Label Classes="Header" 
+			   FontSize="24"
+			   Content="Download Finished"
+			   Margin="0 60 0 0"
+			   HorizontalAlignment="Center"/>
+		
+		<Label Classes="Hint" 
+			   FontSize="18"
+			   Content="Thank you for using SCD!"
+			   Margin="0 16 0 0"
+			   HorizontalAlignment="Center"/>
+
+		<DockPanel Margin="0 54 0 0">
+			<Button DockPanel.Dock="Left"
+					HorizontalAlignment="Left"
+					Classes="Home"
+					Command="{Binding HomeCommand}"/>
+			
+			<Button DockPanel.Dock="Right"
+					HorizontalAlignment="Right"
+					Classes="OpenFolder"
+					Command="{Binding OpenFolderCommand}"/>
+		</DockPanel>
+	</StackPanel>
+</UserControl>

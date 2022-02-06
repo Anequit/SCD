@@ -1,0 +1,67 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <TextBox Text="dwwwwwwwwwwwwwwwww" IsEnabled="False"/>
+        </Border>
+    </Design.PreviewWith>
+
+	<Style Selector="TextBox">
+		<Setter Property="Height" Value="32"/>
+		<Setter Property="CornerRadius" Value="5"/>
+		
+		<Setter Property="Padding" Value="8 0 8 0"/>
+		<Setter Property="Margin" Value="0"/>
+		
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Setter Property="HorizontalContentAlignment" Value="Left"/>
+		
+		<Setter Property="VerticalAlignment" Value="Stretch"/>
+		<Setter Property="HorizontalAlignment" Value="Stretch"/>
+		
+		<Setter Property="Background" Value="#FEFEFE"/>
+		
+		<Setter Property="SelectionBrush" Value="#FF8328"/>
+		<Setter Property="TextWrapping" Value="NoWrap"/>
+		
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="Foreground" Value="#181818"/>
+		
+		<Setter Property="BorderThickness" Value="2"/>
+		<Setter Property="BorderBrush" Value="#DCDCDC"/>
+	</Style>
+
+	<Style Selector="TextBox:pressed">
+		<Setter Property="Background" Value="#FFFFFF"/>
+	</Style>
+	
+	<Style Selector="TextBox:pointerover">
+		<Setter Property="Background" Value="#FFFFFF"/>
+	</Style>
+
+	<Style Selector="TextBox:focus">
+		<Setter Property="Background" Value="#FFFFFF"/>
+	</Style>
+
+	<Style Selector="TextBox /template/ DockPanel#Part_InnerDockPanel">
+		<Setter Property="Margin" Value="0"/>
+	</Style>
+	
+	<Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+		<Setter Property="Background" Value="White"/>
+		<Setter Property="BorderBrush" Value="#AFAFAF"/>
+	</Style>
+
+	<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+		<Setter Property="BorderBrush" Value="#FF8328"/>
+	</Style>
+
+	<Style Selector="TextBox:pressed /template/ Border#PART_BorderElement">
+		<Setter Property="Opacity" Value="100"/>
+	</Style>
+
+	<Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
+		<Setter Property="BorderBrush" Value="#AFAFAF"/>
+		<Setter Property="Background" Value="#CBCBCB"/>
+	</Style>
+</Styles>

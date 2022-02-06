@@ -1,0 +1,258 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <Button Classes="Close"/>
+        </Border>
+    </Design.PreviewWith>
+
+	<Style Selector="Button">
+		<Setter Property="Background" Value="White"/>
+		
+		<Setter Property="Height" Value="32"/>
+		<Setter Property="Padding" Value="0"/>
+	</Style>
+
+	<Style Selector="Button:pointerover">
+		<Setter Property="Background" Value="#DCDCDC"/>
+	</Style>
+	
+	<Style Selector="Button:pressed">
+		<Setter Property="RenderTransform" Value="scale(0.95)"/>
+		<Setter Property="Background" Value="#AFAFAF"/>
+	</Style>
+
+	<Style Selector="Button.Download">
+		<Setter Property="Background" Value="#FF8328"/>
+		
+		<Setter Property="Content">
+			<Template>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<Path Grid.Column="0"
+						  Classes="Download"
+						  Width="14" Height="14"
+						  Margin="14 0 7 0"/>
+
+					<Label Grid.Column="1"
+						   Classes="Button"
+						   Content="Download"
+						   Margin="0 0 14 0"
+						   VerticalAlignment="Center"/>
+				</Grid>
+			</Template>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.Download:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#E1782B"/>
+	</Style>
+
+	<Style Selector="Button.Download:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#CB6A23"/>
+	</Style>
+
+	<Style Selector="Button.ReportBug">
+		<Setter Property="Content">
+			<Template>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<Path Grid.Column="0"
+						  Classes="Bug"
+						  Width="14" Height="14"
+						  Margin="14 0 7 0"/>
+
+					<Label Grid.Column="1"
+						   Classes="Button"
+						   Content="Report Bug"
+						   Margin="0 0 14 0"
+						   VerticalAlignment="Center"/>
+				</Grid>
+			</Template>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.CancelDownload">
+		<Setter Property="Content">
+			<Template>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<Path Grid.Column="0"
+						  Classes="Cross"
+						  Width="12" Height="12"
+						  Margin="14 0 7 0"/>
+
+					<Label Grid.Column="1"
+						   Classes="Button"
+						   Content="Cancel Download"
+						   Margin="0 0 14 0"
+						   VerticalAlignment="Center"/>
+				</Grid>
+			</Template>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.Select">
+		<Setter Property="Content">
+			<Template>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					
+					<Path Grid.Column="0"
+						  Classes="FolderAdd"
+						  Width="16" Height="14"
+						  Margin="14 0 7 0"/>
+					
+					<Label Grid.Column="1"
+						   Classes="Button"
+						   Content="Select"
+						   Margin="0 0 14 0"
+						   VerticalAlignment="Center"/>
+				</Grid>
+			</Template>
+		</Setter>
+	</Style>
+	
+	<Style Selector="Button.TitleBar">
+		<Setter Property="Height" Value="32"/>
+		<Setter Property="Width" Value="32"/>
+		<Setter Property="Padding" Value="0"/>
+		
+		<Setter Property="Background" Value="#CBCBCB"/>
+		<Setter Property="RenderTransform" Value="none"/>
+
+		<Setter Property="RenderTransform" Value="none"/>
+	</Style>
+
+	<Style Selector="Button.TitleBar:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#AFAFAF"/>
+	</Style>
+	
+	<Style Selector="Button.Exit">
+		<Setter Property="Content">
+			<Template>
+				<Path Classes="Cross" 
+					  Height="12" Width="12" 
+					  Fill="#181818"/>
+			</Template>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.Minimize">
+		<Setter Property="Content">
+			<Template>
+				<Path Classes="Dash" 
+					  Height="2" Width="12" 
+					  Fill="#181818"/>
+			</Template>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.Home">
+		<Setter Property="Content">
+			<Template>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<Path Grid.Column="0"
+						  Classes="Home"
+						  Width="14" Height="14"
+						  Margin="14 0 7 0"/>
+
+					<Label Grid.Column="1"
+						   Classes="Button"
+						   Content="Home"
+						   Margin="0 0 14 0"
+						   VerticalAlignment="Center"/>
+				</Grid>
+			</Template>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.OpenFolder">
+		<Setter Property="Background" Value="#FF8328"/>
+
+		<Setter Property="Content">
+			<Template>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<Path Grid.Column="0"
+						  Classes="Folder"
+						  Width="16" Height="14"
+						  Margin="14 0 7 0"/>
+
+					<Label Grid.Column="1"
+						   Classes="Button"
+						   Content="Open Folder"
+						   Margin="0 0 14 0"
+						   VerticalAlignment="Center"/>
+				</Grid>
+			</Template>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.OpenFolder:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#E1782B"/>
+	</Style>
+
+	<Style Selector="Button.OpenFolder:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#CB6A23"/>
+	</Style>
+
+	<Style Selector="Button.Close">
+		<Setter Property="Background" Value="#FF8328"/>
+		
+		<Setter Property="Content">
+			<Template>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<Path Grid.Column="0"
+						  Classes="Cross"
+						  Width="12" Height="12"
+						  Margin="14 0 7 0"/>
+
+					<Label Grid.Column="1"
+						   Classes="Button"
+						   Content="Close"
+						   Margin="0 0 14 0"
+						   VerticalAlignment="Center"/>
+				</Grid>
+			</Template>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.Close:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#E1782B"/>
+	</Style>
+
+	<Style Selector="Button.Close:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#CB6A23"/>
+	</Style>
+
+</Styles>
