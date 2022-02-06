@@ -21,7 +21,7 @@ public class TitleBarViewModel : ReactiveObject
 
         string version = $"{Assembly.GetExecutingAssembly().GetName().Version}";
 
-        _title = $"SCD {version.Remove(version.LastIndexOf('.'))}";
+        _title = $"SCD v{version.Remove(version.LastIndexOf('.'))}";
     }
 
     public string Title
