@@ -5,24 +5,30 @@
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="242"
              x:Class="SCD.Avalonia.Views.MainFormView" Background="#EDEDED">
 
-	<StackPanel Margin="15">
+	<DockPanel Margin="15">
 		<Label Classes="Header"
+			   DockPanel.Dock="Top"
 			   Content="Album URL"/>
 		
 		<Label Classes="Hint"
+			   DockPanel.Dock="Top"
 			   Content="What do you want to download?"/>
 		
 		<TextBox Margin="0 8 0 0"
+				 DockPanel.Dock="Top"
 				 Text="{Binding AlbumURL}"/>
 		
 		<Label Classes="Header"
+			   DockPanel.Dock="Top"
 			   Content="Download Location"
 			   Margin="0 15 0 0"/>
 
 		<Label Classes="Hint"
+			   DockPanel.Dock="Top"
 			   Content="Where should it be saved?"/>
 
-		<Grid Margin="0 8 0 0">
+		<Grid Margin="0 8 0 0"
+			  DockPanel.Dock="Top">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="Auto"/>
@@ -37,7 +43,7 @@
 					Command="{Binding SelectCommand}"/>
 		</Grid>
 
-		<DockPanel Margin="0 15 0 0">
+		<DockPanel VerticalAlignment="Bottom">
 			<Button DockPanel.Dock="Left"
 					Classes="ReportBug"
 					Command="{Binding ReportBugCommand}"/>
@@ -47,5 +53,5 @@
 					HorizontalAlignment="Right"
 					Command="{Binding DownloadCommand}"/>
 		</DockPanel>
-	</StackPanel>
+	</DockPanel>
 </UserControl>
