@@ -13,7 +13,7 @@ SCD is a simplistic downloader built specifically for [cyberdrop](https://cyberd
 
 ## Previews
 <p float="left">
-  <img src="https://raw.githubusercontent.com/Anequit/SCD/main/assets/preview%201.png" width="350" />
-  <img src="https://raw.githubusercontent.com/Anequit/SCD/main/assets/preview%202.png" width="350" /> 
-  <img src="https://raw.githubusercontent.com/Anequit/SCD/main/assets/preview%203.png" width="350" />
+  <img src="https://raw.githubusercontent.com/Anequit/SCD/main/assets/preview%201.png" width="450" />
+  <img src="https://raw.githubusercontent.com/Anequit/SCD/main/assets/preview%202.png" width="450" /> 
+  <img src="https://raw.githubusercontent.com/Anequit/SCD/main/assets/preview%203.png" width="450" />
 </p>
