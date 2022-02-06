@@ -37,8 +37,8 @@
 						 ShowProgressText="True"/>
 		</Border>
 
-		<Button Classes="CancelDownload"
-				DockPanel.Dock="Bottom"
+		<Button Classes="CancelDownload" 
+				DockPanel.Dock="Bottom" Margin="0 15 0 0"
 				HorizontalAlignment="Center" VerticalAlignment="Bottom"
 				Command="{Binding CancelDownloadCommand}"/>
 	</DockPanel>
