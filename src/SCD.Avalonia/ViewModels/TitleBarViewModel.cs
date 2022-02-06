@@ -8,6 +8,7 @@ namespace SCD.Avalonia.ViewModels;
 public class TitleBarViewModel : ReactiveObject
 {
     private readonly Window _window;
+    private string _title = "SCD";
 
     public TitleBarViewModel(Window window)
     {
@@ -16,6 +17,14 @@ public class TitleBarViewModel : ReactiveObject
         MinimizeCommand = ReactiveCommand.Create(() => Minimize());
         ExitCommand = ReactiveCommand.Create(() => Exit());
         DragCommand = ReactiveCommand.Create<PointerPressedEventArgs>(x => Drag(x));
+
+        Title = $"{_title}";
+    }
+
+    public string Title 
+    {
+        get => _title;
+        set => this.RaiseAndSetIfChanged(ref _title, value);
     }
 
     public ReactiveCommand<Unit, Unit> MinimizeCommand { get; }
