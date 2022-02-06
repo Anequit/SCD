@@ -15,7 +15,7 @@
 			</ia:EventTriggerBehavior>
 		</i:Interaction.Behaviors>
 		
-		<Label Classes="Title" Content="SCD"
+		<Label Classes="Title" Content="{Binding Title}"
 			   VerticalAlignment="Stretch" VerticalContentAlignment="Center"
 			   DockPanel.Dock="Left" Padding="10 0 0 0"/>
 		
