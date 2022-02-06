@@ -2,13 +2,14 @@
 using Avalonia.Input;
 using ReactiveUI;
 using System.Reactive;
+using System.Reflection;
 
 namespace SCD.Avalonia.ViewModels;
 
 public class TitleBarViewModel : ReactiveObject
 {
     private readonly Window _window;
-    private string _title = "SCD";
+    private string _title;
 
     public TitleBarViewModel(Window window)
     {
@@ -18,10 +19,12 @@ public class TitleBarViewModel : ReactiveObject
         ExitCommand = ReactiveCommand.Create(() => Exit());
         DragCommand = ReactiveCommand.Create<PointerPressedEventArgs>(x => Drag(x));
 
-        Title = $"{_title}";
+        string version = $"{Assembly.GetExecutingAssembly().GetName().Version}";
+
+        _title = $"SCD {version.Remove(version.LastIndexOf('.'))}";
     }
 
-    public string Title 
+    public string Title
     {
         get => _title;
         set => this.RaiseAndSetIfChanged(ref _title, value);
