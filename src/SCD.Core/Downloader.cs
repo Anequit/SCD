@@ -42,7 +42,7 @@ public static class AlbumDownloader
 
             using(FileStream fileStream = File.OpenWrite(filePath))
             {
-                await HttpClientHelper.HttpClient.DownloadAsync(file.File, fileStream, 100000, _progress, cancellationToken);
+                await HttpClientHelper.HttpClient.DownloadAsync(file.File, fileStream, _progress, cancellationToken);
             }
         }
 

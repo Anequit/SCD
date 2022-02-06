@@ -4,13 +4,14 @@ namespace SCD.Core.Extensions;
 
 public static class HttpClientExtensions
 {
-    public static async Task DownloadAsync(this HttpClient httpClient, string url, Stream destination, int buffer, IProgress<decimal> progress, CancellationToken cancellationToken)
+    public static async Task DownloadAsync(this HttpClient httpClient, string url, Stream destination, IProgress<decimal> progress, CancellationToken cancellationToken)
     {
         using(HttpResponseMessage response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
         {
             // If content length is null, then set contentLength to default 500mb
             long contentLength = (long)(response.Content.Headers.ContentLength is not null ? response.Content.Headers.ContentLength : 500000000);
             long dataDownloaded = 0;
+            long buffer = (contentLength < 100_000) ? (contentLength / 100) : 100_000;
 
             do
             {
