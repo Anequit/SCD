@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="242"
              x:Class="SCD.Avalonia.Views.MainFormView" Background="#EDEDED">
-
+             
 	<DockPanel Margin="15">
 		<Label Classes="Header"
 			   DockPanel.Dock="Top"
