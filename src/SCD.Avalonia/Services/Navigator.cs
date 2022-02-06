@@ -20,9 +20,7 @@ public class Navigator
         set
         {
             if(ViewModels.Count == 0)
-            {
                 ViewModels.Add(value);
-            }
 
             ViewModels[0] = value;
             CurrentViewModelChanged?.Invoke();
@@ -34,18 +32,14 @@ public class Navigator
         get
         {
             if(ViewModels[ViewModels.Count - 1] is not AlertViewModel)
-            {
                 return null;
-            }
 
             return ViewModels[ViewModels.Count - 1];
         }
         set
         {
             if(ViewModels.Count == 1)
-            {
                 ViewModels.Add(value);
-            }
 
             ViewModels[ViewModels.Count - 1] = value;
 
