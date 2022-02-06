@@ -57,5 +57,5 @@ public class DownloadingViewModel : ReactiveObject
 
     private void AlbumDownloader_ProgressChanged(int e) => Progress = e;
     private void AlbumDownloader_FileChanged(AlbumFile e) => Filename = e.Name;
-    private void AlbumDownloader_DownloadFinished() => _navigator.CurrentAlertViewModel = new DownloadFinishedViewModel();
+    private void AlbumDownloader_DownloadFinished(string e) => _navigator.CurrentViewModel = new DownloadFinishedViewModel(_navigator, _window, e);
 }
