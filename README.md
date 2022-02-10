@@ -4,7 +4,7 @@
 [![GitHub repo size](https://img.shields.io:/github/repo-size/Anequit/SCD)](https://github.com/Anequit/SCD/releases)
 
 ## About
-SCD is a simplistic downloader built specifically for [cyberdrop](https://cyberdrop.me/) to make downloading albums from the site a quick and simple process. This application is made with [.net 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) and [AvaloniaUI](http://avaloniaui.net/).
+SCD is a simplistic downloader built specifically for [cyberdrop](https://cyberdrop.me/) to make downloading albums from the site a quick and simple process. This application is made with [.net 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) and [AvaloniaUI](http://avaloniaui.net/). Donations are appreciated!
 
 ## Supported Platforms
  * Windows 
