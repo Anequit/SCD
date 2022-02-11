@@ -1,4 +1,8 @@
-﻿namespace SCD.Core;
+﻿using System.Net;
+using System.Net.Security;
+using System.Security.Authentication;
+
+namespace SCD.Core;
 
 public static class HttpClientHelper
 {
@@ -13,7 +17,14 @@ public static class HttpClientHelper
                 _httpClient = new HttpClient(new SocketsHttpHandler()
                 {
                     AllowAutoRedirect = true,
-                    KeepAlivePingTimeout = Timeout.InfiniteTimeSpan
+                    KeepAlivePingTimeout = Timeout.InfiniteTimeSpan,
+                    MaxConnectionsPerServer = Environment.ProcessorCount,
+                    EnableMultipleHttp2Connections = true,
+                    SslOptions = new SslClientAuthenticationOptions()
+                    {
+                        AllowRenegotiation = true,
+                        EnabledSslProtocols = SslProtocols.None
+                    }
                 });
             }
 
