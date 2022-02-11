@@ -28,6 +28,7 @@ public static class AlbumDownloader
 
         foreach(AlbumFile file in album.Files)
         {
+            ProgressChanged?.Invoke(0);
             FileChanged?.Invoke(file);
 
             cancellationToken.ThrowIfCancellationRequested();
