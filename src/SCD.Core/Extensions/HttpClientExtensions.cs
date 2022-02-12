@@ -10,50 +10,58 @@ public static class HttpClientExtensions
     {
         using(HttpResponseMessage response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
         {
+            response.EnsureSuccessStatusCode();
+
             long contentLength = (long)(response.Content.Headers.ContentLength is not null ? response.Content.Headers.ContentLength : 500000000);
             long buffer = (contentLength < 100_000) ? (contentLength / 100) : 100_000;
             long dataDownloaded = 0;
 
             List<FileChunk> fileChunks = GetFileChunks(contentLength, buffer);
 
-            Parallel.ForEach(Partitioner.Create(fileChunks, true), async i =>
+            await Parallel.ForEachAsync(fileChunks, new ParallelOptions()
             {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
+                CancellationToken = cancellationToken
+            }, async (i, token) =>
+            {
+                do
                 {
-                    httpRequestMessage.RequestUri = new Uri(url);
-                    httpRequestMessage.Headers.Range = new RangeHeaderValue(i.StartingHeaderRange, i.EndingHeaderRange);
-
-                    HttpResponseMessage? httpResponseMessage = null;
-
-                    do
+                    try
                     {
-                        try
+                        using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
                         {
-                            httpResponseMessage = HttpClientHelper.HttpClient.SendAsync(httpRequestMessage, cancellationToken).Result;
-                        }
-                        finally
-                        {
-                            if(httpResponseMessage is not null)
+                            httpRequestMessage.RequestUri = new Uri(url);
+                            httpRequestMessage.Headers.Range = new RangeHeaderValue(i.StartingHeaderRange, i.EndingHeaderRange);
+
+                            using(HttpResponseMessage httpResponseMessage = HttpClientHelper.HttpClient.SendAsync(httpRequestMessage, token).Result)
                             {
-                                i.Data = await httpResponseMessage.Content.ReadAsByteArrayAsync(cancellationToken);
+                                i.Data = await httpResponseMessage.Content.ReadAsByteArrayAsync(token);
                                 i.Downloaded = true;
 
                                 dataDownloaded += (long)(httpResponseMessage.Content.Headers.ContentLength is not null ? httpResponseMessage.Content.Headers.ContentLength : 0);
                                 progress.Report((decimal)dataDownloaded / contentLength * 100);
-
-                                httpResponseMessage.Dispose();
                             }
                         }
-                    } while(!i.Downloaded);
-                }
+                    }
+                    catch(Exception ex)
+                    {
+                        switch(ex)
+                        {
+                            case AggregateException or TaskCanceledException:
+                                return;
+
+                            default:
+                                break;
+                        }
+                    }
+                } while(!i.Downloaded);
             });
 
             foreach(FileChunk chunk in fileChunks)
             {
                 destination.Seek(chunk.StartingHeaderRange, SeekOrigin.Begin);
                 await destination.WriteAsync(chunk.Data, cancellationToken);
+
+                chunk.Data = null;
             }
         }
     }
