@@ -37,6 +37,8 @@ public static class HttpClientExtensions
                                 i.Data = await httpResponseMessage.Content.ReadAsByteArrayAsync(token);
                                 i.Downloaded = true;
 
+                                if(httpResponseMessage.Content.Headers.ContentLength is null)
+                                    throw new NullContentLengthException();
 
                                 dataDownloaded += (long)httpResponseMessage.Content.Headers.ContentLength;
                                 progress.Report(dataDownloaded / contentLength * 100);
