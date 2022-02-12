@@ -7,10 +7,10 @@ namespace SCD.Core;
 
 public static class AlbumDownloader
 {
-    private static readonly Progress<decimal> _progress = new Progress<decimal>(progressAmount => ProgressChanged?.Invoke(Convert.ToInt32(decimal.Round(progressAmount, MidpointRounding.ToZero), CultureInfo.InvariantCulture)));
+    private static readonly Progress<double> _progress = new Progress<double>(progressAmount => ProgressChanged?.Invoke(Math.Round(progressAmount, MidpointRounding.ToZero)));
 
     public static event Action<AlbumFile>? FileChanged;
-    public static event Action<int>? ProgressChanged;
+    public static event Action<double>? ProgressChanged;
     public static event Action<string>? DownloadFinished;
     public static event Action<string>? ErrorOccurred;
 

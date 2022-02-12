@@ -15,7 +15,7 @@ public class DownloadingViewModel : ReactiveObject
     private readonly Window _window;
     private readonly CancellationTokenSource _cancellationTokenSource;
 
-    private int _progress = 0;
+    private double _progress = 0;
     private string _filename = "";
 
     public DownloadingViewModel(Navigator navigator, Window window, Album album, string downloadLocation)
@@ -32,7 +32,7 @@ public class DownloadingViewModel : ReactiveObject
         AlbumDownloader.ProgressChanged += AlbumDownloader_ProgressChanged;
         AlbumDownloader.ErrorOccurred += AlbumDownloader_ErrorOccurred;
 
-        Task.Run(async () => await AlbumDownloader.Download(album, downloadLocation, _cancellationTokenSource.Token));
+        Task.Run(async () => await AlbumDownloader.DownloadAsync(album, downloadLocation, _cancellationTokenSource.Token));
     }
 
     public string Filename
@@ -41,7 +41,7 @@ public class DownloadingViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _filename, value);
     }
 
-    public int Progress
+    public double Progress
     {
         get => _progress;
         set => this.RaiseAndSetIfChanged(ref _progress, value);
@@ -56,7 +56,7 @@ public class DownloadingViewModel : ReactiveObject
         _navigator.CurrentViewModel = new MainFormViewModel(_navigator, _window);
     }
 
-    private void AlbumDownloader_ProgressChanged(int e) => Progress = e;
+    private void AlbumDownloader_ProgressChanged(double e) => Progress = e;
     private void AlbumDownloader_FileChanged(AlbumFile e) => Filename = e.Name;
     private void AlbumDownloader_DownloadFinished(string e) => _navigator.CurrentViewModel = new DownloadFinishedViewModel(_navigator, _window, e);
     private void AlbumDownloader_ErrorOccurred(string e) => _navigator.CurrentAlertViewModel = new AlertViewModel(_navigator, "Error", e);

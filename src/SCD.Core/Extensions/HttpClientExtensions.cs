@@ -1,12 +1,12 @@
 ﻿using SCD.Core.DataModels;
-using System.Collections.Concurrent;
 using System.Net.Http.Headers;
+using SCD.Core.Exceptions;
 
 namespace SCD.Core.Extensions;
 
 public static class HttpClientExtensions
 {
-    public static async Task DownloadAsync(this HttpClient httpClient, string url, Stream destination, IProgress<decimal> progress, CancellationToken cancellationToken)
+    public static async Task DownloadAsync(this HttpClient httpClient, string url, Stream destination, IProgress<double> progress, CancellationToken cancellationToken)
     {
         using(HttpResponseMessage response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
         {
@@ -14,7 +14,7 @@ public static class HttpClientExtensions
 
             long contentLength = (long)(response.Content.Headers.ContentLength is not null ? response.Content.Headers.ContentLength : 500000000);
             long buffer = (contentLength < 100_000) ? (contentLength / 100) : 100_000;
-            long dataDownloaded = 0;
+            double dataDownloaded = 0;
 
             List<FileChunk> fileChunks = GetFileChunks(contentLength, buffer);
 
@@ -37,8 +37,9 @@ public static class HttpClientExtensions
                                 i.Data = await httpResponseMessage.Content.ReadAsByteArrayAsync(token);
                                 i.Downloaded = true;
 
-                                dataDownloaded += (long)(httpResponseMessage.Content.Headers.ContentLength is not null ? httpResponseMessage.Content.Headers.ContentLength : 0);
-                                progress.Report((decimal)dataDownloaded / contentLength * 100);
+
+                                dataDownloaded += (long)httpResponseMessage.Content.Headers.ContentLength;
+                                progress.Report(dataDownloaded / contentLength * 100);
                             }
                         }
                     }
@@ -46,7 +47,7 @@ public static class HttpClientExtensions
                     {
                         switch(ex)
                         {
-                            case AggregateException or TaskCanceledException:
+                            case AggregateException or TaskCanceledException or NullContentLengthException:
                                 return;
 
                             default:
@@ -60,9 +61,10 @@ public static class HttpClientExtensions
             {
                 destination.Seek(chunk.StartingHeaderRange, SeekOrigin.Begin);
                 await destination.WriteAsync(chunk.Data, cancellationToken);
-
-                chunk.Data = null;
+                await destination.FlushAsync(cancellationToken);
             }
+
+            fileChunks.Clear();
         }
     }
 
@@ -81,6 +83,8 @@ public static class HttpClientExtensions
                 EndingHeaderRange = startingHeaderRanges[i] + (int)bufferSize
             });
         }
+
+        startingHeaderRanges.Clear();
 
         return fileChunks;
     }
