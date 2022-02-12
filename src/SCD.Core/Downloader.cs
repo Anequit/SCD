@@ -1,19 +1,19 @@
 ﻿using SCD.Core.DataModels;
 using SCD.Core.Extensions;
 using SCD.Core.Utilities;
-using System.Globalization;
 
 namespace SCD.Core;
 
 public static class AlbumDownloader
 {
-    private static readonly Progress<decimal> _progress = new Progress<decimal>(progressAmount => ProgressChanged?.Invoke(Convert.ToInt32(decimal.Round(progressAmount, MidpointRounding.ToZero), CultureInfo.InvariantCulture)));
+    private static readonly Progress<double> _progress = new Progress<double>(progressAmount => ProgressChanged?.Invoke(Math.Round(progressAmount, MidpointRounding.ToZero)));
 
     public static event Action<AlbumFile>? FileChanged;
-    public static event Action<int>? ProgressChanged;
+    public static event Action<double>? ProgressChanged;
     public static event Action<string>? DownloadFinished;
+    public static event Action<string>? ErrorOccurred;
 
-    public static async Task Download(Album album, string downloadLocation, CancellationToken cancellationToken)
+    public static async Task DownloadAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
     {
         if(album.Files is null || album.Files.Length == 0)
             return;
@@ -28,6 +28,7 @@ public static class AlbumDownloader
 
         foreach(AlbumFile file in album.Files)
         {
+            ProgressChanged?.Invoke(0);
             FileChanged?.Invoke(file);
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -42,8 +43,25 @@ public static class AlbumDownloader
 
             using(FileStream fileStream = File.OpenWrite(filePath))
             {
-                await HttpClientHelper.HttpClient.DownloadAsync(file.File, fileStream, _progress, cancellationToken);
+                try
+                {
+                    await HttpClientHelper.HttpClient.DownloadAsync(file.File, fileStream, _progress, cancellationToken);
+                }
+                catch(Exception ex)
+                {
+                    switch(ex)
+                    {
+                        case OperationCanceledException:
+                            break;
+
+                        default:
+                            ErrorOccurred?.Invoke(ex.Message);
+                            break;
+                    }
+                }
             }
+
+            GC.Collect();
         }
 
         DownloadFinished?.Invoke(path);
