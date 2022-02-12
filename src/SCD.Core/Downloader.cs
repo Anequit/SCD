@@ -14,7 +14,7 @@ public static class AlbumDownloader
     public static event Action<string>? DownloadFinished;
     public static event Action<string>? ErrorOccurred;
 
-    public static async Task Download(Album album, string downloadLocation, CancellationToken cancellationToken)
+    public static async Task DownloadAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
     {
         if(album.Files is null || album.Files.Length == 0)
             return;
