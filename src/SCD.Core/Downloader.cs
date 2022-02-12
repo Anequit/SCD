@@ -61,6 +61,8 @@ public static class AlbumDownloader
                     }
                 }
             }
+
+            GC.Collect();
         }
 
         DownloadFinished?.Invoke(path);
