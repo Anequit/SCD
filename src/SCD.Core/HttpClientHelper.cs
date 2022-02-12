@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Net.Security;
+﻿using System.Net.Security;
 using System.Security.Authentication;
 
 namespace SCD.Core;

@@ -1,7 +1,6 @@
 ﻿using SCD.Core.DataModels;
 using SCD.Core.Extensions;
 using SCD.Core.Utilities;
-using System.Globalization;
 
 namespace SCD.Core;
 

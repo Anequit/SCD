@@ -1,6 +1,6 @@
 ﻿using SCD.Core.DataModels;
-using System.Net.Http.Headers;
 using SCD.Core.Exceptions;
+using System.Net.Http.Headers;
 
 namespace SCD.Core.Extensions;
 
