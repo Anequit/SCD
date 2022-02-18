@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using SCD.Core.DataModels;
+﻿using SCD.Core.DataModels;
 using SCD.Core.Exceptions;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 
 namespace SCD.Core.Utilities;
 
@@ -34,7 +34,10 @@ public static class WebUtilities
         {
             response.EnsureSuccessStatusCode(); // HttpRequestException
 
-            Album? album = JsonConvert.DeserializeObject<Album>(await response.Content.ReadAsStringAsync());
+            Album? album = JsonSerializer.Deserialize<Album>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true
+            });
 
             if(album is null)
                 throw new NullAlbumException();
