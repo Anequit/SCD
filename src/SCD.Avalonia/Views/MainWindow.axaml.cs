@@ -10,7 +10,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-#if !RELEASE
+#if DEBUG
         this.AttachDevTools();
 #endif
     }
