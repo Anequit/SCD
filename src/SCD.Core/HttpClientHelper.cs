@@ -34,5 +34,8 @@ public static class HttpClientHelper
         }
     }
 
+    /// <summary>
+    /// Cancel pending requests
+    /// </summary>
     public static void Cancel() => HttpClient.CancelPendingRequests();
 }
