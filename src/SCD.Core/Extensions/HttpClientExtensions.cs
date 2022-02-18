@@ -44,7 +44,7 @@ public static class HttpClientExtensions
     {
         int[] startingHeaderRanges = Enumerable.Range(0, (int)contentLength).Where(x => x % bufferSize == 0).ToArray();
 
-        FileChunk[] fileChunks = new FileChunk[startingHeaderRanges.Count()];
+        FileChunk[] fileChunks = new FileChunk[startingHeaderRanges.Length];
 
         foreach(int i in Enumerable.Range(0, startingHeaderRanges.Length))
         {
