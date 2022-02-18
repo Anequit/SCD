@@ -29,10 +29,10 @@ public static class HttpClientExtensions
             await Parallel.ForEachAsync(fileChunks, new ParallelOptions()
             {
                 CancellationToken = cancellationToken
-            }, async (i, token) =>
+            }, async (fileChunk, token) =>
             {
-                i.Data = await DownloadFileChunkDataAsync(i, url, token);
-                dataDownloaded += i.Data.LongLength;
+                fileChunk.Data = await DownloadFileChunkDataAsync(fileChunk, url, token);
+                dataDownloaded += fileChunk.Data.LongLength;
                 progress.Report(dataDownloaded / contentLength * 100);
             });
 
