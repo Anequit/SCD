@@ -32,7 +32,7 @@ public class MainFormViewModel : ReactiveObject
             (URL, DL) => !string.IsNullOrEmpty(URL) && !string.IsNullOrEmpty(DL));
 
         ReportBugCommand = ReactiveCommand.Create(() => ReportBug());
-        DownloadCommand = ReactiveCommand.CreateFromTask(() => Download(), ableToDownload);
+        DownloadCommand = ReactiveCommand.Create(() => Download(), ableToDownload);
         SelectCommand = ReactiveCommand.CreateFromTask(() => SelectAsync());
     }
 
@@ -54,16 +54,14 @@ public class MainFormViewModel : ReactiveObject
 
     private void ReportBug() => WebUtilities.Open("https://github.com/Anequit/SCD/issues");
 
-    private async Task Download()
+    private void Download()
     {
         try
         {
             if(!Directory.Exists(DownloadLocation))
                 throw new InvalidPathException(DownloadLocation);
 
-            Album album = await WebUtilities.FetchAlbumAsync(AlbumURL);
-
-            _navigationService.NavigateTo(new DownloadingViewModel(_navigationService, _window, album, DownloadLocation));
+            _navigationService.NavigateTo(new DownloadingViewModel(_navigationService, _window, AlbumURL, DownloadLocation));
         }
         catch(Exception exception)
         {

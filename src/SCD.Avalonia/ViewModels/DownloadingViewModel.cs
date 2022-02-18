@@ -16,9 +16,9 @@ public class DownloadingViewModel : ReactiveObject
     private readonly CancellationTokenSource _cancellationTokenSource;
 
     private double _progress = 0;
-    private string _filename = "";
+    private string _filename = "Loading..";
 
-    public DownloadingViewModel(NavigationService navigationService, Window window, Album album, string downloadLocation)
+    public DownloadingViewModel(NavigationService navigationService, Window window, string albumURL, string downloadLocation)
     {
         _navigationService = navigationService;
         _window = window;
@@ -32,7 +32,7 @@ public class DownloadingViewModel : ReactiveObject
         AlbumDownloader.ProgressChanged += AlbumDownloader_ProgressChanged;
         AlbumDownloader.ErrorOccurred += AlbumDownloader_ErrorOccurred;
 
-        Task.Run(async () => await AlbumDownloader.DownloadAsync(album, downloadLocation, _cancellationTokenSource.Token));
+        Task.Run(async () => await AlbumDownloader.DownloadAsync(await WebUtilities.FetchAlbumAsync(albumURL), downloadLocation, _cancellationTokenSource.Token));
     }
 
     public string Filename
