@@ -11,16 +11,16 @@ namespace SCD.Avalonia.ViewModels;
 
 public class DownloadingViewModel : ReactiveObject
 {
-    private readonly Navigator _navigator;
+    private readonly NavigationService _navigationService;
     private readonly Window _window;
     private readonly CancellationTokenSource _cancellationTokenSource;
 
     private double _progress = 0;
     private string _filename = "";
 
-    public DownloadingViewModel(Navigator navigator, Window window, Album album, string downloadLocation)
+    public DownloadingViewModel(NavigationService navigationService, Window window, Album album, string downloadLocation)
     {
-        _navigator = navigator;
+        _navigationService = navigationService;
         _window = window;
 
         _cancellationTokenSource = new CancellationTokenSource();
@@ -53,11 +53,11 @@ public class DownloadingViewModel : ReactiveObject
     {
         HttpClientHelper.Cancel();
         _cancellationTokenSource?.Cancel();
-        _navigator.CurrentViewModel = new MainFormViewModel(_navigator, _window);
+        _navigationService.NavigateTo(new MainFormViewModel(_navigationService, _window));
     }
 
     private void AlbumDownloader_ProgressChanged(double e) => Progress = e;
     private void AlbumDownloader_FileChanged(AlbumFile e) => Filename = e.Name;
-    private void AlbumDownloader_DownloadFinished(string e) => _navigator.CurrentViewModel = new DownloadFinishedViewModel(_navigator, _window, e);
-    private void AlbumDownloader_ErrorOccurred(string e) => _navigator.CurrentAlertViewModel = new AlertViewModel(_navigator, "Error", e);
+    private void AlbumDownloader_DownloadFinished(string e) => _navigationService.NavigateTo(new DownloadFinishedViewModel(_navigationService, _window, e));
+    private void AlbumDownloader_ErrorOccurred(string e) => _navigationService.ShowAlert("Error", e);
 }
