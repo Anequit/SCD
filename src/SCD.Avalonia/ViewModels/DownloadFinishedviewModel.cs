@@ -8,15 +8,19 @@ namespace SCD.Avalonia.ViewModels;
 
 public class DownloadFinishedViewModel : ReactiveObject
 {
-    public DownloadFinishedViewModel(Navigator navigator, Window window, string path)
+    private readonly NavigationService _navigationService;
+
+    public DownloadFinishedViewModel(NavigationService navigationService, Window window, string path)
     {
-        HomeCommand = ReactiveCommand.Create(() => Home(navigator, window));
+        _navigationService = navigationService;
+
+        HomeCommand = ReactiveCommand.Create(() => Home(window));
         OpenFolderCommand = ReactiveCommand.Create(() => OpenFolder(path));
     }
 
     public ReactiveCommand<Unit, Unit> HomeCommand { get; set; }
     public ReactiveCommand<Unit, Unit> OpenFolderCommand { get; set; }
 
-    private void Home(Navigator navigator, Window window) => navigator.CurrentViewModel = new MainFormViewModel(navigator, window);
+    private void Home(Window window) => _navigationService.NavigateTo(new MainFormViewModel(_navigationService, window));
     private void OpenFolder(string path) => PathUtilities.Open(path);
 }

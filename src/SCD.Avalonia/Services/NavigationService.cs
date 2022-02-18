@@ -5,19 +5,19 @@ using System.Collections.ObjectModel;
 
 namespace SCD.Avalonia.Services;
 
-public class Navigator
+public class NavigationService
 {
     public event Action? CurrentViewModelChanged;
     public event Action? CurrentAlertViewModelChanged;
 
-    public Navigator() => ViewModels = new ObservableCollection<ReactiveObject?>();
+    public NavigationService() => ViewModels = new ObservableCollection<ReactiveObject?>();
 
     public ObservableCollection<ReactiveObject?> ViewModels { get; }
 
     public ReactiveObject? CurrentViewModel
     {
         get => ViewModels[0];
-        set
+        private set
         {
             if(ViewModels.Count == 0)
                 ViewModels.Add(value);
@@ -36,7 +36,7 @@ public class Navigator
 
             return ViewModels[ViewModels.Count - 1];
         }
-        set
+        private set
         {
             if(ViewModels.Count == 1)
                 ViewModels.Add(value);
@@ -46,4 +46,10 @@ public class Navigator
             CurrentAlertViewModelChanged?.Invoke();
         }
     }
+
+    public void NavigateTo(ReactiveObject viewModel) => CurrentViewModel = viewModel;
+
+    public void ShowAlert(string error, string errorMessage) => CurrentAlertViewModel = new AlertViewModel(this, error, errorMessage);
+
+    public void CloseAlert() => CurrentAlertViewModel = null;
 }
