@@ -34,7 +34,7 @@ public static class WebUtilities
         {
             response.EnsureSuccessStatusCode(); // HttpRequestException
 
-            Album? album = JsonConvert.DeserializeObject<Album>(await response.Content.ReadAsStringAsync());
+            Album? album = JsonSerializer.Deserialize<Album>(await response.Content.ReadAsStringAsync());
 
             if(album is null)
                 throw new NullAlbumException();
