@@ -1,7 +1,6 @@
 ﻿using SCD.Core.DataModels;
 using SCD.Core.Exceptions;
 using System;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -12,14 +11,14 @@ namespace SCD.Core.Extensions;
 
 public static class HttpClientExtensions
 {
-    public static async Task DownloadAsync(this HttpClient httpClient, string url, Stream destination, IProgress<double> progress, CancellationToken cancellationToken)
+    public static async Task<FileChunk[]> DownloadFileChunksAsync(this HttpClient httpClient, string url, IProgress<double> progress, CancellationToken cancellationToken)
     {
         using(HttpResponseMessage response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
         {
             response.EnsureSuccessStatusCode();
 
             if(response.Content.Headers.ContentLength is null)
-                throw new NullContentLengthException();
+                throw new NullOrEmptyContentLengthException();
 
             long contentLength = (long)response.Content.Headers.ContentLength;
             long buffer = (contentLength < 100_000) ? (contentLength / 100) : 100_000;
@@ -32,48 +31,12 @@ public static class HttpClientExtensions
                 CancellationToken = cancellationToken
             }, async (i, token) =>
             {
-                do
-                {
-                    try
-                    {
-                        using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
-                        {
-                            httpRequestMessage.RequestUri = new Uri(url);
-                            httpRequestMessage.Headers.Range = new RangeHeaderValue(i.StartingHeaderRange, i.EndingHeaderRange);
-
-                            using(HttpResponseMessage httpResponseMessage = HttpClientHelper.HttpClient.SendAsync(httpRequestMessage, token).Result)
-                            {
-                                i.Data = await httpResponseMessage.Content.ReadAsByteArrayAsync(token);
-                                i.Downloaded = true;
-
-                                if(httpResponseMessage.Content.Headers.ContentLength is null)
-                                    throw new NullContentLengthException();
-
-                                dataDownloaded += (long)httpResponseMessage.Content.Headers.ContentLength;
-                                progress.Report(dataDownloaded / contentLength * 100);
-                            }
-                        }
-                    }
-                    catch(Exception ex)
-                    {
-                        switch(ex)
-                        {
-                            case AggregateException or TaskCanceledException or NullContentLengthException:
-                                return;
-
-                            default:
-                                break;
-                        }
-                    }
-                } while(!i.Downloaded);
+                i.Data = await DownloadFileChunkDataAsync(i, url, token);
+                dataDownloaded += i.Data.LongLength;
+                progress.Report(dataDownloaded / contentLength * 100);
             });
 
-            foreach(FileChunk chunk in fileChunks)
-            {
-                destination.Seek(chunk.StartingHeaderRange, SeekOrigin.Begin);
-                await destination.WriteAsync(chunk.Data, cancellationToken);
-                await destination.FlushAsync(cancellationToken);
-            }
+            return fileChunks;
         }
     }
 
@@ -94,5 +57,42 @@ public static class HttpClientExtensions
         }
 
         return fileChunks;
+    }
+
+    private static async Task<byte[]> DownloadFileChunkDataAsync(FileChunk fileChunk, string url, CancellationToken cancellationToken)
+    {
+        byte[] data;
+
+        do
+        {
+            data = new byte[fileChunk.EndingHeaderRange - fileChunk.StartingHeaderRange];
+
+            try
+            {
+                using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
+                {
+                    httpRequestMessage.RequestUri = new Uri(url);
+                    httpRequestMessage.Headers.Range = new RangeHeaderValue(fileChunk.StartingHeaderRange, fileChunk.EndingHeaderRange);
+
+                    using(HttpResponseMessage httpResponseMessage = HttpClientHelper.HttpClient.SendAsync(httpRequestMessage, cancellationToken).Result)
+                    {
+                        if(httpResponseMessage.Content.Headers.ContentLength is null or 0)
+                            throw new NullOrEmptyContentLengthException();
+
+                        data = await httpResponseMessage.Content.ReadAsByteArrayAsync(cancellationToken);
+                        fileChunk.Downloaded = true;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                if(ex is AggregateException or TaskCanceledException or NullOrEmptyContentLengthException)
+                    break;
+
+                continue;
+            }
+        } while(!fileChunk.Downloaded);
+
+        return data;
     }
 }
