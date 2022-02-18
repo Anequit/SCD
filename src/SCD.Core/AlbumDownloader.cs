@@ -54,6 +54,7 @@ public static class AlbumDownloader
                 {
                     FileChunk[] fileChunks = await HttpClientHelper.HttpClient.DownloadFileChunksAsync(file.File, _progress, cancellationToken);
 
+                    GC.Collect();
                     foreach(FileChunk chunk in fileChunks)
                     {
                         fileStream.Seek(chunk.StartingHeaderRange, SeekOrigin.Begin);
@@ -75,7 +76,6 @@ public static class AlbumDownloader
                 }
             }
 
-            GC.Collect();
         }
 
         DownloadFinished?.Invoke(path);
