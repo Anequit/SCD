@@ -10,7 +10,10 @@ namespace SCD.Core;
 
 public static class AlbumDownloader
 {
-    private static readonly Progress<double> _progress = new Progress<double>(progressAmount => ProgressChanged?.Invoke(Math.Round(progressAmount, MidpointRounding.ToZero)));
+    private static readonly Progress<double> _progress = new Progress<double>(progressAmount =>
+    {
+        ProgressChanged?.Invoke(Math.Round(progressAmount, MidpointRounding.ToZero));
+    });
 
     public static event Action<AlbumFile>? FileChanged;
     public static event Action<double>? ProgressChanged;
@@ -49,7 +52,14 @@ public static class AlbumDownloader
             {
                 try
                 {
-                    await HttpClientHelper.HttpClient.DownloadAsync(file.File, fileStream, _progress, cancellationToken);
+                    FileChunk[] fileChunks = await HttpClientHelper.HttpClient.DownloadFileChunksAsync(file.File, _progress, cancellationToken);
+
+                    foreach(FileChunk chunk in fileChunks)
+                    {
+                        fileStream.Seek(chunk.StartingHeaderRange, SeekOrigin.Begin);
+                        await fileStream.WriteAsync(chunk.Data, cancellationToken);
+                        await fileStream.FlushAsync(cancellationToken);
+                    }
                 }
                 catch(Exception ex)
                 {
