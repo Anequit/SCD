@@ -1,6 +1,12 @@
 ﻿using SCD.Core.DataModels;
 using SCD.Core.Exceptions;
+using System;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SCD.Core.Extensions;
 

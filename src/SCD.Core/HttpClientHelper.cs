@@ -1,5 +1,8 @@
-﻿using System.Net.Security;
+﻿using System;
+using System.Net.Http;
+using System.Net.Security;
 using System.Security.Authentication;
+using System.Threading;
 
 namespace SCD.Core;
 
