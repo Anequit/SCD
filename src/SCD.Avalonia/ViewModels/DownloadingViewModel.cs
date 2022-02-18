@@ -3,6 +3,7 @@ using ReactiveUI;
 using SCD.Avalonia.Services;
 using SCD.Core;
 using SCD.Core.DataModels;
+using SCD.Core.Utilities;
 using System.Reactive;
 using System.Threading;
 using System.Threading.Tasks;
