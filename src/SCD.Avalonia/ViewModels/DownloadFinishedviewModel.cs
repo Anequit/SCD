@@ -8,7 +8,7 @@ namespace SCD.Avalonia.ViewModels;
 
 public class DownloadFinishedViewModel : ReactiveObject
 {
-    NavigationService _navigationService;
+    private readonly NavigationService _navigationService;
 
     public DownloadFinishedViewModel(NavigationService navigationService, Window window, string path)
     {

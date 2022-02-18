@@ -1,7 +1,6 @@
 ﻿using Avalonia.Controls;
 using ReactiveUI;
 using SCD.Avalonia.Services;
-using SCD.Core.DataModels;
 using SCD.Core.Exceptions;
 using SCD.Core.Utilities;
 using System;

@@ -47,18 +47,9 @@ public class NavigationService
         }
     }
 
-    public void NavigateTo(ReactiveObject viewModel)
-    {
-        CurrentViewModel = viewModel;
-    }
+    public void NavigateTo(ReactiveObject viewModel) => CurrentViewModel = viewModel;
 
-    public void ShowAlert(string error, string errorMessage)
-    {
-        CurrentAlertViewModel = new AlertViewModel(this, error, errorMessage);
-    }
+    public void ShowAlert(string error, string errorMessage) => CurrentAlertViewModel = new AlertViewModel(this, error, errorMessage);
 
-    public void CloseAlert()
-    {
-        CurrentAlertViewModel = null;
-    }
+    public void CloseAlert() => CurrentAlertViewModel = null;
 }
