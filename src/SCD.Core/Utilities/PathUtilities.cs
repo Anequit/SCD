@@ -27,7 +27,7 @@ public static class PathUtilities
         string invalidChars = new string(Path.GetInvalidPathChars());
 
         foreach(char invalidChar in invalidChars)
-            path.Replace($"{invalidChar}", string.Empty);
+            path = path.Replace($"{invalidChar}", string.Empty);
 
         return path;
     }
