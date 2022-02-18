@@ -1,7 +1,7 @@
 ﻿namespace SCD.Core.DataModels;
 
-public class AlbumFile
+public record AlbumFile
 {
-    public string Name { get; set; } = "";
-    public string File { get; set; } = "";
+    public string Name { get; init; } = "";
+    public string File { get; init; } = "";
 }

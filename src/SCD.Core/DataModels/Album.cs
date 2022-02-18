@@ -1,9 +1,9 @@
 ﻿namespace SCD.Core.DataModels;
 
-public class Album
+public record Album
 {
-    public bool Success { get; set; } = false;
+    public bool Success { get; init; } = false;
     public string? Title { get; set; }
-    public string? Description { get; set; }
-    public AlbumFile[]? Files { get; set; }
+    public string? Description { get; init; }
+    public AlbumFile[]? Files { get; init; }
 }
