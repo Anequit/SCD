@@ -12,11 +12,14 @@ public static class HttpClientExtensions
         {
             response.EnsureSuccessStatusCode();
 
-            long contentLength = (long)(response.Content.Headers.ContentLength is not null ? response.Content.Headers.ContentLength : 500000000);
+            if(response.Content.Headers.ContentLength is null)
+                throw new NullContentLengthException();
+
+            long contentLength = (long)response.Content.Headers.ContentLength;
             long buffer = (contentLength < 100_000) ? (contentLength / 100) : 100_000;
             double dataDownloaded = 0;
 
-            List<FileChunk> fileChunks = GetFileChunks(contentLength, buffer);
+            FileChunk[] fileChunks = GetFileChunks(contentLength, buffer);
 
             await Parallel.ForEachAsync(fileChunks, new ParallelOptions()
             {
@@ -65,28 +68,24 @@ public static class HttpClientExtensions
                 await destination.WriteAsync(chunk.Data, cancellationToken);
                 await destination.FlushAsync(cancellationToken);
             }
-
-            fileChunks.Clear();
         }
     }
 
-    private static List<FileChunk> GetFileChunks(long contentLength, long bufferSize)
+    private static FileChunk[] GetFileChunks(long contentLength, long bufferSize)
     {
-        List<FileChunk> fileChunks = new List<FileChunk>();
+        int[] startingHeaderRanges = Enumerable.Range(0, (int)contentLength).Where(x => x % bufferSize == 0).ToArray();
 
-        List<int> startingHeaderRanges = Enumerable.Range(0, (int)contentLength).Where(x => x % bufferSize == 0).ToList();
+        FileChunk[] fileChunks = new FileChunk[startingHeaderRanges.Count()];
 
-        foreach(int i in Enumerable.Range(0, startingHeaderRanges.Count))
+        foreach(int i in Enumerable.Range(0, startingHeaderRanges.Length))
         {
-            fileChunks.Add(new FileChunk()
+            fileChunks[i] = new FileChunk()
             {
                 Position = i,
                 StartingHeaderRange = startingHeaderRanges[i],
                 EndingHeaderRange = startingHeaderRanges[i] + (int)bufferSize
-            });
+            };
         }
-
-        startingHeaderRanges.Clear();
 
         return fileChunks;
     }
