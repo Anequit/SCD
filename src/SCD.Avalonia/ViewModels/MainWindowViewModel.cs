@@ -7,15 +7,12 @@ namespace SCD.Avalonia.ViewModels;
 
 public class MainWindowViewModel : ReactiveObject
 {
-    private readonly NavigationService _navigationService;
     private ReactiveObject? _titleBarViewModel;
 
-    public MainWindowViewModel(NavigationService navigationService, Window window)
+    public MainWindowViewModel(Window window)
     {
-        _navigationService = navigationService;
-
-        _navigationService.CurrentViewModelChanged += CurrentViewModelChanged;
-        _navigationService.CurrentAlertViewModelChanged += CurrentAlertViewModelChanged;
+        NavigationService.CurrentViewModelChanged += CurrentViewModelChanged;
+        NavigationService.CurrentAlertViewModelChanged += CurrentAlertViewModelChanged;
 
         if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
@@ -26,11 +23,11 @@ public class MainWindowViewModel : ReactiveObject
             TitleBarViewModel = new TitleBarViewModel(window);
         }
 
-        _navigationService.NavigateTo(new MainFormViewModel(_navigationService, window));
+        NavigationService.NavigateTo(new MainFormViewModel(window));
     }
 
-    public ReactiveObject? CurrentViewModel => _navigationService.CurrentViewModel;
-    public ReactiveObject? AlertViewModel => _navigationService.CurrentAlertViewModel;
+    public ReactiveObject? CurrentViewModel => NavigationService.CurrentViewModel;
+    public ReactiveObject? AlertViewModel => NavigationService.CurrentAlertViewModel;
     public ReactiveObject? TitleBarViewModel
     {
         get => _titleBarViewModel;

@@ -14,15 +14,13 @@ namespace SCD.Avalonia.ViewModels;
 
 public class MainFormViewModel : ReactiveObject
 {
-    private readonly NavigationService _navigationService;
     private readonly Window _window;
 
     private string _albumURL = string.Empty;
     private string _downloadLocation = string.Empty;
 
-    public MainFormViewModel(NavigationService navigationService, Window window)
+    public MainFormViewModel(Window window)
     {
-        _navigationService = navigationService;
         _window = window;
 
         IObservable<bool> ableToDownload = this.WhenAnyValue(
@@ -60,33 +58,33 @@ public class MainFormViewModel : ReactiveObject
             if(!Directory.Exists(DownloadLocation))
                 throw new InvalidPathException(DownloadLocation);
 
-            _navigationService.NavigateTo(new DownloadingViewModel(_navigationService, _window, AlbumURL, DownloadLocation));
+            NavigationService.NavigateTo(new DownloadingViewModel(_window, AlbumURL, DownloadLocation));
         }
         catch(Exception exception)
         {
             switch(exception)
             {
                 case ArgumentOutOfRangeException:
-                    _navigationService.ShowAlert("Error", "Invalid album URL.");
+                    NavigationService.ShowAlert("Error", "Invalid album URL.");
                     AlbumURL = string.Empty;
                     break;
 
                 case UnsuccessfulAlbumException:
-                    _navigationService.ShowAlert("Error", exception.Message);
+                    NavigationService.ShowAlert("Error", exception.Message);
                     AlbumURL = string.Empty;
                     break;
 
                 case InvalidPathException:
-                    _navigationService.ShowAlert("Error", "Invalid download location.");
+                    NavigationService.ShowAlert("Error", "Invalid download location.");
                     DownloadLocation = string.Empty;
                     break;
 
                 case HttpRequestException:
-                    _navigationService.ShowAlert("Error", "Failed to get response from server.");
+                    NavigationService.ShowAlert("Error", "Failed to get response from server.");
                     break;
 
                 default:
-                    _navigationService.ShowAlert("Unknown Error", exception.Message);
+                    NavigationService.ShowAlert("Unknown Error", exception.Message);
                     break;
             }
         }
