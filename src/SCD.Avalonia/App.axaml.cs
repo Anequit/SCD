@@ -16,7 +16,7 @@ public class App : Application
         if(ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow();
-            desktop.MainWindow.DataContext = new MainWindowViewModel(new NavigationService(), desktop.MainWindow);
+            desktop.MainWindow.DataContext = new MainWindowViewModel(desktop.MainWindow);
         }
 
         base.OnFrameworkInitializationCompleted();

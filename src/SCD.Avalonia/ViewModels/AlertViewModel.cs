@@ -6,12 +6,8 @@ namespace SCD.Avalonia.ViewModels;
 
 public class AlertViewModel : ReactiveObject
 {
-    private readonly NavigationService _navigationService;
-
-    public AlertViewModel(NavigationService navigationService, string error, string errorMessage)
+    public AlertViewModel(string error, string errorMessage)
     {
-        _navigationService = navigationService;
-
         Error = error;
         ErrorMessage = errorMessage;
 
@@ -23,5 +19,5 @@ public class AlertViewModel : ReactiveObject
 
     public ReactiveCommand<Unit, Unit> CloseCommand { get; }
 
-    private void Close() => _navigationService.CloseAlert();
+    private void Close() => NavigationService.CloseAlert();
 }
