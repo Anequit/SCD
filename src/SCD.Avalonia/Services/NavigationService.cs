@@ -5,16 +5,14 @@ using System.Collections.ObjectModel;
 
 namespace SCD.Avalonia.Services;
 
-public class NavigationService
+public static class NavigationService
 {
-    public event Action? CurrentViewModelChanged;
-    public event Action? CurrentAlertViewModelChanged;
+    public static event Action? CurrentViewModelChanged;
+    public static event Action? CurrentAlertViewModelChanged;
 
-    public NavigationService() => ViewModels = new ObservableCollection<ReactiveObject?>();
+    public static ObservableCollection<ReactiveObject?> ViewModels { get; } = new ObservableCollection<ReactiveObject?>();
 
-    public ObservableCollection<ReactiveObject?> ViewModels { get; }
-
-    public ReactiveObject? CurrentViewModel
+    public static ReactiveObject? CurrentViewModel
     {
         get => ViewModels[0];
         private set
@@ -27,7 +25,7 @@ public class NavigationService
         }
     }
 
-    public ReactiveObject? CurrentAlertViewModel
+    public static ReactiveObject? CurrentAlertViewModel
     {
         get
         {
@@ -47,9 +45,9 @@ public class NavigationService
         }
     }
 
-    public void NavigateTo(ReactiveObject viewModel) => CurrentViewModel = viewModel;
+    public static void NavigateTo(ReactiveObject viewModel) => CurrentViewModel = viewModel;
 
-    public void ShowAlert(string error, string errorMessage) => CurrentAlertViewModel = new AlertViewModel(this, error, errorMessage);
+    public static void ShowAlert(string error, string errorMessage) => CurrentAlertViewModel = new AlertViewModel(error, errorMessage);
 
-    public void CloseAlert() => CurrentAlertViewModel = null;
+    public static void CloseAlert() => CurrentAlertViewModel = null;
 }
