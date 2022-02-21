@@ -1,6 +1,7 @@
 ﻿using SCD.Core.DataModels;
 using SCD.Core.Extensions;
 using SCD.Core.Utilities;
+using SCD.Helpers;
 using System;
 using System.IO;
 using System.Threading;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SCD.Core;
 
-public static class AlbumDownloader
+public static class Downloader
 {
     private static readonly Progress<double> _progress = new Progress<double>(progressAmount =>
     {
@@ -43,7 +44,7 @@ public static class AlbumDownloader
     /// <param name="downloadLocation">Location the album should be stored.</param>
     /// <param name="cancellationToken">Token to cancel the download.</param>
     /// <returns></returns>
-    public static async Task DownloadAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
+    public static async Task DownloadAlbumAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
     {
         //  If album files is null or empty, then return
         if(album.Files is null || album.Files.Length == 0)
@@ -87,14 +88,7 @@ public static class AlbumDownloader
                     // Clean up any left up data from downloading the file
                     GC.Collect();
 
-                    // Iterate over fileChunks
-                    foreach(FileChunk chunk in fileChunks)
-                    {
-                        // Seek to the correct position, write the chunks data, and then flush the fileStream
-                        fileStream.Seek(chunk.StartingHeaderRange, SeekOrigin.Begin);
-                        await fileStream.WriteAsync(chunk.Data, cancellationToken);
-                        await fileStream.FlushAsync(cancellationToken);
-                    }
+                    await FileUtilities.Save(fileChunks, fileStream, cancellationToken);
                 }
                 catch(Exception ex)
                 {
@@ -113,5 +107,23 @@ public static class AlbumDownloader
         }
 
         DownloadFinished?.Invoke(path);
+    }
+
+    public static async Task DownloadUpdateAsync(CancellationToken cancellationToken)
+    {
+        string downloadUrl = "https://github.com/Anequit/SCD/releases/latest/download/";
+        string tempPath = Path.Combine(Directory.GetCurrentDirectory(), ".temp");
+
+        if(Directory.Exists(tempPath))
+            Directory.Delete(tempPath);
+
+        Directory.CreateDirectory(tempPath);
+
+        DirectoryInfo tempPathInfo = new DirectoryInfo(tempPath)
+        {
+            Attributes = FileAttributes.Hidden
+        };
+        
+        // TODO Check platform and download acording to the platform
     }
 }
