@@ -4,6 +4,7 @@ using SCD.Avalonia.Services;
 using SCD.Core;
 using SCD.Core.DataModels;
 using SCD.Core.Utilities;
+using SCD.Helpers;
 using System.Reactive;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,12 +27,12 @@ public class DownloadingViewModel : ReactiveObject
 
         CancelDownloadCommand = ReactiveCommand.Create(() => CancelDownload());
 
-        AlbumDownloader.DownloadFinished += AlbumDownloader_DownloadFinished;
-        AlbumDownloader.FileChanged += AlbumDownloader_FileChanged;
-        AlbumDownloader.ProgressChanged += AlbumDownloader_ProgressChanged;
-        AlbumDownloader.ErrorOccurred += AlbumDownloader_ErrorOccurred;
+        Downloader.DownloadFinished += AlbumDownloader_DownloadFinished;
+        Downloader.FileChanged += AlbumDownloader_FileChanged;
+        Downloader.ProgressChanged += AlbumDownloader_ProgressChanged;
+        Downloader.ErrorOccurred += AlbumDownloader_ErrorOccurred;
 
-        Task.Run(async () => await AlbumDownloader.DownloadAsync(await WebUtilities.FetchAlbumAsync(albumURL), downloadLocation, _cancellationTokenSource.Token));
+        Task.Run(async () => await Downloader.DownloadAlbumAsync(await WebUtilities.FetchAlbumAsync(albumURL), downloadLocation, _cancellationTokenSource.Token));
     }
 
     public string Filename
