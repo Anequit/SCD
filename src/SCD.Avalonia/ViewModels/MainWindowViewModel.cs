@@ -23,6 +23,12 @@ public class MainWindowViewModel : ReactiveObject
             TitleBarViewModel = new TitleBarViewModel(window);
         }
 
+        if(UpdatingService.CheckForUpdateAsync())
+        {
+            NavigationService.NavigateTo(new UpdatingViewModel());
+            return;
+        }
+
         NavigationService.NavigateTo(new MainFormViewModel(window));
     }
 
