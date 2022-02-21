@@ -1,7 +1,10 @@
 ﻿using SCD.Core.DataModels;
 using SCD.Core.Exceptions;
+using SCD.Helpers;
+using System;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -65,6 +68,32 @@ public static class WebUtilities
                 throw new UnsuccessfulAlbumException(album.Description);
 
             return album;
+        }
+    }
+
+    public static async Task<string> FetchLatestVersion()
+    {
+        using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
+        {
+            httpRequestMessage.RequestUri = new Uri("https://api.github.com/repos/Anequit/SCD/releases/latest");
+            httpRequestMessage.Method = HttpMethod.Get;
+            httpRequestMessage.Headers.UserAgent.ParseAdd("request");
+            httpRequestMessage.Headers.Accept.ParseAdd("application/json");
+
+            using(HttpResponseMessage httpResponseMessage = await HttpClientHelper.HttpClient.SendAsync(httpRequestMessage))
+            {
+                httpResponseMessage.EnsureSuccessStatusCode();
+
+                Release? release = JsonSerializer.Deserialize<Release>(await httpResponseMessage.Content.ReadAsStringAsync());
+
+                if(release is null)
+                    throw new NullReleaseException();
+
+                if(string.IsNullOrEmpty(release.VersionNumber))
+                    throw new NullOrEmptyVersionNumberException();
+
+                return release.VersionNumber.Remove(0, 1);
+            }
         }
     }
 }
