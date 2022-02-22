@@ -3,13 +3,14 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-	  <ApplicationIcon>Assets\SCD.ico</ApplicationIcon>
-	  <IsPublishable>True</IsPublishable>
-	  <DebugType>embedded</DebugType>
-	  <AssemblyName>SCD</AssemblyName>
-	  <RepositoryUrl>https://github.com/Anequit/SCD</RepositoryUrl>
-	  <Description>A simple cyberdrop downloader.</Description>
-	  <AssemblyVersion>1.2.1</AssemblyVersion>
+	<ApplicationIcon>Assets\SCD.ico</ApplicationIcon>
+	<IsPublishable>True</IsPublishable>
+	<DebugType>embedded</DebugType>
+	<AssemblyName>SCD</AssemblyName>
+	<RepositoryUrl>https://github.com/Anequit/SCD</RepositoryUrl>
+	<Description>A simple cyberdrop downloader.</Description>
+	<AssemblyVersion>1.2.1</AssemblyVersion>
+	<IncludeNativeLibrariesForSelfExtract>True</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
