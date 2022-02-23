@@ -31,6 +31,8 @@ public class MainFormViewModel : ReactiveObject
         ReportBugCommand = ReactiveCommand.Create(() => ReportBug());
         DownloadCommand = ReactiveCommand.Create(() => Download(), ableToDownload);
         SelectCommand = ReactiveCommand.CreateFromTask(() => SelectAsync());
+
+        Task.Run(async () => await UpdateService.CheckForUpdateAsync()).ConfigureAwait(false);
     }
 
     public string AlbumURL
@@ -53,41 +55,14 @@ public class MainFormViewModel : ReactiveObject
 
     private void Download()
     {
-        try
+        if(!Directory.Exists(DownloadLocation))
         {
-            if(!Directory.Exists(DownloadLocation))
-                throw new InvalidPathException(DownloadLocation);
-
-            NavigationService.NavigateTo(new DownloadingViewModel(_window, AlbumURL, DownloadLocation));
+            NavigationService.ShowErrorAlert("Error", "Invalid download location.");
+            DownloadLocation = string.Empty;
+            return;
         }
-        catch(Exception exception)
-        {
-            switch(exception)
-            {
-                case ArgumentOutOfRangeException:
-                    NavigationService.ShowAlert("Error", "Invalid album URL.");
-                    AlbumURL = string.Empty;
-                    break;
 
-                case UnsuccessfulAlbumException:
-                    NavigationService.ShowAlert("Error", exception.Message);
-                    AlbumURL = string.Empty;
-                    break;
-
-                case InvalidPathException:
-                    NavigationService.ShowAlert("Error", "Invalid download location.");
-                    DownloadLocation = string.Empty;
-                    break;
-
-                case HttpRequestException:
-                    NavigationService.ShowAlert("Error", "Failed to get response from server.");
-                    break;
-
-                default:
-                    NavigationService.ShowAlert("Unknown Error", exception.Message);
-                    break;
-            }
-        }
+        NavigationService.NavigateTo(new DownloadingViewModel(_window, AlbumURL, DownloadLocation));
     }
 
     private async Task SelectAsync()
