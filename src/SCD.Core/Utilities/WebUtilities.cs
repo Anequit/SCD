@@ -46,8 +46,11 @@ public static class WebUtilities
     /// <exception cref="FailedToFetchAlbumException"></exception>
     public static async Task<Album> FetchAlbumAsync(string url)
     {
-        // Get album identifier from url
-        string albumIdentifier = url.Substring(url.LastIndexOf('/'));
+        string albumIdentifier = url;
+
+        // Since each album url will contain a main
+        if(url.LastIndexOf('/') != -1)
+            albumIdentifier = url.Substring(url.LastIndexOf('/'));
 
         // Call api
         using(HttpResponseMessage response = await HttpClientHelper.HttpClient.GetAsync("https://cyberdrop.me/api/album/get/" + albumIdentifier))
