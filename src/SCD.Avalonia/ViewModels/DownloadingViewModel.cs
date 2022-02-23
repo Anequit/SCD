@@ -90,7 +90,7 @@ public class DownloadingViewModel : ReactiveObject
     }
 
     private void AlbumDownloader_ProgressChanged(double e) => Progress = e;
-    private void AlbumDownloader_FileChanged(AlbumFile e) => Filename = e.Name;
+    private void AlbumDownloader_FileChanged(AlbumFile e) => Filename = e.Filename;
     private void AlbumDownloader_DownloadFinished(string e) => NavigationService.NavigateTo(new DownloadFinishedViewModel(_window, e));
-    private void AlbumDownloader_ErrorOccurred(string e) => NavigationService.ShowAlert("Error", e);
+    private void AlbumDownloader_ErrorOccurred(string e) => NavigationService.ShowErrorAlert("Error", e);
 }
