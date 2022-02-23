@@ -21,8 +21,8 @@ public class TitleBarViewModel : ReactiveObject
 
         string version = "Unknown version";
 
-        if(UpdatingService.CurrentVersion is not null)
-            version = $"v{UpdatingService.CurrentVersion.ToString(3)}";
+        if(UpdateService.CurrentVersion is not null)
+            version = $"v{UpdateService.CurrentVersion.ToString(3)}";
 
         _title = $"SCD - {version}";
     }
