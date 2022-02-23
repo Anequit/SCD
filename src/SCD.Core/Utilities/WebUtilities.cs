@@ -60,11 +60,26 @@ public static class WebUtilities
 
             // If the album doesn't deserialize
             if(album is null)
-                throw new NullAlbumException();
+                throw new FailedToFetchAlbumException();
 
             // If album doesn't exist or is private.
             if(album.Description != null && !album.Success)
-                throw new UnsuccessfulAlbumException(album.Description);
+            {
+                switch(album.Description)
+                {
+                    // Private album 
+                    case "This album is not available for public.":
+                        throw new PrivateAlbumException();
+
+                    // Will only occur if the url provided is invalid.
+                    case "No token provided." or "Album not found.":
+                        throw new InvalidAlbumException();
+
+                    // Can occur if the server is having some issues but is still up.
+                    case "An unexpected error occcured. Try again?":
+                        throw new FailedToFetchAlbumException();
+                }
+            }
 
             return album;
         }
