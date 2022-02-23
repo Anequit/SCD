@@ -68,7 +68,7 @@ public static class WebUtilities
         }
     }
 
-    public static async Task<string> FetchLatestVersion()
+    public static async Task<Release> FetchLatestRelease()
     {
         using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
         {
@@ -89,7 +89,7 @@ public static class WebUtilities
                 if(string.IsNullOrEmpty(release.VersionNumber))
                     throw new NullOrEmptyVersionNumberException();
 
-                return release.VersionNumber.Remove(0, 1);
+                return release;
             }
         }
     }
