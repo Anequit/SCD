@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using SCD.Avalonia.ViewModels;
+using SCD.Core.DataModels;
 using System;
 using System.Collections.ObjectModel;
 
