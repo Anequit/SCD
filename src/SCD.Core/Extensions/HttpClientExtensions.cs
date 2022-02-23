@@ -1,6 +1,6 @@
 ﻿using SCD.Core.DataModels;
 using SCD.Core.Exceptions;
-using SCD.Helpers;
+using SCD.Core.Helpers;
 using System;
 using System.Linq;
 using System.Net.Http;

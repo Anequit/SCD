@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 
-namespace SCD.Helpers;
+namespace SCD.Core.Helpers;
 
 public static class HttpClientHelper
 {
