@@ -47,7 +47,9 @@ public static class NavigationService
 
     public static void NavigateTo(ReactiveObject viewModel) => CurrentViewModel = viewModel;
 
-    public static void ShowAlert(string error, string errorMessage) => CurrentAlertViewModel = new AlertViewModel(error, errorMessage);
+    public static void ShowErrorAlert(string title, string message) => CurrentAlertViewModel = new ErrorAlertViewModel(title, message);
+
+    public static void ShowUpdateAlert(string title, string message, Release release) => CurrentAlertViewModel = new UpdateAlertViewModel(title, message, release);
 
     public static void CloseAlert() => CurrentAlertViewModel = null;
 }
