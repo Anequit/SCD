@@ -61,11 +61,10 @@ public static class WebUtilities
             // Deserialize json response from api
             Album? album = JsonSerializer.Deserialize<Album>(await response.Content.ReadAsStringAsync());
 
-            // If the album doesn't deserialize
+            // If the album doesn't deserialize (Should never happen unless the website is down.)
             if(album is null)
                 throw new FailedToFetchAlbumException();
 
-            // If album doesn't exist or is private.
             if(album.Description != null && !album.Success)
             {
                 switch(album.Description)
