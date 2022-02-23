@@ -53,11 +53,8 @@ public static class WebUtilities
             // Check if api had successful response
             response.EnsureSuccessStatusCode();
 
-            // Attempt to deserialize json response from api
-            Album? album = JsonSerializer.Deserialize<Album>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions()
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            // Deserialize json response from api
+            Album? album = JsonSerializer.Deserialize<Album>(await response.Content.ReadAsStringAsync());
 
             // If the album doesn't deserialize
             if(album is null)
