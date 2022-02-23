@@ -9,7 +9,7 @@ SCD is a simplistic downloader built specifically for [cyberdrop](https://cyberd
 ## Supported Platforms
  * Windows 
  * Linux
- * ~~macOS~~ (Needs testing)
+ * macOS
 
 ## Previews
 <p float="left">
