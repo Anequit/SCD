@@ -44,7 +44,7 @@ public static class Downloader
     /// <param name="downloadLocation">Location the album should be stored.</param>
     /// <param name="cancellationToken">Token to cancel the download.</param>
     /// <returns></returns>
-    public static async Task DownloadAlbumAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
+    public static async Task DownloadAndSaveAlbumAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
     {
         //  If album files is null or empty, then return
         if(album.Files is null || album.Files.Length == 0)
