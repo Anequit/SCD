@@ -3,8 +3,10 @@ using ReactiveUI;
 using SCD.Avalonia.Services;
 using SCD.Core;
 using SCD.Core.DataModels;
+using SCD.Core.Exceptions;
 using SCD.Core.Helpers;
 using SCD.Core.Utilities;
+using System;
 using System.Reactive;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,7 +34,38 @@ public class DownloadingViewModel : ReactiveObject
         Downloader.ProgressChanged += AlbumDownloader_ProgressChanged;
         Downloader.ErrorOccurred += AlbumDownloader_ErrorOccurred;
 
-        Task.Run(async () => await Downloader.DownloadAlbumAsync(await WebUtilities.FetchAlbumAsync(albumURL), downloadLocation, _cancellationTokenSource.Token));
+        Task.Run(async () =>
+        {
+            try
+            {
+                Album album = await WebUtilities.FetchAlbumAsync(albumURL);
+
+                await Downloader.DownloadAndSaveAlbumAsync(album, downloadLocation, _cancellationTokenSource.Token);
+            }
+            catch(Exception exception)
+            {
+                switch(exception)
+                {
+                    case NullAlbumException:
+                        NavigationService.ShowErrorAlert("Error", "Failed to parse album.");
+                        break;
+
+                    case PrivateAlbumException:
+                        NavigationService.ShowErrorAlert("Error", "Album private.");
+                        break;
+
+                    case InvalidAlbumException:
+                        NavigationService.ShowErrorAlert("Error", "Album doesn't exist.");
+                        break;
+
+                    case FailedToFetchAlbumException:
+                        NavigationService.ShowErrorAlert("Error", "An unexpected cyberdrop error occured.");
+                        break;
+                }
+
+                NavigationService.NavigateTo(new MainFormViewModel(_window));
+            }
+        });
     }
 
     public string Filename
