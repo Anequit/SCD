@@ -46,11 +46,9 @@ public static class Downloader
     /// <returns></returns>
     public static async Task DownloadAndSaveAlbumAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
     {
-        //  If album files is null or empty, then return
-        if(album.Files is null || album.Files.Length == 0)
+        if(album.AlbumFiles is null || album.AlbumFiles.Length == 0)
             return;
 
-        // If the album doesn't have a title, then set it to Album
         if(string.IsNullOrEmpty(album.Title))
             album.Title = "Album";
 
@@ -60,7 +58,7 @@ public static class Downloader
         if(!Directory.Exists(path))
             Directory.CreateDirectory(path);
 
-        foreach(AlbumFile file in album.Files)
+        foreach(AlbumFile file in album.AlbumFiles)
         {
             ProgressChanged?.Invoke(0);
             FileChanged?.Invoke(file);
@@ -68,13 +66,11 @@ public static class Downloader
             cancellationToken.ThrowIfCancellationRequested();
 
             // If the file url is empty or the file name is empty, then skip over the file
-            if(string.IsNullOrEmpty(file.File) || string.IsNullOrEmpty(file.Name))
+            if(string.IsNullOrEmpty(file.Filename) || string.IsNullOrEmpty(file.Url))
                 continue;
 
-            // Normalize the file path
-            string filePath = PathUtilities.NormalizePath(Path.Combine(path, file.Name));
+            string filePath = PathUtilities.NormalizePath(Path.Combine(path, file.Filename));
 
-            // Skip if it exists already
             if(File.Exists(filePath))
                 continue;
 
@@ -82,10 +78,8 @@ public static class Downloader
             {
                 try
                 {
-                    // Download and populate fileChunks
-                    FileChunk[] fileChunks = await HttpClientHelper.HttpClient.DownloadFileChunksAsync(file.File, _progress, cancellationToken);
+                    FileChunk[] fileChunks = await HttpClientHelper.HttpClient.DownloadFileChunksAsync(file.Url, _progress, cancellationToken);
 
-                    // Clean up any left up data from downloading the file
                     GC.Collect();
 
                     await FileUtilities.Save(fileChunks, fileStream, cancellationToken);
@@ -94,7 +88,7 @@ public static class Downloader
                 {
                     switch(ex)
                     {
-                        // If the CancellationToken was called, then ignore
+                        // If the CancellationToken was called, then ignore it
                         case OperationCanceledException:
                             break;
 
@@ -107,23 +101,5 @@ public static class Downloader
         }
 
         DownloadFinished?.Invoke(path);
-    }
-
-    public static async Task DownloadUpdateAsync(CancellationToken cancellationToken)
-    {
-        string downloadUrl = "https://github.com/Anequit/SCD/releases/latest/download/";
-        string tempPath = Path.Combine(Directory.GetCurrentDirectory(), ".temp");
-
-        if(Directory.Exists(tempPath))
-            Directory.Delete(tempPath);
-
-        Directory.CreateDirectory(tempPath);
-
-        DirectoryInfo tempPathInfo = new DirectoryInfo(tempPath)
-        {
-            Attributes = FileAttributes.Hidden
-        };
-        
-        // TODO Check platform and download acording to the platform
     }
 }
