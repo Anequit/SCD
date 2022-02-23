@@ -89,6 +89,9 @@ public static class WebUtilities
                 if(string.IsNullOrEmpty(release.VersionNumber))
                     throw new NullOrEmptyVersionNumberException();
 
+                if(string.IsNullOrEmpty(release.Url))
+                    throw new NullOrEmptyUrlException();
+
                 return release;
             }
         }
