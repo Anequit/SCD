@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace SCD.Core.Exceptions;
 
-internal class NullOrEmptyVersionNumberException : Exception
+public class NullOrEmptyVersionNumberException : Exception
 {
     public NullOrEmptyVersionNumberException()
     {
