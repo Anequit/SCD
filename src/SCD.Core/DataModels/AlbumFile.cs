@@ -1,7 +1,12 @@
-﻿namespace SCD.Core.DataModels;
+﻿using System.Text.Json.Serialization;
+
+namespace SCD.Core.DataModels;
 
 public record AlbumFile
 {
-    public string Name { get; init; } = "";
-    public string File { get; init; } = "";
+    [JsonPropertyName("name")]
+    public string Filename { get; init; } = "";
+
+    [JsonPropertyName("file")]
+    public string Url { get; init; } = "";
 }

@@ -3,7 +3,10 @@ using ReactiveUI;
 using SCD.Avalonia.Services;
 using SCD.Core;
 using SCD.Core.DataModels;
+using SCD.Core.Exceptions;
+using SCD.Core.Helpers;
 using SCD.Core.Utilities;
+using System;
 using System.Reactive;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,12 +29,43 @@ public class DownloadingViewModel : ReactiveObject
 
         CancelDownloadCommand = ReactiveCommand.Create(() => CancelDownload());
 
-        AlbumDownloader.DownloadFinished += AlbumDownloader_DownloadFinished;
-        AlbumDownloader.FileChanged += AlbumDownloader_FileChanged;
-        AlbumDownloader.ProgressChanged += AlbumDownloader_ProgressChanged;
-        AlbumDownloader.ErrorOccurred += AlbumDownloader_ErrorOccurred;
+        Downloader.DownloadFinished += AlbumDownloader_DownloadFinished;
+        Downloader.FileChanged += AlbumDownloader_FileChanged;
+        Downloader.ProgressChanged += AlbumDownloader_ProgressChanged;
+        Downloader.ErrorOccurred += AlbumDownloader_ErrorOccurred;
 
-        Task.Run(async () => await AlbumDownloader.DownloadAsync(await WebUtilities.FetchAlbumAsync(albumURL), downloadLocation, _cancellationTokenSource.Token));
+        Task.Run(async () =>
+        {
+            try
+            {
+                Album album = await WebUtilities.FetchAlbumAsync(albumURL);
+
+                await Downloader.DownloadAndSaveAlbumAsync(album, downloadLocation, _cancellationTokenSource.Token);
+            }
+            catch(Exception exception)
+            {
+                switch(exception)
+                {
+                    case NullAlbumException:
+                        NavigationService.ShowErrorAlert("Error", "Failed to parse album.");
+                        break;
+
+                    case PrivateAlbumException:
+                        NavigationService.ShowErrorAlert("Error", "Album private.");
+                        break;
+
+                    case InvalidAlbumException:
+                        NavigationService.ShowErrorAlert("Error", "Album doesn't exist.");
+                        break;
+
+                    case FailedToFetchAlbumException:
+                        NavigationService.ShowErrorAlert("Error", "An unexpected cyberdrop error occured.");
+                        break;
+                }
+
+                NavigationService.NavigateTo(new MainFormViewModel(_window));
+            }
+        });
     }
 
     public string Filename
@@ -56,7 +90,7 @@ public class DownloadingViewModel : ReactiveObject
     }
 
     private void AlbumDownloader_ProgressChanged(double e) => Progress = e;
-    private void AlbumDownloader_FileChanged(AlbumFile e) => Filename = e.Name;
+    private void AlbumDownloader_FileChanged(AlbumFile e) => Filename = e.Filename;
     private void AlbumDownloader_DownloadFinished(string e) => NavigationService.NavigateTo(new DownloadFinishedViewModel(_window, e));
-    private void AlbumDownloader_ErrorOccurred(string e) => NavigationService.ShowAlert("Error", e);
+    private void AlbumDownloader_ErrorOccurred(string e) => NavigationService.ShowErrorAlert("Error", e);
 }

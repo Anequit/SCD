@@ -255,4 +255,61 @@
 		<Setter Property="Background" Value="#CB6A23"/>
 	</Style>
 
+	<Style Selector="Button.No">
+		<Setter Property="Content">
+			<Template>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<Path Grid.Column="0"
+						  Classes="Cross"
+						  Width="14" Height="14"
+						  Margin="14 0 7 0"/>
+
+					<Label Grid.Column="1"
+						   Classes="Button"
+						   Content="No"
+						   Margin="0 0 14 0"
+						   VerticalAlignment="Center"/>
+				</Grid>
+			</Template>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.Yes">
+		<Setter Property="Background" Value="#FF8328"/>
+
+		<Setter Property="Content">
+			<Template>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<Path Grid.Column="0"
+						  Classes="Download"
+						  Width="14" Height="14"
+						  Margin="14 0 7 0"/>
+
+					<Label Grid.Column="1"
+						   Classes="Button"
+						   Content="Yes"
+						   Margin="0 0 14 0"
+						   VerticalAlignment="Center"/>
+				</Grid>
+			</Template>
+		</Setter>
+	</Style>
+
+	<Style Selector="Button.Yes:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#E1782B"/>
+	</Style>
+
+	<Style Selector="Button.Yes:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#CB6A23"/>
+	</Style>
 </Styles>

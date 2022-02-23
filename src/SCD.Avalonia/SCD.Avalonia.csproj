@@ -33,6 +33,9 @@
     <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.10.12" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SCD.Core\SCD.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <AvaloniaXaml Update="Assets\Styles\TextBoxStyles.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
@@ -41,9 +44,6 @@
     <AvaloniaXaml Update="Assets\Icons.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SCD.Core\SCD.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaXaml Update="Assets\Styles\TextBlockStyles.axaml">

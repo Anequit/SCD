@@ -1,5 +1,7 @@
 ﻿using SCD.Core.DataModels;
 using SCD.Core.Exceptions;
+using SCD.Core.Helpers;
+using System;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Runtime.InteropServices;
@@ -33,16 +35,21 @@ public static class WebUtilities
     }
 
     /// <summary>
-    /// Fetch a potential album from a url.
+    /// Fetch Album from url
     /// </summary>
-    /// <param name="url">Link to album.</param>
-    /// <returns>Successfully fetched album.</returns>
-    /// <exception cref="NullAlbumException">If the album doesn't deserialize</exception>
-    /// <exception cref="UnsuccessfulAlbumException">If album doesn't exist or is private.</exception>
+    /// <param name="url"></param>
+    /// <returns>Successful album</returns>
+    /// <exception cref="NullAlbumException"></exception>
+    /// <exception cref="PrivateAlbumException"></exception>
+    /// <exception cref="InvalidAlbumException"></exception>
+    /// <exception cref="FailedToFetchAlbumException"></exception>
     public static async Task<Album> FetchAlbumAsync(string url)
     {
-        // Get album identifier from url
-        string albumIdentifier = url.Substring(url.LastIndexOf('/'));
+        string albumIdentifier = url;
+
+        // Since each album url will contain a main
+        if(url.LastIndexOf('/') != -1)
+            albumIdentifier = url.Substring(url.LastIndexOf('/'));
 
         // Call api
         using(HttpResponseMessage response = await HttpClientHelper.HttpClient.GetAsync("https://cyberdrop.me/api/album/get/" + albumIdentifier))
@@ -50,21 +57,68 @@ public static class WebUtilities
             // Check if api had successful response
             response.EnsureSuccessStatusCode();
 
-            // Attempt to deserialize json response from api
-            Album? album = JsonSerializer.Deserialize<Album>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions()
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            // Deserialize json response from api
+            Album? album = JsonSerializer.Deserialize<Album>(await response.Content.ReadAsStringAsync());
 
-            // If the album doesn't deserialize
+            // If the album doesn't deserialize (Should never happen unless the website is down.)
             if(album is null)
-                throw new NullAlbumException();
+                throw new FailedToFetchAlbumException();
 
-            // If album doesn't exist or is private.
             if(album.Description != null && !album.Success)
-                throw new UnsuccessfulAlbumException(album.Description);
+            {
+                switch(album.Description)
+                {
+                    // Private album 
+                    case "This album is not available for public.":
+                        throw new PrivateAlbumException();
+
+                    // Will only occur if the url provided is invalid.
+                    case "No token provided." or "Album not found.":
+                        throw new InvalidAlbumException();
+
+                    // Can occur if the server is having some issues but is still up.
+                    case "An unexpected error occcured. Try again?":
+                        throw new FailedToFetchAlbumException();
+                }
+            }
 
             return album;
+        }
+    }
+
+    /// <summary>
+    /// Parses the latest release from github
+    /// </summary>
+    /// <returns>Latest release</returns>
+    /// <exception cref="NullReleaseException">Release wasn't able to be deserialized.</exception>
+    /// <exception cref="NullOrEmptyVersionNumberException">Release version was empty or null.</exception>
+    /// <exception cref="NullOrEmptyUrlException">Release url was empty or null.</exception>
+    public static async Task<Release> FetchLatestRelease()
+    {
+        using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
+        {
+            httpRequestMessage.RequestUri = new Uri("https://api.github.com/repos/Anequit/SCD/releases/latest");
+            httpRequestMessage.Method = HttpMethod.Get;
+            httpRequestMessage.Headers.UserAgent.ParseAdd("request");
+            httpRequestMessage.Headers.Accept.ParseAdd("application/json");
+
+            using(HttpResponseMessage httpResponseMessage = await HttpClientHelper.HttpClient.SendAsync(httpRequestMessage))
+            {
+                httpResponseMessage.EnsureSuccessStatusCode();
+
+                Release? release = JsonSerializer.Deserialize<Release>(await httpResponseMessage.Content.ReadAsStringAsync());
+
+                if(release is null)
+                    throw new NullReleaseException();
+
+                if(string.IsNullOrEmpty(release.VersionNumber))
+                    throw new NullOrEmptyVersionNumberException();
+
+                if(string.IsNullOrEmpty(release.Url))
+                    throw new NullOrEmptyUrlException();
+
+                return release;
+            }
         }
     }
 }

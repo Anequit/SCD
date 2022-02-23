@@ -3,21 +3,21 @@ using System.Runtime.Serialization;
 
 namespace SCD.Core.Exceptions;
 
-public class NullOrEmptyContentLengthException : Exception
+public class NullOrZeroContentLengthException : Exception
 {
-    public NullOrEmptyContentLengthException()
+    public NullOrZeroContentLengthException()
     {
     }
 
-    public NullOrEmptyContentLengthException(string? message) : base(message)
+    public NullOrZeroContentLengthException(string? message) : base(message)
     {
     }
 
-    public NullOrEmptyContentLengthException(string? message, Exception? innerException) : base(message, innerException)
+    public NullOrZeroContentLengthException(string? message, Exception? innerException) : base(message, innerException)
     {
     }
 
-    protected NullOrEmptyContentLengthException(SerializationInfo info, StreamingContext context) : base(info, context)
+    protected NullOrZeroContentLengthException(SerializationInfo info, StreamingContext context) : base(info, context)
     {
     }
 }

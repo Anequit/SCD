@@ -4,9 +4,9 @@ using System.Reactive;
 
 namespace SCD.Avalonia.ViewModels;
 
-public class AlertViewModel : ReactiveObject
+public class ErrorAlertViewModel : ReactiveObject
 {
-    public AlertViewModel(string error, string errorMessage)
+    public ErrorAlertViewModel(string error, string errorMessage)
     {
         Error = error;
         ErrorMessage = errorMessage;

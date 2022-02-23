@@ -1,5 +1,6 @@
 ﻿using SCD.Core.DataModels;
 using SCD.Core.Extensions;
+using SCD.Core.Helpers;
 using SCD.Core.Utilities;
 using System;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SCD.Core;
 
-public static class AlbumDownloader
+public static class Downloader
 {
     private static readonly Progress<double> _progress = new Progress<double>(progressAmount =>
     {
@@ -43,13 +44,11 @@ public static class AlbumDownloader
     /// <param name="downloadLocation">Location the album should be stored.</param>
     /// <param name="cancellationToken">Token to cancel the download.</param>
     /// <returns></returns>
-    public static async Task DownloadAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
+    public static async Task DownloadAndSaveAlbumAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
     {
-        //  If album files is null or empty, then return
-        if(album.Files is null || album.Files.Length == 0)
+        if(album.AlbumFiles is null || album.AlbumFiles.Length == 0)
             return;
 
-        // If the album doesn't have a title, then set it to Album
         if(string.IsNullOrEmpty(album.Title))
             album.Title = "Album";
 
@@ -59,7 +58,7 @@ public static class AlbumDownloader
         if(!Directory.Exists(path))
             Directory.CreateDirectory(path);
 
-        foreach(AlbumFile file in album.Files)
+        foreach(AlbumFile file in album.AlbumFiles)
         {
             ProgressChanged?.Invoke(0);
             FileChanged?.Invoke(file);
@@ -67,13 +66,11 @@ public static class AlbumDownloader
             cancellationToken.ThrowIfCancellationRequested();
 
             // If the file url is empty or the file name is empty, then skip over the file
-            if(string.IsNullOrEmpty(file.File) || string.IsNullOrEmpty(file.Name))
+            if(string.IsNullOrEmpty(file.Filename) || string.IsNullOrEmpty(file.Url))
                 continue;
 
-            // Normalize the file path
-            string filePath = PathUtilities.NormalizePath(Path.Combine(path, file.Name));
+            string filePath = PathUtilities.NormalizePath(Path.Combine(path, file.Filename));
 
-            // Skip if it exists already
             if(File.Exists(filePath))
                 continue;
 
@@ -81,26 +78,17 @@ public static class AlbumDownloader
             {
                 try
                 {
-                    // Download and populate fileChunks
-                    FileChunk[] fileChunks = await HttpClientHelper.HttpClient.DownloadFileChunksAsync(file.File, _progress, cancellationToken);
+                    FileChunk[] fileChunks = await HttpClientHelper.HttpClient.DownloadFileChunksAsync(file.Url, _progress, cancellationToken);
 
-                    // Clean up any left up data from downloading the file
                     GC.Collect();
 
-                    // Iterate over fileChunks
-                    foreach(FileChunk chunk in fileChunks)
-                    {
-                        // Seek to the correct position, write the chunks data, and then flush the fileStream
-                        fileStream.Seek(chunk.StartingHeaderRange, SeekOrigin.Begin);
-                        await fileStream.WriteAsync(chunk.Data, cancellationToken);
-                        await fileStream.FlushAsync(cancellationToken);
-                    }
+                    await FileUtilities.Save(fileChunks, fileStream, cancellationToken);
                 }
                 catch(Exception ex)
                 {
                     switch(ex)
                     {
-                        // If the CancellationToken was called, then ignore
+                        // If the CancellationToken was called, then ignore it
                         case OperationCanceledException:
                             break;
 
