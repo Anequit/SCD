@@ -36,12 +36,14 @@ public static class WebUtilities
     }
 
     /// <summary>
-    /// Fetch a potential album from a url.
+    /// Fetch Album from url
     /// </summary>
-    /// <param name="url">Link to album.</param>
-    /// <returns>Successfully fetched album.</returns>
-    /// <exception cref="NullAlbumException">If the album doesn't deserialize</exception>
-    /// <exception cref="UnsuccessfulAlbumException">If album doesn't exist or is private.</exception>
+    /// <param name="url"></param>
+    /// <returns>Successful album</returns>
+    /// <exception cref="NullAlbumException"></exception>
+    /// <exception cref="PrivateAlbumException"></exception>
+    /// <exception cref="InvalidAlbumException"></exception>
+    /// <exception cref="FailedToFetchAlbumException"></exception>
     public static async Task<Album> FetchAlbumAsync(string url)
     {
         // Get album identifier from url
@@ -68,6 +70,13 @@ public static class WebUtilities
         }
     }
 
+    /// <summary>
+    /// Parses the latest release from github
+    /// </summary>
+    /// <returns>Latest release</returns>
+    /// <exception cref="NullReleaseException">Release wasn't able to be deserialized.</exception>
+    /// <exception cref="NullOrEmptyVersionNumberException">Release version was empty or null.</exception>
+    /// <exception cref="NullOrEmptyUrlException">Release url was empty or null.</exception>
     public static async Task<Release> FetchLatestRelease()
     {
         using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
