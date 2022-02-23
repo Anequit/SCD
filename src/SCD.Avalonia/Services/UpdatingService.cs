@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SCD.Avalonia.Services;
 
-public static class UpdatingService
+public static class UpdateService
 {
     /// <summary>
     /// Current version of the application.
