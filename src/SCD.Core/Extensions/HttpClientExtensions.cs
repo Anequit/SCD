@@ -20,7 +20,7 @@ public static class HttpClientExtensions
     /// <param name="progress"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>Array of populated file chunks.</returns>
-    /// <exception cref="NullOrEmptyContentLengthException"></exception>
+    /// <exception cref="NullOrZeroContentLengthException"></exception>
     public static async Task<FileChunk[]> DownloadFileChunksAsync(this HttpClient httpClient, string url, IProgress<double> progress, CancellationToken cancellationToken)
     {
         // Get only headers of url.
@@ -28,8 +28,8 @@ public static class HttpClientExtensions
         {
             response.EnsureSuccessStatusCode();
 
-            if(response.Content.Headers.ContentLength is null)
-                throw new NullOrEmptyContentLengthException();
+            if(response.Content.Headers.ContentLength is null or 0)
+                throw new NullOrZeroContentLengthException();
 
             // Length of the file being downloaded.
             long contentLength = (long)response.Content.Headers.ContentLength;
@@ -88,12 +88,12 @@ public static class HttpClientExtensions
     }
 
     /// <summary>
-    /// Downloads file chunk data asynchronously.
+    /// Downlaods data associated to a filechunk
     /// </summary>
-    /// <param name="fileChunk">Current Chunk.</param>
-    /// <param name="url">Url being downloaded from.</param>
+    /// <param name="fileChunk"></param>
+    /// <param name="url">URL containing file data.</param>
     /// <param name="cancellationToken"></param>
-    /// <returns>Current freshly downloaded data.</returns>
+    /// <returns>Data associated with the filechunk</returns>
     private static async Task<byte[]> DownloadFileChunkDataAsync(FileChunk fileChunk, string url, CancellationToken cancellationToken)
     {
         byte[] data;
@@ -114,7 +114,7 @@ public static class HttpClientExtensions
                     using(HttpResponseMessage httpResponseMessage = HttpClientHelper.HttpClient.SendAsync(httpRequestMessage, cancellationToken).Result)
                     {
                         if(httpResponseMessage.Content.Headers.ContentLength is null or 0)
-                            throw new NullOrEmptyContentLengthException();
+                            throw new NullOrZeroContentLengthException();
 
                         // Store the data from the reponse
                         data = await httpResponseMessage.Content.ReadAsByteArrayAsync(cancellationToken);
@@ -122,10 +122,10 @@ public static class HttpClientExtensions
                     }
                 }
             }
-            catch(Exception ex)
+            catch(Exception exception)
             {
-                // Thrown if CancellationToken is canceled otherwise ignore and try again.
-                if(ex is AggregateException or TaskCanceledException or NullOrEmptyContentLengthException)
+                // Thrown if CancellationToken is canceled or the content length is null or zero otherwise ignore and try again.
+                if(exception is AggregateException or TaskCanceledException or NullOrZeroContentLengthException)
                     break;
 
                 continue;
