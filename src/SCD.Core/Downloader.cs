@@ -53,7 +53,7 @@ public static class Downloader
             album.Title = "Album";
 
         // Normalize path by removing invalid characters from the album directory
-        string path = PathUtilities.NormalizePath(Path.Combine(downloadLocation, album.Title));
+        string path = PathUtilities.RemoveInvalidPathChars(Path.Combine(downloadLocation, album.Title));
 
         if(!Directory.Exists(path))
             Directory.CreateDirectory(path);
@@ -69,7 +69,7 @@ public static class Downloader
             if(string.IsNullOrEmpty(file.Filename) || string.IsNullOrEmpty(file.Url))
                 continue;
 
-            string filePath = PathUtilities.NormalizePath(Path.Combine(path, file.Filename));
+            string filePath = Path.Combine(path, PathUtilities.RemoveInvalidFilenameChars(file.Filename));
 
             if(File.Exists(filePath))
                 continue;
