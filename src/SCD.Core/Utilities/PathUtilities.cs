@@ -27,19 +27,16 @@ public static class PathUtilities
     }
 
     /// <summary>
-    /// Removes invalid characters from path.
+    /// Removes all invalid path characters
     /// </summary>
-    /// <param name="path">Path to normalize.</param>
-    /// <returns>Normalized path.</returns>
-    public static string NormalizePath(string path)
-    {
-        // Get a string of the invalid characters.
-        string invalidChars = new string(Path.GetInvalidPathChars());
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static string RemoveInvalidPathChars(string path) => string.Concat(path.Split(Path.GetInvalidPathChars()));
 
-        // Iterate over the invalid characters, replacing them one at a time with an empty string.
-        foreach(char invalidChar in invalidChars)
-            path = path.Replace($"{invalidChar}", string.Empty);
-
-        return path;
-    }
+    /// <summary>
+    /// Removes all invalid filename characters
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <returns></returns>
+    public static string RemoveInvalidFilenameChars(string filename) => string.Concat(filename.Split(Path.GetInvalidFileNameChars()));
 }
