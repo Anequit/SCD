@@ -14,8 +14,8 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
-    <AvaloniaResource Remove="Assets\icons.axaml" />
     <AvaloniaResource Remove="Assets\IconStyles.axaml" />
+    <AvaloniaResource Remove="Assets\Resources\Icons.axaml" />
     <AvaloniaResource Remove="Assets\Styles\ButtonStyles.axaml" />
     <AvaloniaResource Remove="Assets\Styles\ProgressBarStyles.axaml" />
     <AvaloniaResource Remove="Assets\Styles\TextBlockStyles.axaml" />
@@ -41,11 +41,6 @@
     </AvaloniaXaml>
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaXaml Update="Assets\Icons.axaml">
-      <SubType>Designer</SubType>
-    </AvaloniaXaml>
-  </ItemGroup>
-  <ItemGroup>
     <AvaloniaXaml Update="Assets\Styles\TextBlockStyles.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
@@ -57,6 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <AvaloniaXaml Update="Assets\Styles\ButtonStyles.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaXaml Update="Assets\Resources\Icons.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
   </ItemGroup>

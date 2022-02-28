@@ -15,7 +15,13 @@
 		<StyleInclude Source="/Assets/Styles/ButtonStyles.axaml"/>
 		<StyleInclude Source="/Assets/Styles/ProgressBarStyles.axaml"/>
 		<StyleInclude Source="/Assets/Styles/TextBlockStyles.axaml"/>
-		    
-		<StyleInclude Source="/Assets/Icons.axaml"/>
     </Application.Styles>
+
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source="/Assets/Resources/Icons.axaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
 </Application>
