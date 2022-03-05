@@ -28,7 +28,7 @@
 			
 			<Button DockPanel.Dock="Right"
 					HorizontalAlignment="Right" VerticalAlignment="Bottom"
-					Classes="OpenFolder"
+					Classes="OpenFolder CTA"
 					Command="{Binding OpenFolderCommand}"/>
 		</DockPanel>
 	</DockPanel>
