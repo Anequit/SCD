@@ -21,7 +21,7 @@
 			   Margin="0 16 0 0"/>
 
 		<Label Classes="Hint"
-			   Content="Where should it be saved?"/>
+			   Content="Where should the album be saved?"/>
 
 		<Grid Margin="0 8 0 0">
 			<Grid.ColumnDefinitions>
