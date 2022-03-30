@@ -9,51 +9,34 @@ using System.Threading.Tasks;
 
 namespace SCD.Core;
 
-public static class Downloader
+public static class AlbumDownloader
 {
     private static readonly Progress<double> _progress = new Progress<double>(progressAmount =>
     {
-        // When progress is reported, invoke ProgressChanged with the current progress rounded.
         ProgressChanged?.Invoke(Math.Round(progressAmount, MidpointRounding.ToZero));
     });
 
-    /// <summary>
-    /// Fired when the current file changes.
-    /// </summary>
     public static event Action<AlbumFile>? FileChanged;
 
-    /// <summary>
-    /// Fired when progress on the current file has changed.
-    /// </summary>
     public static event Action<double>? ProgressChanged;
 
-    /// <summary>
-    /// Fired when the album is finished downloading.
-    /// </summary>
     public static event Action<string>? DownloadFinished;
 
-    /// <summary>
-    /// Fired when an error occur.
-    /// </summary>
     public static event Action<string>? ErrorOccurred;
 
-    /// <summary>
-    /// Downloads an album asynchronous.
-    /// </summary>
-    /// <param name="album">Album being downloaded.</param>
-    /// <param name="downloadLocation">Location the album should be stored.</param>
-    /// <param name="cancellationToken">Token to cancel the download.</param>
-    /// <returns></returns>
     public static async Task DownloadAndSaveAlbumAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
     {
-        if(album.AlbumFiles is null || album.AlbumFiles.Length == 0)
+        if(album.AlbumFiles is null || album.Title is null)
             return;
-
-        if(string.IsNullOrEmpty(album.Title))
+        
+        // If the album title contains all invalid characters, then set to default Album
+        if(string.IsNullOrWhiteSpace(PathUtilities.RemoveInvalidPathChars(album.Title)))
             album.Title = "Album";
 
-        // Normalize path by removing invalid characters from the album directory
-        string path = PathUtilities.RemoveInvalidPathChars(Path.Combine(downloadLocation, album.Title));
+        // Remove all invalid chars from path
+        downloadLocation = PathUtilities.RemoveInvalidPathChars(downloadLocation);
+
+        string path = Path.Combine(downloadLocation, album.Title);
 
         if(!Directory.Exists(path))
             Directory.CreateDirectory(path);

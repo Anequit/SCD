@@ -47,6 +47,7 @@ public static class WebUtilities
     {
         string albumIdentifier = url;
 
+        // TODO: Replace with REGEX query
         // Since each album url will contain a main
         if(url.LastIndexOf('/') != -1)
             albumIdentifier = url.Substring(url.LastIndexOf('/'));

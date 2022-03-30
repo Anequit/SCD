@@ -1,5 +1,8 @@
 ﻿namespace SCD.Core.DataModels;
 
+/// <summary>
+/// A chunk of a file
+/// </summary>
 public class FileChunk
 {
     public int Position { get; init; }

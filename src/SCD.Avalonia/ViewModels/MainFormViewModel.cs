@@ -53,17 +53,7 @@ public class MainFormViewModel : ReactiveObject
 
     private void ReportBug() => WebUtilities.Open("https://github.com/Anequit/SCD/issues");
 
-    private void Download()
-    {
-        if(!Directory.Exists(DownloadLocation))
-        {
-            NavigationService.ShowErrorAlert("Error", "Invalid download location.");
-            DownloadLocation = string.Empty;
-            return;
-        }
-
-        NavigationService.NavigateTo(new DownloadingViewModel(_window, AlbumURL, DownloadLocation));
-    }
+    private void Download() => NavigationService.NavigateTo(new DownloadingViewModel(_window, AlbumURL, DownloadLocation));
 
     private async Task SelectAsync()
     {

@@ -49,6 +49,10 @@ public static class HttpClientExtensions
                 CancellationToken = cancellationToken
             }, async (fileChunk, token) =>
             {
+                /**
+                 * Implement loop that will retry to download the chunk if it fails.
+                 */
+
                 // Download and store the chunk data in the current fileChunk
                 fileChunk.Data = await DownloadFileChunkDataAsync(fileChunk, url, token);
                 dataDownloaded += fileChunk.Data.LongLength;
@@ -88,7 +92,7 @@ public static class HttpClientExtensions
     }
 
     /// <summary>
-    /// Downlaods data associated to a filechunk
+    /// Downloads data associated to a filechunk
     /// </summary>
     /// <param name="fileChunk"></param>
     /// <param name="url">URL containing file data.</param>
@@ -96,41 +100,38 @@ public static class HttpClientExtensions
     /// <returns>Data associated with the filechunk</returns>
     private static async Task<byte[]> DownloadFileChunkDataAsync(FileChunk fileChunk, string url, CancellationToken cancellationToken)
     {
-        byte[] data;
+        byte[] data = new byte[fileChunk.EndingHeaderRange - fileChunk.StartingHeaderRange];
 
-        do
+        try
         {
-            data = new byte[fileChunk.EndingHeaderRange - fileChunk.StartingHeaderRange];
-
-            try
+            // Build httpRequestMessage with the url and our range header values from the fileChunk
+            using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
             {
-                // Build httpRequestMessage with the url and our range header values from the fileChunk
-                using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
+                httpRequestMessage.RequestUri = new Uri(url);
+                httpRequestMessage.Headers.Range = new RangeHeaderValue(fileChunk.StartingHeaderRange, fileChunk.EndingHeaderRange);
+
+                // Make request to with httpRequestMessage and lock the thread by waiting for the result.
+                using(HttpResponseMessage httpResponseMessage = HttpClientHelper.HttpClient.SendAsync(httpRequestMessage, cancellationToken).Result)
                 {
-                    httpRequestMessage.RequestUri = new Uri(url);
-                    httpRequestMessage.Headers.Range = new RangeHeaderValue(fileChunk.StartingHeaderRange, fileChunk.EndingHeaderRange);
+                    httpResponseMessage.EnsureSuccessStatusCode();
 
-                    // Make request to with httpRequestMessage and lock the thread by waiting for the result.
-                    using(HttpResponseMessage httpResponseMessage = HttpClientHelper.HttpClient.SendAsync(httpRequestMessage, cancellationToken).Result)
-                    {
-                        if(httpResponseMessage.Content.Headers.ContentLength is null or 0)
-                            throw new NullOrZeroContentLengthException();
-
-                        // Store the data from the reponse
-                        data = await httpResponseMessage.Content.ReadAsByteArrayAsync(cancellationToken);
-                        fileChunk.Downloaded = true;
-                    }
+                    // Store the data from the reponse
+                    data = await httpResponseMessage.Content.ReadAsByteArrayAsync(cancellationToken);
+                    fileChunk.Downloaded = true;
                 }
             }
-            catch(Exception exception)
+        }
+        catch(Exception exception)
+        {
+            switch(exception)
             {
-                // Thrown if CancellationToken is canceled or the content length is null or zero otherwise ignore and try again.
-                if(exception is AggregateException or TaskCanceledException or NullOrZeroContentLengthException)
+                case AggregateException or TaskCanceledException:
                     break;
 
-                continue;
+                default:
+                    throw new FailedToDownloadFileChunkDataException();
             }
-        } while(!fileChunk.Downloaded);
+        }
 
         return data;
     }

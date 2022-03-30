@@ -29,43 +29,12 @@ public class DownloadingViewModel : ReactiveObject
 
         CancelDownloadCommand = ReactiveCommand.Create(() => CancelDownload());
 
-        Downloader.DownloadFinished += AlbumDownloader_DownloadFinished;
-        Downloader.FileChanged += AlbumDownloader_FileChanged;
-        Downloader.ProgressChanged += AlbumDownloader_ProgressChanged;
-        Downloader.ErrorOccurred += AlbumDownloader_ErrorOccurred;
+        AlbumDownloader.DownloadFinished += AlbumDownloader_DownloadFinished;
+        AlbumDownloader.FileChanged += AlbumDownloader_FileChanged;
+        AlbumDownloader.ProgressChanged += AlbumDownloader_ProgressChanged;
+        AlbumDownloader.ErrorOccurred += AlbumDownloader_ErrorOccurred;
 
-        Task.Run(async () =>
-        {
-            try
-            {
-                Album album = await WebUtilities.FetchAlbumAsync(albumURL);
-
-                await Downloader.DownloadAndSaveAlbumAsync(album, downloadLocation, _cancellationTokenSource.Token);
-            }
-            catch(Exception exception)
-            {
-                switch(exception)
-                {
-                    case NullAlbumException:
-                        NavigationService.ShowErrorAlert("Error", "Failed to parse album.");
-                        break;
-
-                    case PrivateAlbumException:
-                        NavigationService.ShowErrorAlert("Error", "Album private.");
-                        break;
-
-                    case InvalidAlbumException:
-                        NavigationService.ShowErrorAlert("Error", "Album doesn't exist.");
-                        break;
-
-                    case FailedToFetchAlbumException:
-                        NavigationService.ShowErrorAlert("Error", "An unexpected cyberdrop error occured.");
-                        break;
-                }
-
-                NavigationService.NavigateTo(new MainFormViewModel(_window));
-            }
-        });
+        Task.Run(async () => await DownloadAsync(albumURL, downloadLocation));
     }
 
     public string Filename
@@ -87,6 +56,39 @@ public class DownloadingViewModel : ReactiveObject
         HttpClientHelper.Cancel();
         _cancellationTokenSource?.Cancel();
         NavigationService.NavigateTo(new MainFormViewModel(_window));
+    }
+
+    private async Task DownloadAsync(string albumURL, string downloadLocation)
+    {
+        try
+        {
+            Album album = await WebUtilities.FetchAlbumAsync(albumURL);
+
+            await AlbumDownloader.DownloadAndSaveAlbumAsync(album, downloadLocation, _cancellationTokenSource.Token);
+        }
+        catch(Exception exception)
+        {
+            switch(exception)
+            {
+                case NullAlbumException:
+                    NavigationService.ShowErrorAlert("Error", "Failed to parse album.");
+                    break;
+
+                case PrivateAlbumException:
+                    NavigationService.ShowErrorAlert("Error", "Album is private.");
+                    break;
+
+                case InvalidAlbumException:
+                    NavigationService.ShowErrorAlert("Error", "Album doesn't exist.");
+                    break;
+
+                case FailedToFetchAlbumException:
+                    NavigationService.ShowErrorAlert("Error", "An unexpected cyberdrop error occured.");
+                    break;
+            }
+
+            NavigationService.NavigateTo(new MainFormViewModel(_window));
+        }
     }
 
     private void AlbumDownloader_ProgressChanged(double e) => Progress = e;
