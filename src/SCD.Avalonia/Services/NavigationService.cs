@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using SCD.Avalonia.ViewModels;
-using SCD.Core.DataModels;
 using System;
 using System.Collections.ObjectModel;
 
@@ -27,10 +26,7 @@ public static class NavigationService
 
     public static ReactiveObject? CurrentAlertViewModel
     {
-        get
-        {
-            return ViewModels[1];
-        }
+        get => ViewModels[1];
         private set
         {
             ViewModels[1] = value;
@@ -42,7 +38,7 @@ public static class NavigationService
 
     public static void ShowErrorAlert(string title, string message) => CurrentAlertViewModel = new ErrorAlertViewModel(title, message);
 
-    public static void ShowUpdateAlert(string title, string message, Release release) => CurrentAlertViewModel = new UpdateAlertViewModel(title, message, release);
+    public static void ShowUpdateAlert(string title, string message) => CurrentAlertViewModel = new UpdateAlertViewModel(title, message);
 
     public static void CloseAlert() => CurrentAlertViewModel = null;
 }

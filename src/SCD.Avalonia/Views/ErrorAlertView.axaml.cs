@@ -5,7 +5,10 @@ namespace SCD.Avalonia.Views;
 
 public partial class ErrorAlertView : UserControl
 {
-    public ErrorAlertView() => InitializeComponent();
+    public ErrorAlertView()
+    {
+        InitializeComponent();
+    }
 
     private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
 }

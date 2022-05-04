@@ -1,9 +1,8 @@
 ﻿using SCD.Core.DataModels;
-using SCD.Core.Extensions;
-using SCD.Core.Helpers;
 using SCD.Core.Utilities;
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,78 +10,59 @@ namespace SCD.Core;
 
 public static class AlbumDownloader
 {
-    private static readonly Progress<double> _progress = new Progress<double>(progressAmount =>
-    {
-        ProgressChanged?.Invoke(Math.Round(progressAmount, MidpointRounding.ToZero));
-    });
-
     public static event Action<AlbumFile>? FileChanged;
+    public static event Action<Exception>? ErrorOccurred;
 
-    public static event Action<double>? ProgressChanged;
-
-    public static event Action<string>? DownloadFinished;
-
-    public static event Action<string>? ErrorOccurred;
-
-    public static async Task DownloadAndSaveAlbumAsync(Album album, string downloadLocation, CancellationToken cancellationToken)
+    public static async Task DownloadAlbumAsync(Album album, string downloadLocation, IProgress<decimal> progress, CancellationToken token)
     {
-        if(album.AlbumFiles is null || album.Title is null)
+        if(!Directory.Exists(downloadLocation))
+            Directory.CreateDirectory(downloadLocation);
+
+        if(album.AlbumFiles is null || album.AlbumFiles.Count == 0)
             return;
-        
-        // If the album title contains all invalid characters, then set to default Album
-        if(string.IsNullOrWhiteSpace(PathUtilities.RemoveInvalidPathChars(album.Title)))
-            album.Title = "Album";
 
-        // Remove all invalid chars from path
-        downloadLocation = PathUtilities.RemoveInvalidPathChars(downloadLocation);
+        DownloadHandler downloadHandler = new DownloadHandler(progress, 1024 * 256, 20);
 
-        string path = Path.Combine(downloadLocation, album.Title);
-
-        if(!Directory.Exists(path))
-            Directory.CreateDirectory(path);
-
-        foreach(AlbumFile file in album.AlbumFiles)
+        do
         {
-            ProgressChanged?.Invoke(0);
-            FileChanged?.Invoke(file);
+            token.ThrowIfCancellationRequested();
 
-            cancellationToken.ThrowIfCancellationRequested();
+            AlbumFile file = album.AlbumFiles.Peek();
+
+            FileChanged?.Invoke(file);
 
             // If the file url is empty or the file name is empty, then skip over the file
             if(string.IsNullOrEmpty(file.Filename) || string.IsNullOrEmpty(file.Url))
                 continue;
 
-            string filePath = Path.Combine(path, PathUtilities.RemoveInvalidFilenameChars(file.Filename));
+            string filePath = Path.Combine(downloadLocation, Parser.ParseValidFilename(file.Filename));
 
             if(File.Exists(filePath))
+            {
+                album.AlbumFiles.Dequeue();
                 continue;
+            }
 
             using(FileStream fileStream = File.OpenWrite(filePath))
             {
                 try
                 {
-                    FileChunk[] fileChunks = await HttpClientHelper.HttpClient.DownloadFileChunksAsync(file.Url, _progress, cancellationToken);
-
-                    GC.Collect();
-
-                    await FileUtilities.Save(fileChunks, fileStream, cancellationToken);
+                    await downloadHandler.DownloadAsync(file.Url, fileStream, token);
+                    album.AlbumFiles.Dequeue();
                 }
                 catch(Exception ex)
                 {
-                    switch(ex)
+                    if(ex is OperationCanceledException or TaskCanceledException)
                     {
-                        // If the CancellationToken was called, then ignore it
-                        case OperationCanceledException:
-                            break;
+                        if(token.IsCancellationRequested)
+                            throw;
 
-                        default:
-                            ErrorOccurred?.Invoke(ex.Message);
-                            break;
+                        continue;
                     }
+                    
+                    ErrorOccurred?.Invoke(ex);
                 }
             }
-        }
-
-        DownloadFinished?.Invoke(path);
+        } while(album.AlbumFiles.Count > 0);
     }
 }

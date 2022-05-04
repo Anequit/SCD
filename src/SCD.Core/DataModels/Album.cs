@@ -1,18 +1,19 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace SCD.Core.DataModels;
 
-public record Album
+public class Album
 {
     [JsonPropertyName("success")]
-    public bool Success { get; init; }
+    public bool Success { get; init; } = false;
 
     [JsonPropertyName("title")]
-    public string? Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string Description { get; init; } = string.Empty;
 
     [JsonPropertyName("files")]
-    public AlbumFile[]? AlbumFiles { get; init; }
+    public Queue<AlbumFile>? AlbumFiles { get; init; }
 }

@@ -9,7 +9,7 @@
 	<AssemblyName>SCD</AssemblyName>
 	<RepositoryUrl>https://github.com/Anequit/SCD</RepositoryUrl>
 	<Description>A simple cyberdrop downloader.</Description>
-	<AssemblyVersion>1.2.3</AssemblyVersion>
+	<AssemblyVersion>2.0.0</AssemblyVersion>
 	<IncludeNativeLibrariesForSelfExtract>True</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
   <ItemGroup>

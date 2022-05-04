@@ -18,5 +18,5 @@ public class DownloadFinishedViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> OpenFolderCommand { get; set; }
 
     private void Home(Window window) => NavigationService.NavigateTo(new MainFormViewModel(window));
-    private void OpenFolder(string path) => PathUtilities.Open(path);
+    private void OpenFolder(string path) => Explorer.Open(path);
 }
