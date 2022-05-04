@@ -1,6 +1,6 @@
 $PublishPath = ".\src\SCD.Avalonia\bin\Publish"
 
-Get-ChildItem $PublishPath | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
+mkdir -Force $PublishPath
 
 dotnet publish .\SCD.sln -c Release -p:PublishProfile=win-x64 -v q --nologo
 Compress-Archive -Path $PublishPath\win-x64 -DestinationPath $PublishPath\win-x64
