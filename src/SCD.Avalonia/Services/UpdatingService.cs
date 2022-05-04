@@ -1,6 +1,7 @@
 ﻿using SCD.Core.DataModels;
 using SCD.Core.Exceptions;
-using SCD.Core.Utilities;
+using SCD.Core.Extensions;
+using SCD.Core.Helpers;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -22,38 +23,28 @@ public static class UpdateService
     {
         try
         {
-            if(CurrentVersion is null)
-                return;
+            Release latestRelease = await HttpClientHelper.HttpClient.FetchLatestReleaseAsync();
 
-            Release latestRelease = await WebUtilities.FetchLatestRelease();
+            if(CurrentVersion is null || latestRelease.VersionNumber == "-1")
+                return;
 
             Version latestVersion = new Version(latestRelease.VersionNumber.Remove(0, 1));
 
-            // Normalizes the version to match how latestVersion is parsed
-            // Without normalization it wouldn't be able to tell if there was a new version
             Version currentVersion = new Version(CurrentVersion.ToString(3));
 
             if(latestVersion > currentVersion)
-                NavigationService.ShowUpdateAlert("Update Available", "Would you like to update?", latestRelease);
+                NavigationService.ShowUpdateAlert("Update Available", "Would you like to update?");
         }
-        catch(Exception exception)
+        catch(Exception ex)
         {
-            switch(exception)
+            switch(ex)
             {
-                case NullReleaseException:
+                case FailedToFetchLatestRelease:
                     NavigationService.ShowErrorAlert("Error", "Failed to get latest release.");
                     break;
 
-                case NullOrEmptyVersionNumberException:
-                    NavigationService.ShowErrorAlert("Error", "Failed to get latest version number.");
-                    break;
-
-                case NullOrEmptyUrlException:
-                    NavigationService.ShowErrorAlert("Error", "Failed to get latest version url.");
-                    break;
-
                 default:
-                    NavigationService.ShowErrorAlert("Unknown Error", exception.Message);
+                    NavigationService.ShowErrorAlert("Unknown Error", ex.Message);
                     break;
             }
         }

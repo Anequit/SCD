@@ -33,7 +33,7 @@
 				CornerRadius="4"
 				DockPanel.Dock="Top"
 				Margin="0 8 0 0">
-			<ProgressBar Value="{Binding Progress}"
+			<ProgressBar Value="{Binding DownloadProgress}"
 						 ShowProgressText="True"/>
 		</Border>
 

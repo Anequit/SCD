@@ -15,8 +15,8 @@ public class TitleBarViewModel : ReactiveObject
     {
         _window = window;
 
-        MinimizeCommand = ReactiveCommand.Create(() => Minimize());
-        ExitCommand = ReactiveCommand.Create(() => Exit());
+        MinimizeCommand = ReactiveCommand.Create(Minimize);
+        ExitCommand = ReactiveCommand.Create(Exit);
         DragCommand = ReactiveCommand.Create<PointerPressedEventArgs>(x => Drag(x));
 
         string version = "Unknown version";

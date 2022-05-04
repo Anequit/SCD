@@ -11,7 +11,7 @@ public class ErrorAlertViewModel : ReactiveObject
         Error = error;
         ErrorMessage = errorMessage;
 
-        CloseCommand = ReactiveCommand.Create(() => Close());
+        CloseCommand = ReactiveCommand.Create(Close);
     }
 
     public string Error { get; }

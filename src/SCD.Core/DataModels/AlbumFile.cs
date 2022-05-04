@@ -2,11 +2,11 @@
 
 namespace SCD.Core.DataModels;
 
-public record AlbumFile
+public class AlbumFile
 {
     [JsonPropertyName("name")]
     public string Filename { get; init; } = "";
 
     [JsonPropertyName("file")]
-    public string Url { get; init; } = "";
+    public string? Url { get; init; } = "";
 }

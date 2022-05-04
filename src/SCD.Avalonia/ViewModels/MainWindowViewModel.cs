@@ -1,7 +1,6 @@
 using Avalonia.Controls;
 using ReactiveUI;
 using SCD.Avalonia.Services;
-using System.Runtime.InteropServices;
 
 namespace SCD.Avalonia.ViewModels;
 
@@ -14,14 +13,11 @@ public class MainWindowViewModel : ReactiveObject
         NavigationService.CurrentViewModelChanged += CurrentViewModelChanged;
         NavigationService.CurrentAlertViewModelChanged += CurrentAlertViewModelChanged;
 
-        if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            window.ExtendClientAreaToDecorationsHint = true;
-            window.ExtendClientAreaChromeHints = 0;
-            window.ExtendClientAreaTitleBarHeightHint = -1;
+        window.ExtendClientAreaToDecorationsHint = true;
+        window.ExtendClientAreaChromeHints = 0;
+        window.ExtendClientAreaTitleBarHeightHint = -1;
 
-            TitleBarViewModel = new TitleBarViewModel(window);
-        }
+        TitleBarViewModel = new TitleBarViewModel(window);
 
         NavigationService.NavigateTo(new MainFormViewModel(window));
     }
