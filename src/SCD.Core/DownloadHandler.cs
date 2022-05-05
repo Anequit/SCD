@@ -79,15 +79,10 @@ internal class DownloadHandler
                     }
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                if(ex is TaskCanceledException or HttpRequestException)
-                {
-                    if(token.IsCancellationRequested) 
-                        return;
-
-                    continue;
-                }
+                if(token.IsCancellationRequested)
+                    return;
             }
         }
         while(downloaded == false);
