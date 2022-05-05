@@ -45,23 +45,27 @@ public static class AlbumDownloader
 
             using(FileStream fileStream = File.OpenWrite(filePath))
             {
-                try
+                do
                 {
-                    await downloadHandler.DownloadAsync(file.Url, fileStream, token);
-                    album.AlbumFiles.Dequeue();
-                }
-                catch(Exception ex)
-                {
-                    if(ex is OperationCanceledException or TaskCanceledException)
+                    try
                     {
-                        if(token.IsCancellationRequested)
-                            throw;
-
-                        continue;
+                        await downloadHandler.DownloadAsync(file.Url, fileStream, token);
+                        album.AlbumFiles.Dequeue();
+                        break;
                     }
-                    
-                    ErrorOccurred?.Invoke(ex);
-                }
+                    catch(Exception ex)
+                    {
+                        if(ex is TaskCanceledException or HttpRequestException)
+                        {
+                            if(token.IsCancellationRequested)
+                                return;
+
+                            continue;
+                        }
+
+                        ErrorOccurred?.Invoke(ex);
+                    }
+                } while(true);
             }
         } while(album.AlbumFiles.Count > 0);
     }
