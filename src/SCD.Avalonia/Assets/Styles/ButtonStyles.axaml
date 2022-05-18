@@ -16,7 +16,7 @@
 		<Setter Property="HorizontalContentAlignment" Value="Center"/>
 	</Style>
 
-	<Style Selector="Button:pointerover">
+	<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Background" Value="#DCDCDC"/>
 	</Style>
 	
