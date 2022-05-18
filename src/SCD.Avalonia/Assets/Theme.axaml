@@ -1,0 +1,24 @@
+﻿<Style xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<Style.Resources>
+		<Color x:Key="Accent">#FF9447</Color>
+		<Color x:Key="AccentLight">#FF9447</Color>
+		<Color x:Key="AccentDark">#FF9447</Color>
+
+		<Color x:Key="Base">#DCDCDC</Color>
+		<Color x:Key="BaseLight">#FFFFFF</Color>
+		<Color x:Key="BaseDark">#DCDCDC</Color>
+		
+		<Color x:Key="TextBoxBackground">#FEFEFE</Color>
+		<Color x:Key="TextBoxBorder">#CCCCCC</Color>
+		<Color x:Key="TextBoxBackgroundFocused">#FFFFFF</Color>
+		<Color x:Key="TextBoxBorderFocused">#AFAFAF</Color>
+		<Color x:Key="TextBoxDisabledBackground">#AFAFAF</Color>
+		<Color x:Key="TextBoxDisabledBorderBrush">#CBCBCB</Color>
+
+
+		<Color x:Key="LabelMain">#181818</Color>
+		<Color x:Key="LabelHint">#4C4C4C</Color>
+	</Style.Resources>
+</Style>
