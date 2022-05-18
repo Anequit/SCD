@@ -20,7 +20,7 @@
 		<Setter Property="Background" Value="#DCDCDC"/>
 	</Style>
 	
-	<Style Selector="Button:pressed">
+	<Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="RenderTransform" Value="scale(0.95)"/>
 		<Setter Property="Background" Value="#AFAFAF"/>
 	</Style>
