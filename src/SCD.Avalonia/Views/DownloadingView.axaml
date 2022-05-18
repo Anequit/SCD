@@ -28,7 +28,7 @@
 			   DockPanel.Dock="Top"
 			   Content="How much of the file has been downloaded."/>
 
-		<Border BorderBrush="#DCDCDC"
+		<Border BorderBrush="#CCCCCC"
 				BorderThickness="2"
 				CornerRadius="4"
 				DockPanel.Dock="Top"

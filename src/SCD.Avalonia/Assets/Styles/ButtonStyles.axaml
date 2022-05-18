@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <Button Classes="No"/>
+            <Button Classes="CTA"/>
         </Border>
     </Design.PreviewWith>
 
@@ -26,15 +26,15 @@
 	</Style>
 
 	<Style Selector="Button.CTA">
-		<Setter Property="Background" Value="#FF8328"/>
+		<Setter Property="Background" Value="#FF9447"/>
 	</Style>
 
 	<Style Selector="Button.CTA:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#E1782B"/>
+		<Setter Property="Background" Value="#FF9C55"/>
 	</Style>
 
 	<Style Selector="Button.CTA:pressed /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#CB6A23"/>
+		<Setter Property="Background" Value="#FF8630"/>
 	</Style>
 
 	<Style Selector="Button.TitleBar">

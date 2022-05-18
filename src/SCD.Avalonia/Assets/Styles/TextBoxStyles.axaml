@@ -28,7 +28,7 @@
 		<Setter Property="Foreground" Value="#181818"/>
 		
 		<Setter Property="BorderThickness" Value="2"/>
-		<Setter Property="BorderBrush" Value="#DCDCDC"/>
+		<Setter Property="BorderBrush" Value="#CCCCCC"/>
 	</Style>
 
 	<Style Selector="TextBox:pressed">
@@ -53,7 +53,7 @@
 	</Style>
 
 	<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="#FF8328"/>
+		<Setter Property="BorderBrush" Value="#FF9447"/>
 	</Style>
 
 	<Style Selector="TextBox:pressed /template/ Border#PART_BorderElement">
