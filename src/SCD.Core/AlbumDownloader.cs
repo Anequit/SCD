@@ -55,7 +55,7 @@ public static class AlbumDownloader
                     }
                     catch(Exception ex)
                     {
-                        if(ex is TaskCanceledException or HttpRequestException)
+                        if(ex is TaskCanceledException or HttpRequestException or OperationCanceledException)
                         {
                             if(token.IsCancellationRequested)
                                 return;
