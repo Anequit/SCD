@@ -25,6 +25,10 @@
 		<Setter Property="Background" Value="{DynamicResource BaseDark}"/>
 	</Style>
 
+	<Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource BaseDisabled}"/>
+	</Style>
+	
 	<Style Selector="Button.CTA">
 		<Setter Property="Background" Value="{DynamicResource Accent}"/>
 	</Style>
