@@ -2,12 +2,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <Button Classes="No"/>
+            <Button Classes="CTA"/>
         </Border>
     </Design.PreviewWith>
 
 	<Style Selector="Button">
-		<Setter Property="Background" Value="White"/>
+		<Setter Property="Background" Value="{DynamicResource Base}"/>
 		
 		<Setter Property="Height" Value="32"/>
 		<Setter Property="Padding" Value="14 0"/>
@@ -16,25 +16,29 @@
 		<Setter Property="HorizontalContentAlignment" Value="Center"/>
 	</Style>
 
-	<Style Selector="Button:pointerover">
-		<Setter Property="Background" Value="#DCDCDC"/>
+	<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource BaseLight}"/>
 	</Style>
 	
-	<Style Selector="Button:pressed">
+	<Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="RenderTransform" Value="scale(0.95)"/>
-		<Setter Property="Background" Value="#AFAFAF"/>
+		<Setter Property="Background" Value="{DynamicResource BaseDark}"/>
 	</Style>
 
+	<Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource BaseDisabled}"/>
+	</Style>
+	
 	<Style Selector="Button.CTA">
-		<Setter Property="Background" Value="#FF8328"/>
+		<Setter Property="Background" Value="{DynamicResource Accent}"/>
 	</Style>
 
 	<Style Selector="Button.CTA:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#E1782B"/>
+		<Setter Property="Background" Value="{DynamicResource AccentLight}"/>
 	</Style>
 
 	<Style Selector="Button.CTA:pressed /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#CB6A23"/>
+		<Setter Property="Background" Value="{DynamicResource AccentDark}"/>
 	</Style>
 
 	<Style Selector="Button.TitleBar">
@@ -42,14 +46,17 @@
 		<Setter Property="Width" Value="32"/>
 		<Setter Property="Padding" Value="0"/>
 
-		<Setter Property="Background" Value="#CBCBCB"/>
-		<Setter Property="Foreground" Value="Red"/>
+		<Setter Property="Background" Value="{DynamicResource Base}"/>
 		
 		<Setter Property="RenderTransform" Value="none"/>
 	</Style>
 
 	<Style Selector="Button.TitleBar:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#AFAFAF"/>
+		<Setter Property="Background" Value="{DynamicResource BaseLight}"/>
+	</Style>
+
+	<Style Selector="Button.TitleBar:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource BaseDark}"/>
 	</Style>
 
 	<Style Selector="Button.Download">

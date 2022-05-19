@@ -6,7 +6,7 @@
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="32"
              x:Class="SCD.Avalonia.Views.TitleBarView"
-			 Height="32" Background="#CBCBCB" IsHitTestVisible="True">
+			 Height="32" Background="{DynamicResource Base}" IsHitTestVisible="True">
 
 	<DockPanel>
 		<i:Interaction.Behaviors>

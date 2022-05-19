@@ -19,28 +19,28 @@
 		<Setter Property="VerticalAlignment" Value="Stretch"/>
 		<Setter Property="HorizontalAlignment" Value="Stretch"/>
 		
-		<Setter Property="Background" Value="#FEFEFE"/>
+		<Setter Property="Background" Value="{DynamicResource TextBoxBackground}"/>
 		
-		<Setter Property="SelectionBrush" Value="#FF8328"/>
+		<Setter Property="SelectionBrush" Value="{DynamicResource Accent}"/>
 		<Setter Property="TextWrapping" Value="NoWrap"/>
 		
 		<Setter Property="FontSize" Value="16"/>
-		<Setter Property="Foreground" Value="#181818"/>
+		<Setter Property="Foreground" Value="{DynamicResource LabelMain}"/>
 		
 		<Setter Property="BorderThickness" Value="2"/>
-		<Setter Property="BorderBrush" Value="#DCDCDC"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource Base}"/>
 	</Style>
 
 	<Style Selector="TextBox:pressed">
-		<Setter Property="Background" Value="#FFFFFF"/>
+		<Setter Property="Background" Value="{DynamicResource TextBoxBackgroundFocused}"/>
 	</Style>
 	
 	<Style Selector="TextBox:pointerover">
-		<Setter Property="Background" Value="#FFFFFF"/>
+		<Setter Property="Background" Value="{DynamicResource TextBoxBackgroundFocused}"/>
 	</Style>
 
 	<Style Selector="TextBox:focus">
-		<Setter Property="Background" Value="#FFFFFF"/>
+		<Setter Property="Background" Value="{DynamicResource TextBoxBackgroundFocused}"/>
 	</Style>
 
 	<Style Selector="TextBox /template/ DockPanel#Part_InnerDockPanel">
@@ -48,12 +48,12 @@
 	</Style>
 	
 	<Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
-		<Setter Property="Background" Value="White"/>
-		<Setter Property="BorderBrush" Value="#AFAFAF"/>
+		<Setter Property="Background" Value="{DynamicResource TextBoxBackgroundFocused}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource BaseLight}"/>
 	</Style>
 
 	<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="#FF8328"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource Accent}"/>
 	</Style>
 
 	<Style Selector="TextBox:pressed /template/ Border#PART_BorderElement">
@@ -61,7 +61,7 @@
 	</Style>
 
 	<Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="#AFAFAF"/>
-		<Setter Property="Background" Value="#CBCBCB"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource BaseDark}"/>
+		<Setter Property="Background" Value="{DynamicResource Base}"/>
 	</Style>
 </Styles>

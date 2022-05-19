@@ -15,6 +15,7 @@
 		<StyleInclude Source="/Assets/Styles/ButtonStyles.axaml"/>
 		<StyleInclude Source="/Assets/Styles/ProgressBarStyles.axaml"/>
 		<StyleInclude Source="/Assets/Styles/TextBlockStyles.axaml"/>
+		<StyleInclude Source="/Assets/Theme.axaml"/>
     </Application.Styles>
 
 	<Application.Resources>

@@ -8,7 +8,7 @@
 
 	<Style Selector="Label">
 		<Setter Property="FontFamily" Value="/Assets/Fonts/Roboto-Regular.ttf#Roboto"/>
-		<Setter Property="Foreground" Value="#181818"/>
+		<Setter Property="Foreground" Value="{DynamicResource LabelMain}"/>
 		<Setter Property="Padding" Value="0"/>
 	</Style>
 	
@@ -24,7 +24,7 @@
 	<Style Selector="Label.Hint">
 		<Setter Property="FontSize" Value="14"/>
 		<Setter Property="FontWeight" Value="Regular"/>
-		<Setter Property="Foreground" Value="#4C4C4C"/>
+		<Setter Property="Foreground" Value="{DynamicResource LabelHint}"/>
 	</Style>
 
 	<Style Selector="Label.Button">
