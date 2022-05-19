@@ -28,7 +28,7 @@
 		<Setter Property="Foreground" Value="{DynamicResource LabelMain}"/>
 		
 		<Setter Property="BorderThickness" Value="2"/>
-		<Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorder}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource Base}"/>
 	</Style>
 
 	<Style Selector="TextBox:pressed">
@@ -49,7 +49,7 @@
 	
 	<Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
 		<Setter Property="Background" Value="{DynamicResource TextBoxBackgroundFocused}"/>
-		<Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderFocused}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource BaseLight}"/>
 	</Style>
 
 	<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
@@ -61,7 +61,7 @@
 	</Style>
 
 	<Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="{DynamicResource TextBoxDisabledBackground}"/>
-		<Setter Property="Background" Value="{DynamicResource TextBoxDisabledBorderBrush}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource BaseDisabledBorder}"/>
+		<Setter Property="Background" Value="{DynamicResource BaseDisabled}"/>
 	</Style>
 </Styles>
