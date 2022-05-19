@@ -25,3 +25,5 @@ Remove-Item -Path $PublishPath\linux-x64 -Force -Recurse -ErrorAction SilentlyCo
 dotnet publish .\SCD.sln -c Release -p:PublishProfile=osx-x64 -v q --nologo
 Compress-Archive -Force -Path $PublishPath\osx-x64 -DestinationPath $PublishPath\osx-x64
 Remove-Item -Path $PublishPath\osx-x64 -Force -Recurse -ErrorAction SilentlyContinue
+
+explorer.exe $PublishPath
