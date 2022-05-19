@@ -57,8 +57,7 @@ public static class AlbumDownloader
                     {
                         if(ex is TaskCanceledException or HttpRequestException or OperationCanceledException)
                         {
-                            if(token.IsCancellationRequested)
-                                return;
+                            token.ThrowIfCancellationRequested();
 
                             continue;
                         }
