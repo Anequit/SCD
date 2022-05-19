@@ -61,7 +61,7 @@
 	</Style>
 
 	<Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="{DynamicResource BaseDisabledBorder}"/>
-		<Setter Property="Background" Value="{DynamicResource BaseDisabled}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource BaseDark}"/>
+		<Setter Property="Background" Value="{DynamicResource Base}"/>
 	</Style>
 </Styles>
