@@ -1,4 +1,4 @@
-# SCD
+# SCD - Discontinued
 [![GitHub all releases](https://img.shields.io:/github/downloads/Anequit/SCD/total)](https://github.com/Anequit/SCD/releases)
 [![GitHub release (latest by date)](https://img.shields.io:/github/v/release/Anequit/SCD)](https://github.com/Anequit/SCD/releases)
 [![GitHub repo size](https://img.shields.io:/github/repo-size/Anequit/SCD)](https://github.com/Anequit/SCD/releases)
