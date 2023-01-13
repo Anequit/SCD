@@ -1,12 +1,19 @@
 using Avalonia.Controls;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
 using SCD.Avalonia.Services;
 
 namespace SCD.Avalonia.ViewModels;
 
-public class MainWindowViewModel : ReactiveObject
+public partial class MainWindowViewModel : ObservableObject
 {
-    private ReactiveObject? _titleBarViewModel;
+    [ObservableProperty]
+    private ObservableObject? _alertViewModel;
+
+    [ObservableProperty]
+    private ObservableObject? _currentViewModel;
+
+    [ObservableProperty]
+    private ObservableObject? _titleBarViewModel;
 
     public MainWindowViewModel(Window window)
     {
@@ -17,19 +24,12 @@ public class MainWindowViewModel : ReactiveObject
         window.ExtendClientAreaChromeHints = 0;
         window.ExtendClientAreaTitleBarHeightHint = -1;
 
-        TitleBarViewModel = new TitleBarViewModel(window);
+        _titleBarViewModel = new TitleBarViewModel();
 
-        NavigationService.NavigateTo(new MainFormViewModel(window));
+        NavigationService.NavigateTo(new MainFormViewModel());
     }
 
-    public ReactiveObject? CurrentViewModel => NavigationService.CurrentViewModel;
-    public ReactiveObject? AlertViewModel => NavigationService.CurrentAlertViewModel;
-    public ReactiveObject? TitleBarViewModel
-    {
-        get => _titleBarViewModel;
-        set => this.RaiseAndSetIfChanged(ref _titleBarViewModel, value);
-    }
+    private void CurrentViewModelChanged() => CurrentViewModel = NavigationService.CurrentViewModel;
 
-    private void CurrentViewModelChanged() => this.RaisePropertyChanged(nameof(CurrentViewModel));
-    private void CurrentAlertViewModelChanged() => this.RaisePropertyChanged(nameof(AlertViewModel));
+    private void CurrentAlertViewModelChanged() => AlertViewModel = NavigationService.CurrentAlertViewModel;
 }

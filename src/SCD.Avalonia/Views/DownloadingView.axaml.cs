@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace SCD.Avalonia.Views;
 
-public partial class DownloadingView : UserControl
+public class DownloadingView : UserControl
 {
     public DownloadingView()
     {

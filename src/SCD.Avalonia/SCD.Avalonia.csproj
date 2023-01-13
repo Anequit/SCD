@@ -1,69 +1,70 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-	<ApplicationIcon>Assets\SCD.ico</ApplicationIcon>
-	<IsPublishable>True</IsPublishable>
-	<DebugType>embedded</DebugType>
-	<AssemblyName>SCD</AssemblyName>
-	<RepositoryUrl>https://github.com/Anequit/SCD</RepositoryUrl>
-	<Description>A simple cyberdrop downloader.</Description>
-	<AssemblyVersion>2.1.0</AssemblyVersion>
-	<IncludeNativeLibrariesForSelfExtract>True</IncludeNativeLibrariesForSelfExtract>
-  </PropertyGroup>
-  <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
-    <AvaloniaResource Remove="Assets\IconStyles.axaml" />
-    <AvaloniaResource Remove="Assets\Resources\Icons.axaml" />
-    <AvaloniaResource Remove="Assets\Styles\ButtonStyles.axaml" />
-    <AvaloniaResource Remove="Assets\Styles\ProgressBarStyles.axaml" />
-    <AvaloniaResource Remove="Assets\Styles\TextBlockStyles.axaml" />
-    <AvaloniaResource Remove="Assets\Styles\TextBoxStyles.axaml" />
-    <AvaloniaResource Remove="Assets\Theme.axaml" />
-    <None Remove=".gitignore" />
-    <None Remove="Assets\Fonts\Roboto-Regular.ttf" />
-    <None Remove="Assets\SCD.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.12" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.12" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
-    <PackageReference Include="Avalonia.Xaml.Interactions" Version="0.10.12.2" />
-    <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.10.12.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SCD.Core\SCD.Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaXaml Update="Assets\Theme.axaml">
-      <SubType>Designer</SubType>
-    </AvaloniaXaml>
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaXaml Update="Assets\Styles\TextBoxStyles.axaml">
-      <SubType>Designer</SubType>
-    </AvaloniaXaml>
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaXaml Update="Assets\Styles\TextBlockStyles.axaml">
-      <SubType>Designer</SubType>
-    </AvaloniaXaml>
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaXaml Update="Assets\Styles\ProgressBarStyles.axaml">
-      <SubType>Designer</SubType>
-    </AvaloniaXaml>
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaXaml Update="Assets\Styles\ButtonStyles.axaml">
-      <SubType>Designer</SubType>
-    </AvaloniaXaml>
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaXaml Update="Assets\Resources\Icons.axaml">
-      <SubType>Designer</SubType>
-    </AvaloniaXaml>
-  </ItemGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ApplicationIcon>Assets\SCD.ico</ApplicationIcon>
+        <IsPublishable>True</IsPublishable>
+        <DebugType>embedded</DebugType>
+        <AssemblyName>SCD</AssemblyName>
+        <RepositoryUrl>https://github.com/Anequit/SCD</RepositoryUrl>
+        <Description>A simple cyberdrop downloader.</Description>
+        <AssemblyVersion>2.1.0</AssemblyVersion>
+        <IncludeNativeLibrariesForSelfExtract>True</IncludeNativeLibrariesForSelfExtract>
+    </PropertyGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+        <AvaloniaResource Remove="Assets\IconStyles.axaml" />
+        <AvaloniaResource Remove="Assets\Resources\Icons.axaml" />
+        <AvaloniaResource Remove="Assets\Styles\ButtonStyles.axaml" />
+        <AvaloniaResource Remove="Assets\Styles\ProgressBarStyles.axaml" />
+        <AvaloniaResource Remove="Assets\Styles\TextBlockStyles.axaml" />
+        <AvaloniaResource Remove="Assets\Styles\TextBoxStyles.axaml" />
+        <AvaloniaResource Remove="Assets\Theme.axaml" />
+        <None Remove=".gitignore" />
+        <None Remove="Assets\Fonts\Roboto-Regular.ttf" />
+        <None Remove="Assets\SCD.ico" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview4" />
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview4" />
+        <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.0.0-preview4" />
+        <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.0.0-preview4" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\SCD.Core\SCD.Core.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <AvaloniaXaml Update="Assets\Theme.axaml">
+            <SubType>Designer</SubType>
+        </AvaloniaXaml>
+    </ItemGroup>
+    <ItemGroup>
+        <AvaloniaXaml Update="Assets\Styles\TextBoxStyles.axaml">
+            <SubType>Designer</SubType>
+        </AvaloniaXaml>
+    </ItemGroup>
+    <ItemGroup>
+        <AvaloniaXaml Update="Assets\Styles\TextBlockStyles.axaml">
+            <SubType>Designer</SubType>
+        </AvaloniaXaml>
+    </ItemGroup>
+    <ItemGroup>
+        <AvaloniaXaml Update="Assets\Styles\ProgressBarStyles.axaml">
+            <SubType>Designer</SubType>
+        </AvaloniaXaml>
+    </ItemGroup>
+    <ItemGroup>
+        <AvaloniaXaml Update="Assets\Styles\ButtonStyles.axaml">
+            <SubType>Designer</SubType>
+        </AvaloniaXaml>
+    </ItemGroup>
+    <ItemGroup>
+        <AvaloniaXaml Update="Assets\Resources\Icons.axaml">
+            <SubType>Designer</SubType>
+        </AvaloniaXaml>
+    </ItemGroup>
 </Project>

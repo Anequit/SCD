@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace SCD.Avalonia.Views;
 
-public partial class MainFormView : UserControl
+public class MainFormView : UserControl
 {
     public MainFormView()
     {

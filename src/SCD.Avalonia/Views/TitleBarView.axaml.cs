@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace SCD.Avalonia.Views;
 
-public partial class TitleBarView : UserControl
+public class TitleBarView : UserControl
 {
     public TitleBarView()
     {

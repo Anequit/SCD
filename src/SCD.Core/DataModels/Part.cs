@@ -1,9 +1,9 @@
 ﻿namespace SCD.Core.DataModels;
 
-public class Part
+public class FileChunk
 {
-    public int Location { get; set; }
+    public required long StartingHeaderRange { get; init; }
+    public required long EndingHeaderRange { get; set; }
+
     public byte[]? Content { get; set; }
-    public long StartingHeaderRange { get; set; }
-    public long EndingHeaderRange { get; set; }
 }

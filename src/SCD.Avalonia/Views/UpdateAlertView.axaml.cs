@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace SCD.Avalonia.Views;
 
-public partial class UpdateAlertView : UserControl
+public class UpdateAlertView : UserControl
 {
     public UpdateAlertView()
     {

@@ -1,69 +1,62 @@
-﻿using Avalonia.Controls;
-using ReactiveUI;
+﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Platform.Storage;
+using Avalonia.Platform.Storage.FileIO;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SCD.Avalonia.Services;
 using SCD.Core.Utilities;
 using System;
-using System.Reactive;
-using System.Reflection;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace SCD.Avalonia.ViewModels;
 
-public class MainFormViewModel : ReactiveObject
+public partial class MainFormViewModel : ObservableValidator
 {
     private readonly Window _window;
-    private string _albumURL = string.Empty;
+
+    [Required]
+    [ObservableProperty]
+    private string _albumUrl = string.Empty;
+
+    [Required]
+    [ObservableProperty]
     private string _downloadLocation = string.Empty;
 
-    public MainFormViewModel(Window window)
+    public MainFormViewModel()
     {
-        _window = window;
-
-        IObservable<bool> ableToDownload = this.WhenAnyValue(
-            x => x.AlbumURL,
-            x => x.DownloadLocation,
-            (URL, DL) => !string.IsNullOrEmpty(URL) && !string.IsNullOrEmpty(DL));
-
-        ReportBugCommand = ReactiveCommand.Create(ReportBug);
-        DownloadCommand = ReactiveCommand.Create(Download, ableToDownload);
-        SelectCommand = ReactiveCommand.CreateFromTask(SelectAsync);
+        _window = ((IClassicDesktopStyleApplicationLifetime)Application.Current?.ApplicationLifetime!).MainWindow!;
 
         Task.Run(async () => await UpdateService.CheckForUpdateAsync());
     }
 
-    public string AlbumURL
-    {
-        get => _albumURL;
-        set => this.RaiseAndSetIfChanged(ref _albumURL, value);
-    }
-
-    public string DownloadLocation
-    {
-        get => _downloadLocation;
-        set => this.RaiseAndSetIfChanged(ref _downloadLocation, value);
-    }
-
-    public ReactiveCommand<Unit, Unit> ReportBugCommand { get; }
-    public ReactiveCommand<Unit, Unit> DownloadCommand { get; }
-    public ReactiveCommand<Unit, Unit> SelectCommand { get; }
-
+    [RelayCommand]
     private void ReportBug() => Web.Open("https://github.com/Anequit/SCD/issues");
 
-    private void Download() => NavigationService.NavigateTo(new DownloadingViewModel(_window, AlbumURL, DownloadLocation));
+    [RelayCommand]
+    private void Download() => NavigationService.NavigateTo(new DownloadingViewModel(AlbumUrl, DownloadLocation));
 
+    [RelayCommand]
     private async Task SelectAsync()
     {
-        OpenFolderDialog openFolderDialog = new OpenFolderDialog()
+        IReadOnlyList<IStorageFolder> result = await _window.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
             Title = "Download Location",
-            Directory = Assembly.GetExecutingAssembly().Location,
-        };
+            AllowMultiple = false,
+            SuggestedStartLocation = new BclStorageFolder(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments))
+        });
 
-        string? path = await openFolderDialog.ShowAsync(_window);
+        if(result.Count == 0)
+            return;
+
+        result[0].TryGetUri(out Uri? path);
 
         if(path is null)
             return;
 
-        DownloadLocation = path;
+        DownloadLocation = path.LocalPath;
     }
 }

@@ -2,34 +2,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="242"
-             x:Class="SCD.Avalonia.Views.DownloadFinishedView" Background="#EDEDED">
+             mc:Ignorable="d"
+             d:DesignWidth="450"
+             d:DesignHeight="242"
+             x:Class="SCD.Avalonia.Views.DownloadFinishedView"
+             Background="#EDEDED">
 
-	<DockPanel Margin="15">
-		<Label Classes="Header" 
-			   FontSize="24"
-			   Content="Download Finished"
-			   DockPanel.Dock="Top"
-			   Margin="0 55 0 0"
-			   HorizontalAlignment="Center"/>
-		
-		<Label Classes="Hint" 
-			   FontSize="18"
-			   Content="Thank you for using SCD!"
-			   DockPanel.Dock="Top"
-			   Margin="0 16 0 0"
-			   HorizontalAlignment="Center"/>
+    <DockPanel Margin="15">
+        <Label Classes="Header"
+               FontSize="24"
+               Content="Download Finished"
+               DockPanel.Dock="Top"
+               Margin="0 55 0 0"
+               HorizontalAlignment="Center" />
 
-		<DockPanel Margin="0 60 0 0">
-			<Button DockPanel.Dock="Left"
-					HorizontalAlignment="Left" VerticalAlignment="Bottom"
-					Classes="Home"
-					Command="{Binding HomeCommand}"/>
-			
-			<Button DockPanel.Dock="Right"
-					HorizontalAlignment="Right" VerticalAlignment="Bottom"
-					Classes="OpenFolder CTA"
-					Command="{Binding OpenFolderCommand}"/>
-		</DockPanel>
-	</DockPanel>
+        <Label Classes="Hint"
+               FontSize="18"
+               Content="Thank you for using SCD!"
+               DockPanel.Dock="Top"
+               Margin="0 16 0 0"
+               HorizontalAlignment="Center" />
+
+        <DockPanel Margin="0 60 0 0">
+            <Button DockPanel.Dock="Left"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Classes="Home"
+                    Command="{Binding HomeCommand}"
+                    TabIndex="0" />
+
+            <Button DockPanel.Dock="Right"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Classes="OpenFolder CTA"
+                    Command="{Binding OpenFolderCommand}"
+                    TabIndex="1" />
+        </DockPanel>
+    </DockPanel>
 </UserControl>

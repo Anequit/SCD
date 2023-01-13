@@ -15,5 +15,5 @@ public class Album
     public string Description { get; init; } = string.Empty;
 
     [JsonPropertyName("files")]
-    public Queue<AlbumFile>? AlbumFiles { get; init; }
+    public Queue<AlbumFile> AlbumFiles { get; init; } = new Queue<AlbumFile>();
 }

@@ -11,7 +11,7 @@ namespace SCD.Core.Extensions;
 
 public static class HttpClientExtensions
 {
-    public static async Task<Album> FetchAlbumAsync(this HttpClient httpClient, string url, CancellationToken token)
+    public async static Task<Album> FetchAlbumAsync(this HttpClient httpClient, string url, CancellationToken token)
     {
         using(HttpRequestMessage requestMessage = new HttpRequestMessage())
         {
@@ -26,31 +26,28 @@ public static class HttpClientExtensions
 
                 Album album = JsonSerializer.Deserialize<Album>(await responseMessage.Content.ReadAsStringAsync(token)) ?? throw new FailedToFetchAlbumException("Failed to fetch album.");
 
-                if(!album.Success)
+                if(album.Success)
+                    return album;
+
+                switch(album.Description)
                 {
-                    switch(album.Description)
-                    {
-                        // Private album 
-                        case "This album is not available for public.":
-                            throw new FailedToFetchAlbumException("Album is private.");
+                    // Private album 
+                    case "This album is not available for public.": 
+                        throw new FailedToFetchAlbumException("Album is private.");
 
-                        // Will only occur if the url provided is invalid.
-                        case "No token provided." or "Album not found.":
-                            throw new FailedToFetchAlbumException("Album not found.");
+                    // Will only occur if the url provided is invalid.
+                    case "No token provided." or "Album not found.": 
+                        throw new FailedToFetchAlbumException("Album not found.");
 
-                        // Can occur if the server is having some issues but is still up.
-                        case "An unexpected error occcured. Try again?":
-                            throw new FailedToFetchAlbumException("Unexpected error.");
-                    }
+                    // Can occur if the server is having some issues but is still up.
+                    case "An unexpected error occcured. Try again?" or _:
+                        throw new FailedToFetchAlbumException("Unexpected error.");
                 }
-
-                return album;
             }
         }
-
     }
 
-    public static async Task<Release> FetchLatestReleaseAsync(this HttpClient httpClient)
+    public async static Task<Release> FetchLatestReleaseAsync(this HttpClient httpClient)
     {
         using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
         {

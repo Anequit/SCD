@@ -11,15 +11,15 @@ namespace SCD.Avalonia.Services;
 public static class UpdateService
 {
     /// <summary>
-    /// Current version of the application.
+    ///     Current version of the application.
     /// </summary>
     public static Version? CurrentVersion { get; } = Assembly.GetExecutingAssembly().GetName().Version;
 
     /// <summary>
-    /// Checks if there is a newer version on github.
+    ///     Checks if there is a newer version on github.
     /// </summary>
     /// <returns>True if update is available.</returns>
-    public static async Task CheckForUpdateAsync()
+    public async static Task CheckForUpdateAsync()
     {
         try
         {
@@ -41,10 +41,12 @@ public static class UpdateService
             {
                 case FailedToFetchLatestRelease:
                     NavigationService.ShowErrorAlert("Error", "Failed to get latest release.");
+
                     break;
 
                 default:
                     NavigationService.ShowErrorAlert("Unknown Error", ex.Message);
+
                     break;
             }
         }

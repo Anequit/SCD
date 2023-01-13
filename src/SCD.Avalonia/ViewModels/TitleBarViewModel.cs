@@ -1,23 +1,23 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SCD.Avalonia.Services;
-using System.Reactive;
 
 namespace SCD.Avalonia.ViewModels;
 
-public class TitleBarViewModel : ReactiveObject
+public partial class TitleBarViewModel : ObservableObject
 {
     private readonly Window _window;
+
+    [ObservableProperty]
     private string _title;
 
-    public TitleBarViewModel(Window window)
+    public TitleBarViewModel()
     {
-        _window = window;
-
-        MinimizeCommand = ReactiveCommand.Create(Minimize);
-        ExitCommand = ReactiveCommand.Create(Exit);
-        DragCommand = ReactiveCommand.Create<PointerPressedEventArgs>(x => Drag(x));
+        _window = ((IClassicDesktopStyleApplicationLifetime)Application.Current?.ApplicationLifetime!).MainWindow!;
 
         string version = "Unknown version";
 
@@ -27,17 +27,12 @@ public class TitleBarViewModel : ReactiveObject
         _title = $"SCD - {version}";
     }
 
-    public string Title
-    {
-        get => _title;
-        set => this.RaiseAndSetIfChanged(ref _title, value);
-    }
-
-    public ReactiveCommand<Unit, Unit> MinimizeCommand { get; }
-    public ReactiveCommand<Unit, Unit> ExitCommand { get; }
-    public ReactiveCommand<PointerPressedEventArgs, Unit> DragCommand { get; }
-
+    [RelayCommand]
     private void Minimize() => _window.WindowState = WindowState.Minimized;
+
+    [RelayCommand]
     private void Exit() => _window.Close();
+
+    [RelayCommand]
     private void Drag(PointerPressedEventArgs eventArgs) => _window.BeginMoveDrag(eventArgs);
 }

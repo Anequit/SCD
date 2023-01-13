@@ -1,4 +1,4 @@
-﻿using ReactiveUI;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SCD.Avalonia.ViewModels;
 using System;
 using System.Collections.ObjectModel;
@@ -7,14 +7,11 @@ namespace SCD.Avalonia.Services;
 
 public static class NavigationService
 {
-    public static event Action? CurrentViewModelChanged;
-    public static event Action? CurrentAlertViewModelChanged;
-
     // Initialize with an array of 2 objects
-    public static ObservableCollection<ReactiveObject?> ViewModels { get; } = new ObservableCollection<ReactiveObject?>(new ReactiveObject[2]);
+    private static ObservableCollection<ObservableObject?> ViewModels { get; } = new ObservableCollection<ObservableObject?>(new ObservableObject[2]);
 
     // Will always be in ViewModels[0]
-    public static ReactiveObject? CurrentViewModel
+    public static ObservableObject? CurrentViewModel
     {
         get => ViewModels[0];
         private set
@@ -24,7 +21,7 @@ public static class NavigationService
         }
     }
 
-    public static ReactiveObject? CurrentAlertViewModel
+    public static ObservableObject? CurrentAlertViewModel
     {
         get => ViewModels[1];
         private set
@@ -34,7 +31,10 @@ public static class NavigationService
         }
     }
 
-    public static void NavigateTo(ReactiveObject viewModel) => CurrentViewModel = viewModel;
+    public static event Action? CurrentViewModelChanged;
+    public static event Action? CurrentAlertViewModelChanged;
+
+    public static void NavigateTo(ObservableObject viewModel) => CurrentViewModel = viewModel;
 
     public static void ShowErrorAlert(string title, string message) => CurrentAlertViewModel = new ErrorAlertViewModel(title, message);
 

@@ -1,22 +1,19 @@
-﻿using Avalonia.Controls;
-using ReactiveUI;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SCD.Avalonia.Services;
 using SCD.Core.Utilities;
-using System.Reactive;
 
 namespace SCD.Avalonia.ViewModels;
 
-public class DownloadFinishedViewModel : ReactiveObject
+public partial class DownloadFinishedViewModel : ObservableObject
 {
-    public DownloadFinishedViewModel(Window window, string path)
-    {
-        HomeCommand = ReactiveCommand.Create(() => Home(window));
-        OpenFolderCommand = ReactiveCommand.Create(() => OpenFolder(path));
-    }
+    private readonly string _path;
 
-    public ReactiveCommand<Unit, Unit> HomeCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> OpenFolderCommand { get; set; }
+    public DownloadFinishedViewModel(string path) => _path = path;
 
-    private void Home(Window window) => NavigationService.NavigateTo(new MainFormViewModel(window));
-    private void OpenFolder(string path) => Explorer.Open(path);
+    [RelayCommand]
+    private void Home() => NavigationService.NavigateTo(new MainFormViewModel());
+
+    [RelayCommand]
+    private void OpenFolder() => Explorer.Open(_path);
 }

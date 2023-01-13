@@ -1,27 +1,27 @@
-﻿using ReactiveUI;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SCD.Avalonia.Services;
 using SCD.Core.Utilities;
-using System.Reactive;
 
 namespace SCD.Avalonia.ViewModels;
 
-public class UpdateAlertViewModel : ReactiveObject
+public partial class UpdateAlertViewModel : ObservableObject
 {
+    [ObservableProperty]
+    private string _message;
+
+    [ObservableProperty]
+    private string _title;
+
     public UpdateAlertViewModel(string title, string message)
     {
-        Title = title;
-        Message = message;
-
-        YesCommand = ReactiveCommand.Create(Yes);
-        NoCommand = ReactiveCommand.Create(No);
+        _title = title;
+        _message = message;
     }
 
-    public string Title { get; }
-    public string Message { get; }
-
-    public ReactiveCommand<Unit, Unit> YesCommand { get; }
-    public ReactiveCommand<Unit, Unit> NoCommand { get; }
-
+    [RelayCommand]
     private void Yes() => Web.Open(@"https://github.com/Anequit/SCD/releases/latest");
+
+    [RelayCommand]
     private void No() => NavigationService.CloseAlert();
 }

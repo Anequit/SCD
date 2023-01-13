@@ -5,19 +5,11 @@ namespace SCD.Core.Exceptions;
 
 public class FailedToFetchLatestRelease : Exception
 {
-    public FailedToFetchLatestRelease()
-    {
-    }
+    public FailedToFetchLatestRelease() { }
 
-    public FailedToFetchLatestRelease(string? message) : base(message)
-    {
-    }
+    public FailedToFetchLatestRelease(string? message) : base(message) { }
 
-    public FailedToFetchLatestRelease(string? message, Exception? innerException) : base(message, innerException)
-    {
-    }
+    public FailedToFetchLatestRelease(string? message, Exception? innerException) : base(message, innerException) { }
 
-    protected FailedToFetchLatestRelease(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
-    }
+    protected FailedToFetchLatestRelease(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

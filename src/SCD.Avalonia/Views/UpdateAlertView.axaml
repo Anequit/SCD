@@ -2,41 +2,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="242"
+             mc:Ignorable="d"
+             d:DesignWidth="450"
+             d:DesignHeight="242"
              x:Class="SCD.Avalonia.Views.UpdateAlertView"
-			 ZIndex="1">
+             ZIndex="1">
 
-	<Grid>
-		<Rectangle Fill="Black" Opacity="80"
-				   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-		<Border Background="#ECECEC"
-				CornerRadius="3"
-				Margin="85 26">
-			<DockPanel Margin="15">
-				<PathIcon Data="{StaticResource Alert}"
-						  Width="32" Height="32"
-						  DockPanel.Dock="Top"/>
-				
-				<Label Classes="Header"
-					   Margin="0 10 0 0" DockPanel.Dock="Top"
-					   FontSize="24"
-					   Content="{Binding Title}"
-					   HorizontalAlignment="Center"/>
+    <Grid>
+        <Rectangle Fill="Black"
+                   Opacity="80"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch" />
+        <Border Background="#ECECEC"
+                CornerRadius="3"
+                Margin="85 26">
+            <DockPanel Margin="15">
+                <PathIcon Data="{StaticResource Alert}"
+                          Width="32"
+                          Height="32"
+                          DockPanel.Dock="Top" />
 
-				<TextBlock Text="{Binding Message}"
-						   Margin="0 5 0 0" DockPanel.Dock="Top"
-						   HorizontalAlignment="Center"/>
+                <Label Classes="Header"
+                       Margin="0 10 0 0"
+                       DockPanel.Dock="Top"
+                       FontSize="24"
+                       Content="{Binding Title}"
+                       HorizontalAlignment="Center" />
 
-				<DockPanel Margin="0 16 0 0" VerticalAlignment="Bottom">
-					<Button Classes="No"
-							DockPanel.Dock="Left" HorizontalAlignment="Left"
-							Command="{Binding NoCommand}"/>
+                <TextBlock Text="{Binding Message}"
+                           Margin="0 5 0 0"
+                           DockPanel.Dock="Top"
+                           HorizontalAlignment="Center" />
 
-					<Button Classes="Yes CTA"
-							DockPanel.Dock="Right" HorizontalAlignment="Right"
-							Command="{Binding YesCommand}"/>
-				</DockPanel>
-			</DockPanel>
-		</Border>
-	</Grid>
+                <DockPanel Margin="0 16 0 0"
+                           VerticalAlignment="Bottom">
+                    <Button Classes="No"
+                            DockPanel.Dock="Left"
+                            HorizontalAlignment="Left"
+                            Command="{Binding NoCommand}" />
+
+                    <Button Classes="Yes CTA"
+                            DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            Command="{Binding YesCommand}" />
+                </DockPanel>
+            </DockPanel>
+        </Border>
+    </Grid>
 </UserControl>

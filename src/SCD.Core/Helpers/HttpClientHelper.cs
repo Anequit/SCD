@@ -8,9 +8,7 @@ namespace SCD.Core.Helpers;
 
 public static class HttpClientHelper
 {
-    private static readonly HttpClient _httpClient = InitializeClient();
-
-    public static HttpClient HttpClient => _httpClient;
+    public static HttpClient HttpClient { get; } = InitializeClient();
 
     public static void Cancel() => HttpClient.CancelPendingRequests();
 
@@ -20,12 +18,13 @@ public static class HttpClientHelper
     {
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
-        return new HttpClient(new SocketsHttpHandler()
+        return new HttpClient(new SocketsHttpHandler
         {
             AllowAutoRedirect = true,
             EnableMultipleHttp2Connections = true,
             AutomaticDecompression = DecompressionMethods.All,
-            SslOptions = new SslClientAuthenticationOptions()
+            PooledConnectionLifetime = TimeSpan.FromMinutes(5),
+            SslOptions = new SslClientAuthenticationOptions
             {
                 EnabledSslProtocols = SslProtocols.None,
                 EncryptionPolicy = EncryptionPolicy.RequireEncryption,
@@ -33,7 +32,7 @@ public static class HttpClientHelper
             }
         })
         {
-            Timeout = TimeSpan.FromSeconds(10)
+            Timeout = TimeSpan.FromSeconds(30)
         };
     }
 }

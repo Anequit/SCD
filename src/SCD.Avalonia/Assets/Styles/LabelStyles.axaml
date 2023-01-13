@@ -6,29 +6,40 @@
         </Border>
     </Design.PreviewWith>
 
-	<Style Selector="Label">
-		<Setter Property="FontFamily" Value="/Assets/Fonts/Roboto-Regular.ttf#Roboto"/>
-		<Setter Property="Foreground" Value="{DynamicResource LabelMain}"/>
-		<Setter Property="Padding" Value="0"/>
-	</Style>
-	
-	<Style Selector="Label.Header">
-		<Setter Property="FontWeight" Value="DemiBold"/>
-		<Setter Property="FontSize" Value="16"/>
-	</Style>
-	
-	<Style Selector="Label.Title">
-		<Setter Property="FontSize" Value="14"/>
-	</Style>
+    <Style Selector="Label">
+        <Setter Property="FontFamily"
+                Value="/Assets/Fonts/Roboto-Regular.ttf#Roboto" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource LabelMain}" />
+        <Setter Property="Padding"
+                Value="0" />
+    </Style>
 
-	<Style Selector="Label.Hint">
-		<Setter Property="FontSize" Value="14"/>
-		<Setter Property="FontWeight" Value="Regular"/>
-		<Setter Property="Foreground" Value="{DynamicResource LabelHint}"/>
-	</Style>
+    <Style Selector="Label.Header">
+        <Setter Property="FontWeight"
+                Value="DemiBold" />
+        <Setter Property="FontSize"
+                Value="16" />
+    </Style>
 
-	<Style Selector="Label.Button">
-		<Setter Property="FontSize" Value="16"/>
-		<Setter Property="Margin" Value="7 0 0 0"/>
-	</Style>
+    <Style Selector="Label.Title">
+        <Setter Property="FontSize"
+                Value="14" />
+    </Style>
+
+    <Style Selector="Label.Hint">
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="FontWeight"
+                Value="Regular" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource LabelHint}" />
+    </Style>
+
+    <Style Selector="Label.Button">
+        <Setter Property="FontSize"
+                Value="16" />
+        <Setter Property="Margin"
+                Value="7 0 0 0" />
+    </Style>
 </Styles>

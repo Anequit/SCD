@@ -13,20 +13,18 @@ public static class AlbumDownloader
     public static event Action<AlbumFile>? FileChanged;
     public static event Action<Exception>? ErrorOccurred;
 
-    public static async Task DownloadAlbumAsync(Album album, string downloadLocation, IProgress<decimal> progress, CancellationToken token)
+    public async static Task DownloadAlbumAsync(Album album, string downloadLocation, IProgress<decimal> progress, CancellationToken token)
     {
         if(!Directory.Exists(downloadLocation))
             Directory.CreateDirectory(downloadLocation);
 
-        if(album.AlbumFiles is null || album.AlbumFiles.Count == 0)
+        if(album.AlbumFiles.Count == 0)
             return;
 
-        DownloadHandler downloadHandler = new DownloadHandler(progress, 1024 * 256, 20);
+        DownloadHandler downloadHandler = new DownloadHandler(progress, 1024 * 256, 50);
 
         do
         {
-            token.ThrowIfCancellationRequested();
-
             AlbumFile file = album.AlbumFiles.Peek();
 
             FileChanged?.Invoke(file);
@@ -40,32 +38,38 @@ public static class AlbumDownloader
             if(File.Exists(filePath))
             {
                 album.AlbumFiles.Dequeue();
+
                 continue;
             }
-
-            using(FileStream fileStream = File.OpenWrite(filePath))
+            
+            try
             {
-                do
+                file.FileChunks ??= await downloadHandler.DownloadFileChunksAsync(file, token);
+                
+                await using(FileStream fileStream = File.OpenWrite(filePath))
                 {
-                    try
+                    foreach(FileChunk chunk in file.FileChunks)
                     {
-                        await downloadHandler.DownloadAsync(file.Url, fileStream, token);
-                        album.AlbumFiles.Dequeue();
-                        break;
-                    }
-                    catch(Exception ex)
-                    {
-                        if(ex is TaskCanceledException or HttpRequestException or OperationCanceledException)
-                        {
-                            token.ThrowIfCancellationRequested();
+                        fileStream.Seek(chunk.StartingHeaderRange, SeekOrigin.Begin);
 
-                            continue;
-                        }
-
-                        ErrorOccurred?.Invoke(ex);
+                        await fileStream.WriteAsync(chunk.Content, token);
                     }
-                } while(true);
+                }
             }
+            catch(Exception ex)
+            {
+                File.Delete(filePath);
+                
+                token.ThrowIfCancellationRequested();
+                
+                if(ex is IOException or HttpRequestException)
+                    continue;
+                
+                ErrorOccurred?.Invoke(ex);
+                throw;
+            }
+            
+            album.AlbumFiles.Dequeue();
         } while(album.AlbumFiles.Count > 0);
     }
 }

@@ -2,66 +2,85 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <TextBox Text="dwwwwwwwwwwwwwwwww" IsEnabled="False"/>
+            <TextBox Text="dwwwwwwwwwwwwwwwww"
+                     IsEnabled="False" />
         </Border>
     </Design.PreviewWith>
 
-	<Style Selector="TextBox">
-		<Setter Property="Height" Value="32"/>
-		<Setter Property="CornerRadius" Value="5"/>
-		
-		<Setter Property="Padding" Value="8 0 8 0"/>
-		<Setter Property="Margin" Value="0"/>
-		
-		<Setter Property="VerticalContentAlignment" Value="Center"/>
-		<Setter Property="HorizontalContentAlignment" Value="Left"/>
-		
-		<Setter Property="VerticalAlignment" Value="Stretch"/>
-		<Setter Property="HorizontalAlignment" Value="Stretch"/>
-		
-		<Setter Property="Background" Value="{DynamicResource TextBoxBackground}"/>
-		
-		<Setter Property="SelectionBrush" Value="{DynamicResource Accent}"/>
-		<Setter Property="TextWrapping" Value="NoWrap"/>
-		
-		<Setter Property="FontSize" Value="16"/>
-		<Setter Property="Foreground" Value="{DynamicResource LabelMain}"/>
-		
-		<Setter Property="BorderThickness" Value="2"/>
-		<Setter Property="BorderBrush" Value="{DynamicResource Base}"/>
-	</Style>
+    <Style Selector="TextBox">
+        <Setter Property="Height"
+                Value="32" />
+        <Setter Property="CornerRadius"
+                Value="5" />
+        <Setter Property="Padding"
+                Value="8 0 8 0" />
+        <Setter Property="Margin"
+                Value="0" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left" />
+        <Setter Property="VerticalAlignment"
+                Value="Stretch" />
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch" />
+        <Setter Property="Background"
+                Value="{DynamicResource TextBoxBackground}" />
+        <Setter Property="SelectionBrush"
+                Value="{DynamicResource Accent}" />
+        <Setter Property="TextWrapping"
+                Value="NoWrap" />
+        <Setter Property="FontSize"
+                Value="16" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource LabelMain}" />
+        <Setter Property="BorderThickness"
+                Value="2" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource Base}" />
+    </Style>
 
-	<Style Selector="TextBox:pressed">
-		<Setter Property="Background" Value="{DynamicResource TextBoxBackgroundFocused}"/>
-	</Style>
-	
-	<Style Selector="TextBox:pointerover">
-		<Setter Property="Background" Value="{DynamicResource TextBoxBackgroundFocused}"/>
-	</Style>
+    <Style Selector="TextBox:pressed">
+        <Setter Property="Background"
+                Value="{DynamicResource TextBoxBackgroundFocused}" />
+    </Style>
 
-	<Style Selector="TextBox:focus">
-		<Setter Property="Background" Value="{DynamicResource TextBoxBackgroundFocused}"/>
-	</Style>
+    <Style Selector="TextBox:pointerover">
+        <Setter Property="Background"
+                Value="{DynamicResource TextBoxBackgroundFocused}" />
+    </Style>
 
-	<Style Selector="TextBox /template/ DockPanel#Part_InnerDockPanel">
-		<Setter Property="Margin" Value="0"/>
-	</Style>
-	
-	<Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
-		<Setter Property="Background" Value="{DynamicResource TextBoxBackgroundFocused}"/>
-		<Setter Property="BorderBrush" Value="{DynamicResource BaseLight}"/>
-	</Style>
+    <Style Selector="TextBox:focus">
+        <Setter Property="Background"
+                Value="{DynamicResource TextBoxBackgroundFocused}" />
+    </Style>
 
-	<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="{DynamicResource Accent}"/>
-	</Style>
+    <Style Selector="TextBox /template/ DockPanel#Part_InnerDockPanel">
+        <Setter Property="Margin"
+                Value="0" />
+    </Style>
 
-	<Style Selector="TextBox:pressed /template/ Border#PART_BorderElement">
-		<Setter Property="Opacity" Value="100"/>
-	</Style>
+    <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background"
+                Value="{DynamicResource TextBoxBackgroundFocused}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource BaseLight}" />
+    </Style>
 
-	<Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="{DynamicResource BaseDark}"/>
-		<Setter Property="Background" Value="{DynamicResource Base}"/>
-	</Style>
+    <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource Accent}" />
+    </Style>
+
+    <Style Selector="TextBox:pressed /template/ Border#PART_BorderElement">
+        <Setter Property="Opacity"
+                Value="100" />
+    </Style>
+
+    <Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource BaseDark}" />
+        <Setter Property="Background"
+                Value="{DynamicResource Base}" />
+    </Style>
 </Styles>

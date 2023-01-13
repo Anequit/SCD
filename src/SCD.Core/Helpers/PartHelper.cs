@@ -3,27 +3,26 @@ using System;
 
 namespace SCD.Core.Helpers;
 
-public class PartHelper
+public static class PartHelper
 {
-    public static Part[] BuildPartArray(long contentLength, int buffer)
+    public static FileChunk[] BuildPartArray(long contentLength, int partSize)
     {
         if(contentLength <= 0)
             throw new ArgumentOutOfRangeException(nameof(contentLength));
 
-        if(buffer <= 0)
-            throw new ArgumentOutOfRangeException(nameof(buffer));
+        if(partSize <= 0)
+            throw new ArgumentOutOfRangeException(nameof(partSize));
 
-        int amount = (int)Math.Ceiling((double)contentLength / buffer);
+        int amount = (int)Math.Ceiling((double)contentLength / partSize);
 
-        Part[] parts = new Part[amount];
+        FileChunk[] parts = new FileChunk[amount];
 
         for(int x = 0; x < amount; x++)
         {
-            parts[x] = new Part()
+            parts[x] = new FileChunk
             {
-                Location = x,
-                StartingHeaderRange = x * buffer,
-                EndingHeaderRange = (x * buffer) + buffer
+                StartingHeaderRange = x * partSize,
+                EndingHeaderRange = x * partSize + partSize
             };
         }
 

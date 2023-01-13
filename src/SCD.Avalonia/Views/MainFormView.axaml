@@ -2,50 +2,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="450" 
-             x:Class="SCD.Avalonia.Views.MainFormView" Background="#EDEDED">
-             
-	<StackPanel Margin="15">
-		
-		<Label Classes="Header"
-			   Content="Album URL"/>
-		
-		<Label Classes="Hint"
-			   Content="What do you want to download?"/>
-		
-		<TextBox Margin="0 8 0 0"
-				 Text="{Binding AlbumURL}"/>
-		
-		<Label Classes="Header"
-			   Content="Download Location"
-			   Margin="0 16 0 0"/>
+             mc:Ignorable="d"
+             d:DesignWidth="450"
+             x:Class="SCD.Avalonia.Views.MainFormView"
+             Background="#EDEDED">
 
-		<Label Classes="Hint"
-			   Content="Where should the album be saved?"/>
+    <StackPanel Margin="15">
 
-		<Grid Margin="0 8 0 0">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
-			
-			<TextBox Grid.Column="0"
-					 Text="{Binding DownloadLocation}"/>
+        <Label Classes="Header"
+               Content="Album URL" />
 
-			<Button Grid.Column="1"
-					Classes="Select"
-					Margin="8 0 0 0" 
-					Command="{Binding SelectCommand}"/>
-		</Grid>
+        <Label Classes="Hint"
+               Content="What do you want to download?" />
 
-		<DockPanel Margin="0 16 0 0" VerticalAlignment="Bottom">
-			<Button DockPanel.Dock="Left"
-					Classes="ReportBug" HorizontalAlignment="Left"
-					Command="{Binding ReportBugCommand}"/>
-			
-			<Button DockPanel.Dock="Right"
-					Classes="CTA Download" HorizontalAlignment="Right"
-					Command="{Binding DownloadCommand}"/>
-		</DockPanel>
-	</StackPanel>
+        <TextBox Margin="0 8 0 0"
+                 Text="{Binding AlbumUrl}"
+                 MaxLines="1" />
+
+        <Label Classes="Header"
+               Content="Download Location"
+               Margin="0 16 0 0" />
+
+        <Label Classes="Hint"
+               Content="Where should the album be saved?" />
+
+        <Grid Margin="0 8 0 0"
+              ColumnDefinitions="*,Auto">
+
+            <TextBox Grid.Column="0"
+                     Text="{Binding DownloadLocation}"
+                     MaxLines="1" />
+
+            <Button Grid.Column="1"
+                    Classes="Select"
+                    Margin="8 0 0 0"
+                    Command="{Binding SelectCommand}" />
+        </Grid>
+
+        <DockPanel Margin="0 16 0 0"
+                   VerticalAlignment="Bottom">
+            <Button DockPanel.Dock="Left"
+                    Classes="ReportBug"
+                    HorizontalAlignment="Left"
+                    Command="{Binding ReportBugCommand}" />
+
+            <Button DockPanel.Dock="Right"
+                    Classes="CTA Download"
+                    HorizontalAlignment="Right"
+                    Command="{Binding DownloadCommand}" />
+        </DockPanel>
+    </StackPanel>
 </UserControl>

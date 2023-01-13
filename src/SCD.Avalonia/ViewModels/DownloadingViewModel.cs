@@ -1,100 +1,86 @@
-﻿using Avalonia.Controls;
-using ReactiveUI;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SCD.Avalonia.Services;
 using SCD.Core;
 using SCD.Core.DataModels;
-using SCD.Core.Exceptions;
 using SCD.Core.Extensions;
 using SCD.Core.Helpers;
 using SCD.Core.Utilities;
 using System;
 using System.IO;
-using System.Reactive;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SCD.Avalonia.ViewModels;
 
-public class DownloadingViewModel : ReactiveObject
+public partial class DownloadingViewModel : ObservableObject
 {
-    private readonly Window _window;
     private readonly CancellationTokenSource _cancellationTokenSource;
     private readonly Progress<decimal> _progress;
 
-    private double _downloadProgress = 0;
+    [ObservableProperty]
+    private double _downloadProgress;
+
+    [ObservableProperty]
     private string _filename = "Loading..";
 
-    public DownloadingViewModel(Window window, string albumURL, string downloadLocation)
+    public DownloadingViewModel(string albumUrl, string downloadLocation)
     {
-        _window = window;
-
         _cancellationTokenSource = new CancellationTokenSource();
         _progress = new Progress<decimal>(ProgressChanged);
 
-        AlbumDownloader.FileChanged += AlbumDownloader_FileChanged;
-        AlbumDownloader.ErrorOccurred += AlbumDownloader_ErrorOccurred;
+        AlbumDownloader.FileChanged += FileChanged;
+        AlbumDownloader.ErrorOccurred += ErrorOccurred;
 
-        CancelDownloadCommand = ReactiveCommand.Create(CancelDownload);
-
-        Task.Run(async () => await DownloadAsync(albumURL, downloadLocation));
+        Task.Run(async () => await DownloadAsync(albumUrl, downloadLocation));
     }
 
-    public string Filename
-    {
-        get => _filename;
-        set => this.RaiseAndSetIfChanged(ref _filename, value);
-    }
-
-    public double DownloadProgress
-    {
-        get => _downloadProgress;
-        set => this.RaiseAndSetIfChanged(ref _downloadProgress, value);
-    }
-
-    public ReactiveCommand<Unit, Unit> CancelDownloadCommand { get; }
-
+    [RelayCommand]
     private void CancelDownload()
     {
         _cancellationTokenSource?.Cancel();
         HttpClientHelper.Cancel();
-        GC.Collect();
 
-        NavigationService.NavigateTo(new MainFormViewModel(_window));
+        NavigationService.NavigateTo(new MainFormViewModel());
     }
 
-    private async Task DownloadAsync(string albumURL, string downloadLocation)
+    private async Task DownloadAsync(string albumUrl, string downloadLocation)
     {
         try
         {
-            Album album = await HttpClientHelper.HttpClient.FetchAlbumAsync(albumURL, _cancellationTokenSource.Token);
+            Album album = await HttpClientHelper.HttpClient.FetchAlbumAsync(albumUrl, _cancellationTokenSource.Token);
 
-            album.Title = (string.IsNullOrEmpty(Parser.ParseValidPath(album.Title))) ? "Unknown Album Title" : album.Title;
-            downloadLocation = (string.IsNullOrEmpty(Parser.ParseValidPath(downloadLocation))) ? throw new ArgumentException(nameof(downloadLocation)) : downloadLocation;
+            album.Title = string.IsNullOrEmpty(Parser.ParseValidPath(album.Title)) ? "Unknown Album Title" : album.Title;
+            downloadLocation = string.IsNullOrEmpty(Parser.ParseValidPath(downloadLocation)) ? throw new ArgumentException(null, nameof(downloadLocation)) : downloadLocation;
 
             string path = Path.Combine(downloadLocation, album.Title);
 
             await AlbumDownloader.DownloadAlbumAsync(album, path, _progress, _cancellationTokenSource.Token);
 
-            NavigationService.NavigateTo(new DownloadFinishedViewModel(_window, path));
+            NavigationService.NavigateTo(new DownloadFinishedViewModel(path));
         }
         catch(Exception ex)
         {
             switch(ex)
             {
-                case FailedToFetchAlbumException:
-                    NavigationService.ShowErrorAlert("Error", ex.Message);
+                case OperationCanceledException:
+                    NavigationService.NavigateTo(new MainFormViewModel());
+
+                    break;
+
+                default:
+                    ErrorOccurred(ex);
+
                     break;
             }
-
-            NavigationService.NavigateTo(new MainFormViewModel(_window));
         }
     }
 
     private void ProgressChanged(decimal progressAmount) => DownloadProgress = (double)Math.Round(progressAmount, MidpointRounding.ToZero);
 
-    private void AlbumDownloader_ErrorOccurred(Exception obj) => NavigationService.ShowErrorAlert("Error", obj.Message);
+    private void ErrorOccurred(Exception obj) => NavigationService.ShowErrorAlert("Error", obj.Message);
 
-    private void AlbumDownloader_FileChanged(AlbumFile file)
+    private void FileChanged(AlbumFile file)
     {
         Filename = file.Filename;
         DownloadProgress = 0;

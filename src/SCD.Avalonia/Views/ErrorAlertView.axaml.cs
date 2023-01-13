@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace SCD.Avalonia.Views;
 
-public partial class ErrorAlertView : UserControl
+public class ErrorAlertView : UserControl
 {
     public ErrorAlertView()
     {

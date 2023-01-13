@@ -2,204 +2,234 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <Button Classes="CTA"/>
+            <Button Classes="CTA" />
         </Border>
     </Design.PreviewWith>
 
-	<Style Selector="Button">
-		<Setter Property="Background" Value="{DynamicResource Base}"/>
-		
-		<Setter Property="Height" Value="32"/>
-		<Setter Property="Padding" Value="14 0"/>
-		
-		<Setter Property="VerticalContentAlignment" Value="Center"/>
-		<Setter Property="HorizontalContentAlignment" Value="Center"/>
-	</Style>
+    <Style Selector="Button">
+        <Setter Property="Background"
+                Value="{DynamicResource Base}" />
 
-	<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="{DynamicResource BaseLight}"/>
-	</Style>
-	
-	<Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="RenderTransform" Value="scale(0.95)"/>
-		<Setter Property="Background" Value="{DynamicResource BaseDark}"/>
-	</Style>
+        <Setter Property="Height"
+                Value="32" />
+        <Setter Property="Padding"
+                Value="14 0" />
 
-	<Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="{DynamicResource BaseDisabled}"/>
-	</Style>
-	
-	<Style Selector="Button.CTA">
-		<Setter Property="Background" Value="{DynamicResource Accent}"/>
-	</Style>
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+    </Style>
 
-	<Style Selector="Button.CTA:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="{DynamicResource AccentLight}"/>
-	</Style>
+    <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource BaseLight}" />
+    </Style>
 
-	<Style Selector="Button.CTA:pressed /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="{DynamicResource AccentDark}"/>
-	</Style>
+    <Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="RenderTransform"
+                Value="scale(0.95)" />
+        <Setter Property="Background"
+                Value="{DynamicResource BaseDark}" />
+    </Style>
 
-	<Style Selector="Button.TitleBar">
-		<Setter Property="Height" Value="32"/>
-		<Setter Property="Width" Value="32"/>
-		<Setter Property="Padding" Value="0"/>
+    <Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource BaseDisabled}" />
+    </Style>
 
-		<Setter Property="Background" Value="{DynamicResource Base}"/>
-		
-		<Setter Property="RenderTransform" Value="none"/>
-	</Style>
+    <Style Selector="Button.CTA">
+        <Setter Property="Background"
+                Value="{DynamicResource Accent}" />
+    </Style>
 
-	<Style Selector="Button.TitleBar:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="{DynamicResource BaseLight}"/>
-	</Style>
+    <Style Selector="Button.CTA:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource AccentLight}" />
+    </Style>
 
-	<Style Selector="Button.TitleBar:pressed /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="{DynamicResource BaseDark}"/>
-	</Style>
+    <Style Selector="Button.CTA:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource AccentDark}" />
+    </Style>
 
-	<Style Selector="Button.Download">
-		<Setter Property="Content">
-			<Template>
-				<StackPanel Orientation="Horizontal">
-					<PathIcon Data="{StaticResource Download}"
-							  Width="14" Height="14"/>
+    <Style Selector="Button.TitleBar">
+        <Setter Property="Height"
+                Value="32" />
+        <Setter Property="Width"
+                Value="32" />
+        <Setter Property="Padding"
+                Value="0" />
 
-					<Label Classes="Button"
-						   Content="Download"/>
-				</StackPanel>
-			</Template>
-		</Setter>
-	</Style>
+        <Setter Property="Background"
+                Value="{DynamicResource Base}" />
 
-	<Style Selector="Button.ReportBug">
-		<Setter Property="Content">
-			<Template>
-				<StackPanel Orientation="Horizontal">
-					<PathIcon Data="{StaticResource Bug}"
-							  Width="14" Height="14"/>
+        <Setter Property="RenderTransform"
+                Value="none" />
+    </Style>
 
-					<Label Classes="Button"
-						   Content="Report Bug"/>
-				</StackPanel>
-			</Template>
-		</Setter>
-	</Style>
+    <Style Selector="Button.TitleBar:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource BaseLight}" />
+    </Style>
 
-	<Style Selector="Button.CancelDownload">
-		<Setter Property="Content">
-			<Template>
-				<StackPanel Orientation="Horizontal">
-					<PathIcon Data="{StaticResource Cross}"
-							  Width="14" Height="14"/>
+    <Style Selector="Button.TitleBar:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background"
+                Value="{DynamicResource BaseDark}" />
+    </Style>
 
-					<Label Classes="Button"
-						   Content="Cancel Download"/>
-				</StackPanel>
-			</Template>
-		</Setter>
-	</Style>
+    <Style Selector="Button.Download">
+        <Setter Property="Content">
+            <Template>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource Download}"
+                              Width="14"
+                              Height="14" />
 
-	<Style Selector="Button.Select">
-		<Setter Property="Content">
-			<Template>
-				<StackPanel Orientation="Horizontal">
-					<PathIcon Data="{StaticResource FolderAdd}"
-							  Width="16" Height="14"/>
+                    <Label Classes="Button"
+                           Content="Download" />
+                </StackPanel>
+            </Template>
+        </Setter>
+    </Style>
 
-					<Label Classes="Button"
-						   Content="Select"/>
-				</StackPanel>
-			</Template>
-		</Setter>
-	</Style>
-	
-	<Style Selector="Button.Exit">
-		<Setter Property="Content">
-			<Template>
-				<PathIcon Data="{StaticResource Cross}" 
-						  Width="12" Height="12"/>
-			</Template>
-		</Setter>
-	</Style>
+    <Style Selector="Button.ReportBug">
+        <Setter Property="Content">
+            <Template>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource Bug}"
+                              Width="14"
+                              Height="14" />
 
-	<Style Selector="Button.Minimize">
-		<Setter Property="Content">
-			<Template>
-				<PathIcon Data="{StaticResource Dash}"
-						  Width="12" Height="2"/>
-			</Template>
-		</Setter>
-	</Style>
+                    <Label Classes="Button"
+                           Content="Report Bug" />
+                </StackPanel>
+            </Template>
+        </Setter>
+    </Style>
 
-	<Style Selector="Button.Home">
-		<Setter Property="Content">
-			<Template>
-				<StackPanel Orientation="Horizontal">
-					<PathIcon Data="{StaticResource Home}"
-							  Width="14" Height="14"/>
-					
-					<Label Classes="Button"
-						   Content="Home"/>
-				</StackPanel>
-			</Template>
-		</Setter>
-	</Style>
+    <Style Selector="Button.CancelDownload">
+        <Setter Property="Content">
+            <Template>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource Cross}"
+                              Width="14"
+                              Height="14" />
 
-	<Style Selector="Button.OpenFolder">
-		<Setter Property="Content">
-			<Template>
-				<StackPanel Orientation="Horizontal">
-					<PathIcon Data="{StaticResource Folder}"
-							  Width="16" Height="14"/>
+                    <Label Classes="Button"
+                           Content="Cancel Download" />
+                </StackPanel>
+            </Template>
+        </Setter>
+    </Style>
 
-					<Label Classes="Button"
-						   Content="Open Folder"/>
-				</StackPanel>
-			</Template>
-		</Setter>
-	</Style>
+    <Style Selector="Button.Select">
+        <Setter Property="Content">
+            <Template>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource FolderAdd}"
+                              Width="16"
+                              Height="14" />
 
-	<Style Selector="Button.Close">
-		<Setter Property="Content">
-			<Template>
-				<StackPanel Orientation="Horizontal">
-					<PathIcon Data="{StaticResource Cross}"
-							  Width="14" Height="14"/>
+                    <Label Classes="Button"
+                           Content="Select" />
+                </StackPanel>
+            </Template>
+        </Setter>
+    </Style>
 
-					<Label Classes="Button"
-						   Content="Close"/>
-				</StackPanel>
-			</Template>
-		</Setter>
-	</Style>
+    <Style Selector="Button.Exit">
+        <Setter Property="Content">
+            <Template>
+                <PathIcon Data="{StaticResource Cross}"
+                          Width="12"
+                          Height="12" />
+            </Template>
+        </Setter>
+    </Style>
 
-	<Style Selector="Button.No">
-		<Setter Property="Content">
-			<Template>
-				<StackPanel Orientation="Horizontal">
-					<PathIcon Data="{StaticResource Cross}"
-							  Width="14" Height="14"/>
-					
-					<Label Classes="Button"
-						   Content="No"/>
-				</StackPanel>
-			</Template>
-		</Setter>
-	</Style>
+    <Style Selector="Button.Minimize">
+        <Setter Property="Content">
+            <Template>
+                <PathIcon Data="{StaticResource Dash}"
+                          Width="12"
+                          Height="2" />
+            </Template>
+        </Setter>
+    </Style>
 
-	<Style Selector="Button.Yes">
-		<Setter Property="Content">
-			<Template>
-				<StackPanel Orientation="Horizontal">
-					<PathIcon Data="{StaticResource Download}"
-							  Width="14" Height="14"/>
+    <Style Selector="Button.Home">
+        <Setter Property="Content">
+            <Template>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource Home}"
+                              Width="14"
+                              Height="14" />
 
-					<Label Classes="Button"
-						   Content="Yes"/>
-				</StackPanel>
-			</Template>
-		</Setter>
-	</Style>
+                    <Label Classes="Button"
+                           Content="Home" />
+                </StackPanel>
+            </Template>
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.OpenFolder">
+        <Setter Property="Content">
+            <Template>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource Folder}"
+                              Width="16"
+                              Height="14" />
+
+                    <Label Classes="Button"
+                           Content="Open Folder" />
+                </StackPanel>
+            </Template>
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.Close">
+        <Setter Property="Content">
+            <Template>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource Cross}"
+                              Width="14"
+                              Height="14" />
+
+                    <Label Classes="Button"
+                           Content="Close" />
+                </StackPanel>
+            </Template>
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.No">
+        <Setter Property="Content">
+            <Template>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource Cross}"
+                              Width="14"
+                              Height="14" />
+
+                    <Label Classes="Button"
+                           Content="No" />
+                </StackPanel>
+            </Template>
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.Yes">
+        <Setter Property="Content">
+            <Template>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource Download}"
+                              Width="14"
+                              Height="14" />
+
+                    <Label Classes="Button"
+                           Content="Yes" />
+                </StackPanel>
+            </Template>
+        </Setter>
+    </Style>
 </Styles>

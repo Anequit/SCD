@@ -1,23 +1,29 @@
-﻿using ReactiveUI;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SCD.Avalonia.Services;
-using System.Reactive;
 
 namespace SCD.Avalonia.ViewModels;
 
-public class ErrorAlertViewModel : ReactiveObject
+public partial class ErrorAlertViewModel : ObservableObject
 {
-    public ErrorAlertViewModel(string error, string errorMessage)
-    {
-        Error = error;
-        ErrorMessage = errorMessage;
+    [ObservableProperty]
+    private string _error;
 
-        CloseCommand = ReactiveCommand.Create(Close);
+    [ObservableProperty]
+    private string _errorMessage;
+
+    public ErrorAlertViewModel()
+    {
+        _error = string.Empty;
+        _errorMessage = string.Empty;
     }
 
-    public string Error { get; }
-    public string ErrorMessage { get; }
+    public ErrorAlertViewModel(string error, string errorMessage)
+    {
+        _error = error;
+        _errorMessage = errorMessage;
+    }
 
-    public ReactiveCommand<Unit, Unit> CloseCommand { get; }
-
+    [RelayCommand]
     private void Close() => NavigationService.CloseAlert();
 }
