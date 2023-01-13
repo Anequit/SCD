@@ -37,16 +37,16 @@ class FileDownloader
 
             _contentLength = headerResponse.Content.Headers.ContentLength ?? throw new NullOrZeroContentLengthException(albumFile.Url);
 
-            FileChunk[] parts = PartHelper.BuildPartArray(_contentLength, _buffer);
+            albumFile.FileChunks = FileChunkHelper.BuildChunkArray(_contentLength, _buffer);
 
-            Task[] tasks = new Task[parts.Length];
+            Task[] tasks = new Task[albumFile.FileChunks.Length];
 
-            for(int x = 0; x < parts.Length; x++)
-                tasks[x] = DownloadChunkAsync(parts[x], albumFile.Url, token);
+            for(int x = 0; x < albumFile.FileChunks.Length; x++)
+                tasks[x] = DownloadChunkAsync(albumFile.FileChunks[x], albumFile.Url, token);
 
             Task.WaitAll(tasks, token);
-
-            return parts;
+            
+            await SaveFileAsync(albumFile, saveLocation, token);
         }
     }
 
