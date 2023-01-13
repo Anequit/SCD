@@ -45,7 +45,7 @@ class FileDownloader
                 tasks[x] = DownloadChunkAsync(albumFile.FileChunks[x], albumFile.Url, token);
 
             Task.WaitAll(tasks, token);
-            
+
             await SaveFileAsync(albumFile, saveLocation, token);
         }
     }
@@ -66,8 +66,9 @@ class FileDownloader
                     using(HttpResponseMessage responseMessage = await HttpClientHelper.HttpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, token))
                     {
                         responseMessage.EnsureSuccessStatusCode();
-                        
+
                         chunk.Content = await responseMessage.Content.ReadAsByteArrayAsync(token);
+
                         break;
                     }
                 }
@@ -84,10 +85,10 @@ class FileDownloader
 
         _semaphoreSlim.Release();
     }
-    
+
     private async Task SaveFileAsync(AlbumFile albumFile, string saveLocation, CancellationToken token)
     {
-        FileStreamOptions options = new FileStreamOptions()
+        FileStreamOptions options = new FileStreamOptions
         {
             PreallocationSize = albumFile.FileChunks![^1].EndingHeaderRange,
             BufferSize = _buffer,
@@ -96,7 +97,7 @@ class FileDownloader
             Share = FileShare.None,
             Options = FileOptions.SequentialScan
         };
-        
+
         // Save File
         await using(FileStream fileStream = new FileStream(saveLocation, options))
         {

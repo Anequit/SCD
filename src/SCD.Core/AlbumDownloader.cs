@@ -41,11 +41,11 @@ public static class AlbumDownloader
 
                 continue;
             }
-            
+
             try
             {
                 await downloadHandler.DownloadFileAsync(file, filePath, token);
-                
+
                 /*
                 await using(FileStream fileStream = File.OpenWrite(filePath))
                 {
@@ -60,16 +60,17 @@ public static class AlbumDownloader
             catch(Exception ex)
             {
                 File.Delete(filePath);
-                
+
                 token.ThrowIfCancellationRequested();
-                
+
                 if(ex is IOException or HttpRequestException)
                     continue;
-                
+
                 ErrorOccurred?.Invoke(ex);
+
                 throw;
             }
-            
+
             album.AlbumFiles.Dequeue();
         } while(album.AlbumFiles.Count > 0);
     }

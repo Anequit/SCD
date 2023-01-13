@@ -63,7 +63,7 @@ public partial class DownloadingViewModel : ObservableObject
         {
             if(!_cancellationTokenSource.Token.IsCancellationRequested && ex is not (OperationCanceledException or TaskCanceledException))
                 ErrorOccurred(ex);
-            
+
             NavigationService.NavigateTo(new MainFormViewModel());
         }
     }

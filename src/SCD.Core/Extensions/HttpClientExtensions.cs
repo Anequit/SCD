@@ -29,20 +29,15 @@ public static class HttpClientExtensions
                 if(album.Success)
                     return album;
 
-                switch(album.Description)
+                throw album.Description switch
                 {
                     // Private album 
-                    case "This album is not available for public.": 
-                        throw new FailedToFetchAlbumException("Album is private.");
-
+                    "This album is not available for public." => new FailedToFetchAlbumException("Album is private."),
                     // Will only occur if the url provided is invalid.
-                    case "No token provided." or "Album not found.": 
-                        throw new FailedToFetchAlbumException("Album not found.");
-
+                    "No token provided." or "Album not found." => new FailedToFetchAlbumException("Album not found."),
                     // Can occur if the server is having some issues but is still up.
-                    case "An unexpected error occcured. Try again?" or _:
-                        throw new FailedToFetchAlbumException("Unexpected error.");
-                }
+                    "An unexpected error occcured. Try again?" or _ => new FailedToFetchAlbumException("Unexpected error.")
+                };
             }
         }
     }

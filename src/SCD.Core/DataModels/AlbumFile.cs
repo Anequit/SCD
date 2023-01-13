@@ -16,7 +16,7 @@ public class AlbumFile : IDisposable
 
     [JsonPropertyName("file")]
     public required string Url { get; init; }
-    
+
     public FileChunk[]? FileChunks { get; set; } = null;
 
     public void Dispose()
