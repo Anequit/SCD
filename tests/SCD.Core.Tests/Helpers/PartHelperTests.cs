@@ -12,9 +12,9 @@ public class PartHelperTests
     [TestCase(1115, 1024 * 64)]
     public void BuildPartArrayTest_ReturnsCorrectAmount(int contentLength, int buffer)
     {
-        Part[]? result = PartHelper.BuildPartArray(contentLength, buffer);
+        FileChunk[]? result = PartHelper.BuildPartArray(contentLength, buffer);
 
-        Assert.True(result.Length == Math.Ceiling((double)contentLength / buffer));
+        Assert.True(Math.Abs(result.Length - Math.Ceiling((double)contentLength / buffer)) == 0);
     }
 
     [TestCase(1231515125, 1024 * 512)]
@@ -22,7 +22,7 @@ public class PartHelperTests
     [TestCase(1115, 1024 * 64)]
     public void BuildPartArrayTest_FinalPartCorrectEndingHeader(int contentLength, int buffer)
     {
-        Part[]? result = PartHelper.BuildPartArray(contentLength, buffer);
+        FileChunk[]? result = PartHelper.BuildPartArray(contentLength, buffer);
 
         Assert.True(result[^1].EndingHeaderRange == contentLength);
     }
