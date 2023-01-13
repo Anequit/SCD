@@ -23,7 +23,7 @@ public static class HttpClientHelper
             AllowAutoRedirect = true,
             EnableMultipleHttp2Connections = true,
             AutomaticDecompression = DecompressionMethods.All,
-            PooledConnectionLifetime = TimeSpan.FromMinutes(5),
+            PooledConnectionLifetime = TimeSpan.FromMinutes(2),
             SslOptions = new SslClientAuthenticationOptions
             {
                 EnabledSslProtocols = SslProtocols.None,
@@ -32,7 +32,7 @@ public static class HttpClientHelper
             }
         })
         {
-            Timeout = TimeSpan.FromSeconds(30)
+            Timeout = TimeSpan.FromSeconds(15)
         };
     }
 }
