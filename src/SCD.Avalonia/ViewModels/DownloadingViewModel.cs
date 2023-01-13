@@ -61,18 +61,10 @@ public partial class DownloadingViewModel : ObservableObject
         }
         catch(Exception ex)
         {
-            switch(ex)
-            {
-                case OperationCanceledException:
-                    NavigationService.NavigateTo(new MainFormViewModel());
-
-                    break;
-
-                default:
-                    ErrorOccurred(ex);
-
-                    break;
-            }
+            if(!_cancellationTokenSource.Token.IsCancellationRequested && ex is not (OperationCanceledException or TaskCanceledException))
+                ErrorOccurred(ex);
+            
+            NavigationService.NavigateTo(new MainFormViewModel());
         }
     }
 
