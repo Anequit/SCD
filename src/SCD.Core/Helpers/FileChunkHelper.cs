@@ -3,9 +3,9 @@ using System;
 
 namespace SCD.Core.Helpers;
 
-public static class PartHelper
+public static class FileChunkHelper
 {
-    public static FileChunk[] BuildPartArray(long contentLength, int partSize)
+    public static FileChunk[] BuildChunkArray(long contentLength, int partSize)
     {
         if(contentLength <= 0)
             throw new ArgumentOutOfRangeException(nameof(contentLength));
