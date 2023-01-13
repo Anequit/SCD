@@ -45,17 +45,6 @@ public static class AlbumDownloader
             try
             {
                 await downloadHandler.DownloadFileAsync(file, filePath, token);
-
-                /*
-                await using(FileStream fileStream = File.OpenWrite(filePath))
-                {
-                    foreach(FileChunk chunk in file.FileChunks)
-                    {
-                        fileStream.Seek(chunk.StartingHeaderRange, SeekOrigin.Begin);
-
-                        await fileStream.WriteAsync(chunk.Content, token);
-                    }
-                }*/
             }
             catch(Exception ex)
             {
