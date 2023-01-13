@@ -27,7 +27,7 @@ class FileDownloader
         _semaphoreSlim = new SemaphoreSlim(throttle);
     }
 
-    public async Task<FileChunk[]> DownloadFileChunksAsync(AlbumFile albumFile, CancellationToken token)
+    public async Task DownloadFileAsync(AlbumFile albumFile, string saveLocation, CancellationToken token)
     {
         _downloaded = 0;
 
