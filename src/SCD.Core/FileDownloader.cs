@@ -2,6 +2,7 @@
 using SCD.Core.Exceptions;
 using SCD.Core.Helpers;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SCD.Core;
 
-class DownloadHandler
+class FileDownloader
 {
     private readonly int _buffer;
     private readonly IProgress<decimal> _progress;
@@ -18,7 +19,7 @@ class DownloadHandler
 
     private long _downloaded;
 
-    public DownloadHandler(IProgress<decimal> progress, int buffer, int throttle)
+    public FileDownloader(IProgress<decimal> progress, int buffer, int throttle)
     {
         _progress = progress;
         _buffer = buffer;
