@@ -21,7 +21,7 @@ public static class AlbumDownloader
         if(album.AlbumFiles.Count == 0)
             return;
 
-        DownloadHandler downloadHandler = new DownloadHandler(progress, 1024 * 256, 50);
+        FileDownloader downloadHandler = new FileDownloader(progress, 1024 * 256, 1000);
 
         do
         {
