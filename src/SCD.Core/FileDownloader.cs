@@ -66,9 +66,8 @@ class FileDownloader
                     using(HttpResponseMessage responseMessage = await HttpClientHelper.HttpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseContentRead, token))
                     {
                         responseMessage.EnsureSuccessStatusCode();
-
+                        
                         chunk.Content = await responseMessage.Content.ReadAsByteArrayAsync(token);
-
                         break;
                     }
                 }
@@ -84,5 +83,29 @@ class FileDownloader
         _progress.Report((decimal)_downloaded / _contentLength * 100);
 
         _semaphoreSlim.Release();
+    }
+    
+    private async Task SaveFileAsync(AlbumFile albumFile, string saveLocation, CancellationToken token)
+    {
+        FileStreamOptions options = new FileStreamOptions()
+        {
+            PreallocationSize = albumFile.FileChunks![^1].EndingHeaderRange,
+            BufferSize = _buffer,
+            Access = FileAccess.Write,
+            Mode = FileMode.CreateNew,
+            Share = FileShare.None,
+            Options = FileOptions.SequentialScan
+        };
+        
+        // Save File
+        await using(FileStream fileStream = new FileStream(saveLocation, options))
+        {
+            foreach(FileChunk chunk in albumFile.FileChunks)
+            {
+                fileStream.Seek(chunk.StartingHeaderRange, SeekOrigin.Begin);
+
+                await fileStream.WriteAsync(chunk.Content, token);
+            }
+        }
     }
 }
