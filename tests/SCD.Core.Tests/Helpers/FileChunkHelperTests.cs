@@ -5,7 +5,7 @@ using System;
 
 namespace SCD.Core.Tests.Helpers;
 
-public class PartHelperTests
+public class FileChunkHelperTests
 {
     [TestCase(1231515125, 1024 * 512)]
     [TestCase(13123156, 1024 * 32)]
