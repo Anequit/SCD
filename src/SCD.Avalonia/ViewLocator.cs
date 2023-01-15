@@ -14,13 +14,11 @@ public class ViewLocator : IDataTemplate
 
         if(type != null)
             return (Control)Activator.CreateInstance(type)!;
-        else
+        
+        return new TextBlock
         {
-            return new TextBlock
-            {
-                Text = "Not Found: " + name
-            };
-        }
+            Text = "Not Found: " + name
+        };
     }
 
     public bool Match(object? data) => data is ObservableObject;
