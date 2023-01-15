@@ -48,22 +48,31 @@ public partial class DownloadingViewModel : ObservableObject
     {
         try
         {
+            // Fetch album from cyberdrop
             Album album = await HttpClientHelper.HttpClient.FetchAlbumAsync(albumUrl, _cancellationTokenSource.Token);
 
+            // Parse album title
             album.Title = string.IsNullOrEmpty(Parser.ParseValidPath(album.Title)) ? "Unknown Album Title" : album.Title;
+            
+            // Parse download path
             downloadLocation = string.IsNullOrEmpty(Parser.ParseValidPath(downloadLocation)) ? throw new ArgumentException(null, nameof(downloadLocation)) : downloadLocation;
 
+            // Create folder path
             string path = Path.Combine(downloadLocation, album.Title);
 
+            // Download album files
             await AlbumDownloader.DownloadAlbumAsync(album, path, _progress, _cancellationTokenSource.Token);
 
+            // Navigate to download finished page
             NavigationService.NavigateTo(new DownloadFinishedViewModel(path));
         }
         catch(Exception ex)
         {
+            // If task wasn't canceled report error to user
             if(!_cancellationTokenSource.Token.IsCancellationRequested && ex is not (OperationCanceledException or TaskCanceledException))
                 ErrorOccurred(ex);
 
+            // Navigate back to main page
             NavigationService.NavigateTo(new MainFormViewModel());
         }
     }
