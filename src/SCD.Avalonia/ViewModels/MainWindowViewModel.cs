@@ -24,7 +24,7 @@ public partial class MainWindowViewModel : ObservableObject
         window.ExtendClientAreaChromeHints = 0;
         window.ExtendClientAreaTitleBarHeightHint = -1;
 
-        _titleBarViewModel = new TitleBarViewModel();
+        _titleBarViewModel = new TitleBarViewModel(window);
 
         NavigationService.NavigateTo(new MainFormViewModel());
     }

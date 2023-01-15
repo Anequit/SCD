@@ -28,7 +28,7 @@ public partial class MainFormViewModel : ObservableValidator
 
     public MainFormViewModel()
     {
-        _window = ((IClassicDesktopStyleApplicationLifetime)Application.Current?.ApplicationLifetime!).MainWindow!;
+        _window = App.MainWindow;
 
         Task.Run(async () => await UpdateService.CheckForUpdateAsync());
     }

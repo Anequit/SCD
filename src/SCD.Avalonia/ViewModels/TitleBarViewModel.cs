@@ -15,10 +15,10 @@ public partial class TitleBarViewModel : ObservableObject
     [ObservableProperty]
     private string _title;
 
-    public TitleBarViewModel()
+    public TitleBarViewModel(Window window)
     {
-        _window = ((IClassicDesktopStyleApplicationLifetime)Application.Current?.ApplicationLifetime!).MainWindow!;
-
+        _window = window;
+        
         string version = "Unknown version";
 
         if(UpdateService.CurrentVersion is not null)
