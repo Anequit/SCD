@@ -23,5 +23,7 @@ public class AlbumFile : IDisposable
     {
         if(FileChunks is not null)
             Array.Clear(FileChunks);
+        
+        GC.SuppressFinalize(this);
     }
 }
