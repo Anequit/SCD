@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SCD.Core;
 
-class FileDownloader
+internal class FileDownloader
 {
     private readonly int _buffer;
     private readonly IProgress<decimal> _progress;
@@ -46,7 +46,7 @@ class FileDownloader
 
             // Initalize chunk task array
             Task[] tasks = new Task[albumFile.FileChunks.Length];
-            
+
             // Populate chunk task array
             for(int x = 0; x < albumFile.FileChunks.Length; x++)
                 tasks[x] = DownloadChunkAsync(albumFile.FileChunks[x], albumFile.Url, token);
@@ -96,7 +96,7 @@ class FileDownloader
 
         // Increase downloaded amount
         _downloaded += chunk.EndingHeaderRange - chunk.StartingHeaderRange;
-        
+
         // Report downloaded percentage
         _progress.Report((decimal)_downloaded / _contentLength * 100);
 
@@ -105,7 +105,7 @@ class FileDownloader
     }
 
     private async Task SaveFileAsync(AlbumFile albumFile, string saveLocation, CancellationToken token)
-    {   
+    {
         // Initialize optimimal file stream options
         FileStreamOptions options = new FileStreamOptions
         {

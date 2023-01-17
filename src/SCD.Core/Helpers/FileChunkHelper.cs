@@ -22,7 +22,7 @@ public static class FileChunkHelper
             parts[x] = new FileChunk
             {
                 StartingHeaderRange = x * partSize,
-                EndingHeaderRange = x * partSize + partSize
+                EndingHeaderRange = (x * partSize) + partSize
             };
         }
 

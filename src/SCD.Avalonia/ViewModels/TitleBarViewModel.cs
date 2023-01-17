@@ -1,6 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
+﻿using Avalonia.Controls;
 using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -18,7 +16,7 @@ public partial class TitleBarViewModel : ObservableObject
     public TitleBarViewModel(Window window)
     {
         _window = window;
-        
+
         string version = "Unknown version";
 
         if(UpdateService.CurrentVersion is not null)

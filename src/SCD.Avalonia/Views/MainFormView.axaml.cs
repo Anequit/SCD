@@ -5,10 +5,7 @@ namespace SCD.Avalonia.Views;
 
 public class MainFormView : UserControl
 {
-    public MainFormView()
-    {
-        InitializeComponent();
-    }
+    public MainFormView() => InitializeComponent();
 
     private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
 }

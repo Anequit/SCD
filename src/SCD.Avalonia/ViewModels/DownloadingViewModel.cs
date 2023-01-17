@@ -53,7 +53,7 @@ public partial class DownloadingViewModel : ObservableObject
 
             // Parse album title
             album.Title = string.IsNullOrEmpty(Parser.ParseValidPath(album.Title)) ? "Unknown Album Title" : album.Title;
-            
+
             // Parse download path
             downloadLocation = string.IsNullOrEmpty(Parser.ParseValidPath(downloadLocation)) ? throw new ArgumentException(null, nameof(downloadLocation)) : downloadLocation;
 

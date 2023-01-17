@@ -11,7 +11,7 @@ namespace SCD.Core.Extensions;
 
 public static class HttpClientExtensions
 {
-    public async static Task<Album> FetchAlbumAsync(this HttpClient httpClient, string url, CancellationToken token)
+    public static async Task<Album> FetchAlbumAsync(this HttpClient httpClient, string url, CancellationToken token)
     {
         using(HttpRequestMessage requestMessage = new HttpRequestMessage())
         {
@@ -42,7 +42,7 @@ public static class HttpClientExtensions
         }
     }
 
-    public async static Task<Release> FetchLatestReleaseAsync(this HttpClient httpClient)
+    public static async Task<Release> FetchLatestReleaseAsync(this HttpClient httpClient)
     {
         using(HttpRequestMessage httpRequestMessage = new HttpRequestMessage())
         {

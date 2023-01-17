@@ -18,8 +18,12 @@ public static class Web
             });
         }
         else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
             Process.Start("xdg-open", url);
+        }
         else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
             Process.Start("open", url);
+        }
     }
 }

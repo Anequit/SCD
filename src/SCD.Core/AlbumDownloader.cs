@@ -13,7 +13,7 @@ public static class AlbumDownloader
     public static event Action<AlbumFile>? FileChanged;
     public static event Action<Exception>? ErrorOccurred;
 
-    public async static Task DownloadAlbumAsync(Album album, string downloadLocation, IProgress<decimal> progress, CancellationToken token)
+    public static async Task DownloadAlbumAsync(Album album, string downloadLocation, IProgress<decimal> progress, CancellationToken token)
     {
         // Create file directory for album files
         if(!Directory.Exists(downloadLocation))

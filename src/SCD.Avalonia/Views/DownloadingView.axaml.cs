@@ -5,10 +5,7 @@ namespace SCD.Avalonia.Views;
 
 public class DownloadingView : UserControl
 {
-    public DownloadingView()
-    {
-        InitializeComponent();
-    }
+    public DownloadingView() => InitializeComponent();
 
     private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
 }

@@ -5,10 +5,7 @@ namespace SCD.Avalonia.Views;
 
 public class TitleBarView : UserControl
 {
-    public TitleBarView()
-    {
-        InitializeComponent();
-    }
+    public TitleBarView() => InitializeComponent();
 
     private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
 }
