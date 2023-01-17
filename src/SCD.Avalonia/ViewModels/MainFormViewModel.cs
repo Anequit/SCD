@@ -30,7 +30,7 @@ public partial class MainFormViewModel : ObservableValidator
     {
         _window = App.MainWindow;
 
-        Task.Run(async () => await UpdateService.CheckForUpdateAsync());
+        Task.Run(UpdateService.CheckForUpdateAsync);
     }
 
     [RelayCommand]
