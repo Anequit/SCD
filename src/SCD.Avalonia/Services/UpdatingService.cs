@@ -19,7 +19,7 @@ public static class UpdateService
     ///     Checks if there is a newer version on github.
     /// </summary>
     /// <returns>True if update is available.</returns>
-    public static async Task CheckForUpdateAsync()
+    public async static Task CheckForUpdateAsync()
     {
         try
         {

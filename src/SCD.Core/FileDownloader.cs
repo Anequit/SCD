@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SCD.Core;
 
-internal class FileDownloader
+class FileDownloader
 {
     private readonly int _buffer;
     private readonly IProgress<decimal> _progress;
